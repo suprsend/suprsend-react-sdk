@@ -1,0 +1,35 @@
+import styled from '@emotion/styled';
+import { lightColors, CText } from '../../utils/styles';
+import { BadgeThemeProps } from '../../interface';
+
+interface BadgeProps {
+  count: number;
+  badgeComponent?: React.FC<{ count: number }>;
+  style?: BadgeThemeProps;
+}
+
+function Badge({ count, badgeComponent, style }: BadgeProps) {
+  if (count <= 0) return null;
+
+  if (badgeComponent) {
+    const BagdeComponent = badgeComponent;
+    return <BagdeComponent count={count} />;
+  }
+  return <CountText style={style}>{count}</CountText>;
+}
+
+export default Badge;
+
+const CountText = styled(CText)`
+  position: absolute;
+  right: -3px;
+  top: -7px;
+  display: inline-block;
+  font-size: 10px;
+  line-height: 1;
+  padding: 3px 6px;
+  border-radius: 50%;
+  background-color: ${lightColors.primary};
+  color: ${lightColors.main};
+  text-align: center;
+`;
