@@ -4,15 +4,19 @@ import {
   useFeedClient,
   useFeedData,
   ApiResponseStatus,
+  Dictionary,
 } from '@suprsend/react-hooks';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import NotificationFeedHeader from './NotificationFeedHeader';
-import { CText, HeadingText, lightColors } from '../utils/styles';
+import { CText, darkTheme, HeadingText, lightColors } from '../utils/styles';
 import {
+  INotificationFeedTheme,
   INotificationsContainerTheme,
   NotificationFeedProps,
+  ThemeType,
 } from '../interface';
 import { NotificationCard } from '../NotificationCard';
+import { mergeDeep } from '../utils';
 
 interface LoaderProps {
   style?: React.CSSProperties;
@@ -56,21 +60,30 @@ function EmptyFeed({
 }
 
 export default function NotificationFeed(config: NotificationFeedProps) {
-  const notificationsContainer = config.theme?.notificationsContainer;
   const feedData = useFeedData();
   const feedClient = useFeedClient();
   const pagination = config.pagination ?? true;
+
+  const modifiedTheme =
+    config?.themeType === ThemeType.DARK
+      ? (mergeDeep(
+          darkTheme,
+          config.theme as Dictionary
+        ) as INotificationFeedTheme)
+      : config.theme || {};
+
+  const notificationsContainerStyle = modifiedTheme?.notificationsContainer;
 
   if (!feedData) return null;
 
   const CustomLoader = config?.loaderComponent;
   return (
     <Container
-      style={notificationsContainer?.container}
+      style={notificationsContainerStyle?.container}
       id="ss-notification-container"
     >
       <NotificationFeedHeader
-        style={{ header: config.theme?.header, tabs: config?.theme?.tabs }}
+        style={{ header: modifiedTheme?.header, tabs: modifiedTheme?.tabs }}
         headerRightComponent={config.headerRightComponent}
         showUnreadCountOnTabs={config.showUnreadCountOnTabs}
         tabBadgeComponent={config.tabBadgeComponent}
@@ -78,7 +91,7 @@ export default function NotificationFeed(config: NotificationFeedProps) {
 
       {feedData?.apiStatus === ApiResponseStatus.LOADING && (
         <InitialLoader>
-          <Loader size="large" style={notificationsContainer?.loader} />
+          <Loader size="large" style={notificationsContainerStyle?.loader} />
         </InitialLoader>
       )}
 
@@ -87,7 +100,7 @@ export default function NotificationFeed(config: NotificationFeedProps) {
           !feedData?.notifications.length)) && (
         <EmptyFeed
           noNotificationsComponent={config?.noNotificationsComponent}
-          notificationsContainer={notificationsContainer}
+          notificationsContainer={notificationsContainerStyle}
         />
       )}
 
@@ -105,7 +118,7 @@ export default function NotificationFeed(config: NotificationFeedProps) {
               CustomLoader ? (
                 <CustomLoader />
               ) : (
-                <Loader style={notificationsContainer?.loader} />
+                <Loader style={notificationsContainerStyle?.loader} />
               )
             }
           >
@@ -116,7 +129,7 @@ export default function NotificationFeed(config: NotificationFeedProps) {
                 notificationClickHandler={config.notificationClickHandler}
                 primaryActionClickHandler={config.primaryActionClickHandler}
                 secondaryActionClickHandler={config.secondaryActionClickHandler}
-                theme={config.theme?.notification}
+                theme={modifiedTheme?.notification}
                 hideAvatar={config.hideAvatar}
                 notificationComponent={config.notificationComponent}
                 themeType={config.themeType}

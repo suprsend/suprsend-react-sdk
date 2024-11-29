@@ -1,11 +1,16 @@
-import { IRemoteNotification, useFeedClient } from '@suprsend/react-hooks';
+import {
+  Dictionary,
+  IRemoteNotification,
+  useFeedClient,
+} from '@suprsend/react-hooks';
 import NotificationCard from './NotificationCard';
-import { formatActionLink } from '../utils';
+import { formatActionLink, mergeDeep } from '../utils';
 import {
   INotificationCardTheme,
   CustomNotificationCard,
   ThemeType,
 } from '../interface';
+import { darkTheme } from '../utils/styles';
 
 function getURLTarget(target?: boolean) {
   return target ? '_blank' : '_self';
@@ -82,6 +87,11 @@ function ClickableNotification({
     }
   };
 
+  const modifiedTheme =
+    themeType === ThemeType.DARK
+      ? (mergeDeep(darkTheme, theme as Dictionary) as INotificationCardTheme)
+      : theme || {};
+
   return (
     <div onClick={handleCardClick}>
       <NotificationCard
@@ -92,7 +102,7 @@ function ClickableNotification({
         themeType={themeType}
         primaryActionClickHandler={primaryActionClickHandler}
         secondaryActionClickHandler={secondaryActionClickHandler}
-        theme={theme}
+        theme={modifiedTheme}
       />
     </div>
   );

@@ -1,12 +1,14 @@
 import { useRef, useState } from 'react';
 import { usePopper } from 'react-popper';
 import styled from '@emotion/styled';
-import { useFeedClient, useFeedData } from '@suprsend/react-hooks';
+import { Dictionary, useFeedClient, useFeedData } from '@suprsend/react-hooks';
 import { Bell } from './Bell';
 import { Badge } from './Badge';
 import { NotificationFeed } from '../NotificationFeed';
 import useClickOutside from '../utils/useClickOutside';
-import { InboxPopoverProps } from '../interface';
+import { InboxPopoverProps, ITheme, ThemeType } from '../interface';
+import { mergeDeep } from '../utils';
+import { darkTheme } from '../utils/styles';
 
 export default function InboxPopover({
   bellComponent,
@@ -46,15 +48,20 @@ export default function InboxPopover({
     feedClient?.resetBadgeCount();
   };
 
+  const modifiedTheme =
+    feedConfig?.themeType === ThemeType.DARK
+      ? (mergeDeep(darkTheme, theme as Dictionary) as ITheme)
+      : theme || {};
+
   return (
     <Container>
       <BellContainer onClick={handleBellClick} ref={referenceElement}>
         <Badge
           count={notificationData?.meta?.badge || 0}
           badgeComponent={badgeComponent}
-          style={theme?.badge}
+          style={modifiedTheme?.badge}
         />
-        <Bell bellComponent={bellComponent} style={theme?.bell} />
+        <Bell bellComponent={bellComponent} style={modifiedTheme?.bell} />
       </BellContainer>
 
       {popoverOpened && (
@@ -63,7 +70,7 @@ export default function InboxPopover({
           style={{ ...styles.popper, zIndex: 999 }}
           {...attributes.popper}
         >
-          <NotificationFeed {...feedConfig} />
+          <NotificationFeed {...feedConfig} theme={modifiedTheme} />
         </div>
       )}
     </Container>

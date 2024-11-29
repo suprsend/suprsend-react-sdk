@@ -1,3 +1,5 @@
+import { Dictionary } from '@suprsend/react-hooks';
+
 export function formatActionLink(link: string) {
   if (!link) return;
 
@@ -57,4 +59,29 @@ export function getShortFormattedTime(value: number, unit: string) {
     default:
       return value;
   }
+}
+
+function isObject(item: unknown) {
+  return item && typeof item === 'object' && !Array.isArray(item);
+}
+
+export function mergeDeep(target?: Dictionary, source?: Dictionary) {
+  const output = Object.assign({}, target);
+  if (target && isObject(target) && source && isObject(source)) {
+    Object.keys(source).forEach((key) => {
+      if (isObject(source[key])) {
+        if (!(key in target)) {
+          Object.assign(output, { [key]: source[key] });
+        } else {
+          output[key] = mergeDeep(
+            target[key] as Dictionary,
+            source[key] as Dictionary
+          );
+        }
+      } else {
+        Object.assign(output, { [key]: source[key] });
+      }
+    });
+  }
+  return output;
 }
