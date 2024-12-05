@@ -1,11 +1,7 @@
 import { lightColors } from '../../utils/styles';
-import { IconThemeProps } from '../../interface';
+import { IconProps } from '../../interface';
 
-interface MoreIconProps {
-  style?: IconThemeProps;
-}
-
-const MoreIcon = ({ style }: MoreIconProps) => {
+const MoreIcon = ({ style }: IconProps) => {
   const height = style?.height || 20;
   const width = style?.width || 20;
   const color = style?.color || lightColors.secondaryText;

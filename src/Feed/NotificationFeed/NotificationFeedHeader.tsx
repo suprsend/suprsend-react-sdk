@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Dispatch, SetStateAction } from 'react';
 import { IStore, useFeedClient, useFeedData } from '@suprsend/react-hooks';
 import { ApiResponse } from '@suprsend/react-hooks';
 import { CText, HeadingText, lightColors } from '../utils/styles';
@@ -41,6 +42,7 @@ interface IHeaderProps {
     markAllRead: () => void;
     closeInboxPopover: () => void;
   }>;
+  setPopoverOpen?: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function Header({
@@ -48,6 +50,7 @@ export default function Header({
   tabBadgeComponent,
   headerRightComponent,
   showUnreadCountOnTabs = true,
+  setPopoverOpen,
 }: IHeaderProps) {
   const feedClient = useFeedClient();
   const feedData = useFeedData();
@@ -67,8 +70,7 @@ export default function Header({
           <HeaderRightComponent
             markAllRead={() => feedClient?.markAllAsRead()}
             closeInboxPopover={() => {
-              // TODO: change it
-              // toggleInbox(false);
+              setPopoverOpen?.(false);
             }}
           />
         ) : (

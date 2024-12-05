@@ -1,10 +1,6 @@
-import { IconThemeProps } from '../../interface';
+import { IconProps } from '../../interface';
 
-interface PinnedNotificationIconProps {
-  style?: IconThemeProps;
-}
-
-const PinnedNotificationIcon = ({ style }: PinnedNotificationIconProps) => {
+const PinnedNotificationIcon = ({ style }: IconProps) => {
   const height = style?.height || 13;
   const width = style?.width || 13;
   const color = style?.color || '#DC6803';

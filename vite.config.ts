@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv, LibraryFormats } from 'vite';
 import react from '@vitejs/plugin-react';
 import dts from 'vite-plugin-dts';
+import pkg from './package.json';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
@@ -31,13 +32,11 @@ export default defineConfig(({ mode }) => {
         formats,
       },
       rollupOptions: {
-        external: ['react', 'react-dom'],
+        external: [...Object.keys(pkg.dependencies || {}), 'react'],
         output: {
           globals: {
             react: 'React',
-            'react-dom': 'ReactDOM',
           },
-          exports: 'named',
         },
       },
     },

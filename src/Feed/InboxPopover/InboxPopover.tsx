@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { LegacyRef, useState } from 'react';
 import { usePopper } from 'react-popper';
 import styled from '@emotion/styled';
 import { Dictionary, useFeedClient, useFeedData } from '@suprsend/react-hooks';
@@ -17,31 +17,30 @@ export default function InboxPopover({
   theme,
   ...feedConfig
 }: InboxPopoverProps) {
-  const referenceElement = useRef<HTMLDivElement>(null);
-  const popperElement = useRef<HTMLDivElement>(null);
+  const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(
+    null
+  );
+  const [popperElement, setPopperElement] = useState<HTMLElement | null>(null);
+
   const feedClient = useFeedClient();
   const notificationData = useFeedData();
   const [popoverOpened, setPopoverOpen] = useState<boolean>(false);
 
-  useClickOutside(popperElement, () => {
+  useClickOutside({ current: popperElement }, () => {
     setPopoverOpen((prev) => !prev);
   });
 
-  const { styles, attributes } = usePopper(
-    referenceElement.current,
-    popperElement.current,
-    {
-      placement: popperPosition,
-      modifiers: [
-        {
-          name: 'offset',
-          options: {
-            offset: [0, 5],
-          },
+  const { styles, attributes } = usePopper(referenceElement, popperElement, {
+    placement: popperPosition,
+    modifiers: [
+      {
+        name: 'offset',
+        options: {
+          offset: [0, 5],
         },
-      ],
-    }
-  );
+      },
+    ],
+  });
 
   const handleBellClick = () => {
     setPopoverOpen((prev) => !prev);
@@ -55,7 +54,7 @@ export default function InboxPopover({
 
   return (
     <Container>
-      <BellContainer onClick={handleBellClick} ref={referenceElement}>
+      <BellContainer onClick={handleBellClick} ref={setReferenceElement}>
         <Badge
           count={notificationData?.meta?.badge || 0}
           badgeComponent={badgeComponent}
@@ -66,11 +65,16 @@ export default function InboxPopover({
 
       {popoverOpened && (
         <div
-          ref={popperElement}
+          ref={setPopperElement as LegacyRef<HTMLDivElement> | undefined}
           style={{ ...styles.popper, zIndex: 999 }}
           {...attributes.popper}
         >
-          <NotificationFeed {...feedConfig} theme={modifiedTheme} />
+          <NotificationFeed
+            {...feedConfig}
+            theme={modifiedTheme}
+            popover
+            setPopoverOpen={setPopoverOpen}
+          />
         </div>
       )}
     </Container>

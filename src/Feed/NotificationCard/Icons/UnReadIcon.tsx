@@ -1,11 +1,7 @@
 import { lightColors } from '../../utils/styles';
-import { IconThemeProps } from '../../interface';
+import { IconProps } from '../../interface';
 
-interface ReadIconProps {
-  style?: IconThemeProps;
-}
-
-const UnReadIcon = ({ style }: ReadIconProps) => {
+const UnReadIcon = ({ style }: IconProps) => {
   const height = style?.height || 16;
   const width = style?.width || 16;
   const color = style?.color || lightColors.primaryText;

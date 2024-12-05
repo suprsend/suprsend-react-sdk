@@ -1,37 +1,16 @@
-import {
-  Dictionary,
-  IRemoteNotification,
-  useFeedClient,
-} from '@suprsend/react-hooks';
+import { Dictionary, useFeedClient } from '@suprsend/react-hooks';
 import NotificationCard from './NotificationCard';
 import { formatActionLink, mergeDeep } from '../utils';
 import {
   INotificationCardTheme,
-  CustomNotificationCard,
+  ClickableNotificationProps,
   ThemeType,
+  ClickHandlerPayload,
 } from '../interface';
 import { darkTheme } from '../utils/styles';
 
 function getURLTarget(target?: boolean) {
   return target ? '_blank' : '_self';
-}
-
-interface ClickableNotificationProps {
-  notificationData: IRemoteNotification;
-  notificationClickHandler?: (notificationData: IRemoteNotification) => void;
-  notificationComponent?: React.FC<CustomNotificationCard>;
-  hideAvatar?: boolean;
-  themeType?: ThemeType;
-  primaryActionClickHandler?: (notification: IRemoteNotification) => void;
-  secondaryActionClickHandler?: (notification: IRemoteNotification) => void;
-  theme?: INotificationCardTheme;
-}
-
-export interface ClickHandlerPayload {
-  target?: boolean;
-  customClickHandler?: (notificationData: IRemoteNotification) => void;
-  url?: string;
-  type: string;
 }
 
 function ClickableNotification({

@@ -1,12 +1,6 @@
 import styled from '@emotion/styled';
 import { lightColors, CText } from '../../utils/styles';
-import { BadgeThemeProps } from '../../interface';
-
-interface BadgeProps {
-  count: number;
-  badgeComponent?: React.FC<{ count: number }>;
-  style?: BadgeThemeProps;
-}
+import { BadgeProps } from '../../interface';
 
 function Badge({ count, badgeComponent, style }: BadgeProps) {
   if (count <= 0) return null;

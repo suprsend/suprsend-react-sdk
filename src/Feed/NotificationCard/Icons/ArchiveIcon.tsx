@@ -1,11 +1,7 @@
 import { lightColors } from '../../utils/styles';
-import { IconThemeProps } from '../../interface';
+import { IconProps } from '../../interface';
 
-interface ArchiveIconProps {
-  style?: IconThemeProps;
-}
-
-const ArchiveIcon = ({ style }: ArchiveIconProps) => {
+const ArchiveIcon = ({ style }: IconProps) => {
   const height = style?.height || 17;
   const width = style?.width || 16;
   const color = style?.color || lightColors.secondaryText;

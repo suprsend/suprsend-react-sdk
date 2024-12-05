@@ -4,7 +4,7 @@ import Markdown, { PluggableList } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import TimeAgo from 'react-timeago';
-import { IRemoteNotification, useFeedClient } from '@suprsend/react-hooks';
+import { useFeedClient } from '@suprsend/react-hooks';
 import { Pluggable } from 'unified';
 import { CText, HelperText, lightColors } from '../utils/styles';
 import {
@@ -20,18 +20,7 @@ import {
   ReadIcon,
   UnReadIcon,
 } from './Icons';
-import {
-  INotificationCardTheme,
-  NotificationCardExpriesTextThemeProps,
-  ThemeType,
-  CustomNotificationCard,
-} from '../interface';
-import { ClickHandlerPayload } from './ClickableNotificationCard';
-
-interface ExpiryTimerProps {
-  dateInput?: number;
-  style?: NotificationCardExpriesTextThemeProps;
-}
+import { NotificationCardProps, ExpiryTimerProps } from '../interface';
 
 function ExpiryTime({ dateInput, style }: ExpiryTimerProps) {
   const [, setTime] = useState(Date.now());
@@ -74,21 +63,6 @@ function ExpiryTime({ dateInput, style }: ExpiryTimerProps) {
       </ExpiresText>
     </div>
   );
-}
-
-interface NotificationCardProps {
-  notification?: INotificationCardTheme;
-  notificationData: IRemoteNotification;
-  handleActionClick: (
-    e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
-    clickData: ClickHandlerPayload
-  ) => void;
-  notificationComponent?: React.FC<CustomNotificationCard>;
-  hideAvatar?: boolean;
-  themeType?: ThemeType;
-  primaryActionClickHandler?: (notificationData: IRemoteNotification) => void;
-  secondaryActionClickHandler?: (notificationData: IRemoteNotification) => void;
-  theme?: INotificationCardTheme;
 }
 
 export default function Notification({

@@ -1,10 +1,5 @@
 import BellIcon from './BellIcon';
-import { IconThemeProps } from '../../interface';
-
-interface BellProps {
-  bellComponent?: React.FC;
-  style?: IconThemeProps;
-}
+import { BellProps } from '../../interface';
 
 export default function Bell({ bellComponent, style }: BellProps) {
   if (bellComponent) {

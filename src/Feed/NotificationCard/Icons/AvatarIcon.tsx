@@ -1,8 +1,4 @@
-import { ThemeType } from '../../interface';
-
-interface AvatarIconProps {
-  type?: ThemeType;
-}
+import { AvatarIconProps, ThemeType } from '../../interface';
 
 const AvatarIcon = ({ type }: AvatarIconProps) => {
   if (type === ThemeType.DARK) {

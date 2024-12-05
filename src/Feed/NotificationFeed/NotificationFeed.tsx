@@ -62,7 +62,7 @@ function EmptyFeed({
 export default function NotificationFeed(config: NotificationFeedProps) {
   const feedData = useFeedData();
   const feedClient = useFeedClient();
-  const pagination = config.pagination ?? true;
+  const pagination = config.pagination ? config.pagination : true;
 
   const modifiedTheme =
     config?.themeType === ThemeType.DARK
@@ -74,11 +74,28 @@ export default function NotificationFeed(config: NotificationFeedProps) {
 
   const notificationsContainerStyle = modifiedTheme?.notificationsContainer;
 
-  if (!feedData) return null;
-
   const CustomLoader = config?.loaderComponent;
+  const ContainerDiv = config?.popover ? PopOverConatiner : Container;
+
+  if (!feedData) {
+    return (
+      <ContainerDiv
+        style={notificationsContainerStyle?.container}
+        id="ss-notification-container"
+      >
+        <NotificationFeedHeader
+          style={{ header: modifiedTheme?.header, tabs: modifiedTheme?.tabs }}
+          headerRightComponent={config.headerRightComponent}
+          showUnreadCountOnTabs={config.showUnreadCountOnTabs}
+          tabBadgeComponent={config.tabBadgeComponent}
+          setPopoverOpen={config?.setPopoverOpen}
+        />
+      </ContainerDiv>
+    );
+  }
+
   return (
-    <Container
+    <ContainerDiv
       style={notificationsContainerStyle?.container}
       id="ss-notification-container"
     >
@@ -87,6 +104,7 @@ export default function NotificationFeed(config: NotificationFeedProps) {
         headerRightComponent={config.headerRightComponent}
         showUnreadCountOnTabs={config.showUnreadCountOnTabs}
         tabBadgeComponent={config.tabBadgeComponent}
+        setPopoverOpen={config?.setPopoverOpen}
       />
 
       {feedData?.apiStatus === ApiResponseStatus.LOADING && (
@@ -138,11 +156,11 @@ export default function NotificationFeed(config: NotificationFeedProps) {
           </InfiniteScroll>
         </ScrollDiv>
       )}
-    </Container>
+    </ContainerDiv>
   );
 }
 
-const Container = styled.div`
+const PopOverConatiner = styled.div`
   height: 500px;
   width: 450px;
   margin: 0px 15px;
@@ -157,6 +175,10 @@ const Container = styled.div`
     margin: 0px;
     border-radius: 0px;
   }
+`;
+
+const Container = styled.div`
+  overflow: scroll;
 `;
 
 const EmptyNotificationsContainer = styled.div`

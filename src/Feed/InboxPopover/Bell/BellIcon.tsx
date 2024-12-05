@@ -1,11 +1,7 @@
-import { IconThemeProps } from '../../interface';
+import { IconProps } from '../../interface';
 import { lightColors } from '../../utils/styles';
 
-interface BellIconProps {
-  style?: IconThemeProps;
-}
-
-function BellIcon({ style }: BellIconProps) {
+function BellIcon({ style }: IconProps) {
   const height = style?.height || 24;
   const width = style?.width || 24;
   const color = style?.color || lightColors.primaryText;

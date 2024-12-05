@@ -4,6 +4,7 @@ import {
   ApiResponse,
 } from '@suprsend/react-hooks';
 import { Placement } from '@popperjs/core';
+import { Dispatch, SetStateAction } from 'react';
 
 export enum ThemeType {
   LIGHT = 'light',
@@ -15,10 +16,29 @@ export interface BadgeThemeProps extends React.CSSProperties {
   color?: string;
 }
 
+export interface BadgeProps {
+  count: number;
+  badgeComponent?: React.FC<{ count: number }>;
+  style?: BadgeThemeProps;
+}
+
+export interface BellProps {
+  bellComponent?: React.FC;
+  style?: IconThemeProps;
+}
+
+export interface IconProps {
+  style?: IconThemeProps;
+}
+
 export interface IconThemeProps {
   height?: number | string;
   width?: number | string;
   color?: string;
+}
+
+export interface AvatarIconProps {
+  type?: ThemeType;
 }
 
 export interface TabsThemeProps {
@@ -55,6 +75,21 @@ export interface NotificationCardExpriesTextThemeProps
   expiringColor?: string;
 }
 
+export interface NotificationCardProps {
+  notification?: INotificationCardTheme;
+  notificationData: IRemoteNotification;
+  handleActionClick: (
+    e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
+    clickData: ClickHandlerPayload
+  ) => void;
+  notificationComponent?: React.FC<CustomNotificationCard>;
+  hideAvatar?: boolean;
+  themeType?: ThemeType;
+  primaryActionClickHandler?: (notificationData: IRemoteNotification) => void;
+  secondaryActionClickHandler?: (notificationData: IRemoteNotification) => void;
+  theme?: INotificationCardTheme;
+}
+
 export interface NotificationCardActionButtonViewThemeProps
   extends React.CSSProperties {
   hoverBackgroundColor?: string;
@@ -76,6 +111,29 @@ export interface CustomNotificationCard {
   markAsInteracted: (e?: Event) => Promise<ApiResponse> | undefined;
 }
 
+export interface ClickHandlerPayload {
+  target?: boolean;
+  customClickHandler?: (notificationData: IRemoteNotification) => void;
+  url?: string;
+  type: string;
+}
+
+export interface ExpiryTimerProps {
+  dateInput?: number;
+  style?: NotificationCardExpriesTextThemeProps;
+}
+
+export interface ClickableNotificationProps {
+  notificationData: IRemoteNotification;
+  notificationClickHandler?: (notificationData: IRemoteNotification) => void;
+  notificationComponent?: React.FC<CustomNotificationCard>;
+  hideAvatar?: boolean;
+  themeType?: ThemeType;
+  primaryActionClickHandler?: (notification: IRemoteNotification) => void;
+  secondaryActionClickHandler?: (notification: IRemoteNotification) => void;
+  theme?: INotificationCardTheme;
+}
+
 export interface NotificationFeedProps {
   notificationClickHandler?: (notification: IRemoteNotification) => void;
   primaryActionClickHandler?: (notification: IRemoteNotification) => void;
@@ -93,6 +151,8 @@ export interface NotificationFeedProps {
   hideAvatar?: boolean;
   themeType?: ThemeType;
   theme?: INotificationFeedTheme;
+  popover?: boolean;
+  setPopoverOpen?: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface INotificationsContainerTheme {
