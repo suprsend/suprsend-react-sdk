@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { lightColors, CText } from '../../utils/styles';
 import { BadgeProps } from '../../interface';
 
-function Badge({ count, badgeComponent, style }: BadgeProps) {
+export default function Badge({ count, badgeComponent, style }: BadgeProps) {
   if (count <= 0) return null;
 
   if (badgeComponent) {
@@ -11,8 +11,6 @@ function Badge({ count, badgeComponent, style }: BadgeProps) {
   }
   return <CountText style={style}>{count}</CountText>;
 }
-
-export default Badge;
 
 const CountText = styled(CText)`
   position: absolute;

@@ -1,7 +1,7 @@
 import { IconProps } from '../../interface';
 import { lightColors } from '../../utils/styles';
 
-function BellIcon({ style }: IconProps) {
+export default function BellIcon({ style }: IconProps) {
   const height = style?.height || 24;
   const width = style?.width || 24;
   const color = style?.color || lightColors.primaryText;
@@ -25,5 +25,3 @@ function BellIcon({ style }: IconProps) {
     </svg>
   );
 }
-
-export default BellIcon;

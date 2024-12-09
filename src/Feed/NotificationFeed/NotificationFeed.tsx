@@ -8,15 +8,15 @@ import {
 } from '@suprsend/react-hooks';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import NotificationFeedHeader from './NotificationFeedHeader';
-import { CText, darkTheme, HeadingText, lightColors } from '../utils/styles';
+import { NotificationCard } from '../NotificationCard';
 import {
   INotificationFeedTheme,
   INotificationsContainerTheme,
   NotificationFeedProps,
   ThemeType,
 } from '../interface';
-import { NotificationCard } from '../NotificationCard';
 import { mergeDeep } from '../utils';
+import { CText, darkTheme, HeadingText, lightColors } from '../utils/styles';
 
 interface LoaderProps {
   style?: React.CSSProperties;

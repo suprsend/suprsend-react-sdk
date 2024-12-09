@@ -1,7 +1,11 @@
-import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
-import { IStore, useFeedClient, useFeedData } from '@suprsend/react-hooks';
-import { ApiResponse } from '@suprsend/react-hooks';
+import styled from '@emotion/styled';
+import {
+  IStore,
+  useFeedClient,
+  useFeedData,
+  ApiResponse,
+} from '@suprsend/react-hooks';
 import { CText, HeadingText, lightColors } from '../utils/styles';
 import { TabsThemeProps, IHeaderTheme } from '../interface';
 

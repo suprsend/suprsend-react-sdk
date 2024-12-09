@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 // Improved version of https://usehooks.com/useOnClickOutside/
-function useClickOutside<T extends HTMLElement>(
+export default function useClickOutside<T extends HTMLElement>(
   ref: React.RefObject<T>,
   handler: (event: MouseEvent | TouchEvent) => void
 ) {
@@ -36,5 +36,3 @@ function useClickOutside<T extends HTMLElement>(
     };
   }, [ref, handler]);
 }
-
-export default useClickOutside;
