@@ -75,19 +75,40 @@ export interface NotificationCardExpriesTextThemeProps
   expiringColor?: string;
 }
 
+export type HandleActionClick = (
+  e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
+  clickData: ClickHandlerPayload
+) => void;
+
+export interface ToastNotificationProps {
+  notificationData: IRemoteNotification;
+  hideAvatar?: boolean;
+  themeType?: ThemeType;
+  theme?: ToastNotificationCardTheme;
+}
+
+interface ToastNotificationCardTheme {
+  avatar?: React.CSSProperties;
+  headerText?: React.CSSProperties;
+  bodyText?: NotificationCardBodyTextThemeProps;
+}
+
 export interface NotificationCardProps {
   notification?: INotificationCardTheme;
   notificationData: IRemoteNotification;
-  handleActionClick: (
-    e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
-    clickData: ClickHandlerPayload
-  ) => void;
+  handleActionClick: HandleActionClick;
   notificationComponent?: React.FC<CustomNotificationCard>;
   hideAvatar?: boolean;
   themeType?: ThemeType;
   primaryActionClickHandler?: (notificationData: IRemoteNotification) => void;
   secondaryActionClickHandler?: (notificationData: IRemoteNotification) => void;
   theme?: INotificationCardTheme;
+}
+
+export interface BodyMarkdownProps {
+  body: string;
+  handleActionClick?: HandleActionClick;
+  style?: NotificationCardBodyTextThemeProps;
 }
 
 export interface NotificationCardActionButtonViewThemeProps

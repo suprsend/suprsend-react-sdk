@@ -20,7 +20,11 @@ import {
   ReadIcon,
   UnReadIcon,
 } from './Icons';
-import { NotificationCardProps, ExpiryTimerProps } from '../interface';
+import {
+  NotificationCardProps,
+  ExpiryTimerProps,
+  BodyMarkdownProps,
+} from '../interface';
 
 function ExpiryTime({ dateInput, style }: ExpiryTimerProps) {
   const [, setTime] = useState(Date.now());
@@ -65,6 +69,241 @@ function ExpiryTime({ dateInput, style }: ExpiryTimerProps) {
   );
 }
 
+export function BodyMarkdown({
+  body,
+  handleActionClick,
+  style,
+}: BodyMarkdownProps) {
+  const tableBorderColor =
+    style?.tableBorderColor || 'rgba(100, 116, 139, 0.3)';
+  const blockquoteColor = style?.blockquoteColor || 'rgba(100, 116, 139, 0.3)';
+  const linkColor = style?.linkColor || lightColors.primary;
+
+  return (
+    <BodyText style={style}>
+      <Markdown
+        remarkPlugins={[remarkGfm as Pluggable] as PluggableList}
+        rehypePlugins={[rehypeRaw as Pluggable] as PluggableList}
+        components={{
+          a({ children, href, style }) {
+            return (
+              <span
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleActionClick?.(e, {
+                    type: 'markdown_link',
+                    url: href,
+                  });
+                }}
+                style={{
+                  color: linkColor,
+                  textDecoration: 'none',
+                  ...(style || {}),
+                }}
+              >
+                {children}
+              </span>
+            );
+          },
+          p({ children, style }) {
+            return (
+              <p
+                style={{
+                  margin: 0,
+                  overflowWrap: 'anywhere',
+                  ...(style || {}),
+                }}
+              >
+                {children}
+              </p>
+            );
+          },
+          blockquote({ children, style }) {
+            return (
+              <blockquote
+                style={{
+                  margin: 0,
+                  paddingLeft: 10,
+                  borderLeft: `3px ${blockquoteColor} solid`,
+                  marginBottom: 5,
+                  marginTop: 5,
+                  ...(style || {}),
+                }}
+              >
+                {children}
+              </blockquote>
+            );
+          },
+          ul({ children, style }) {
+            return (
+              <ul
+                style={{
+                  whiteSpace: 'normal',
+                  margin: 0,
+                  paddingLeft: 10,
+                  ...(style || {}),
+                }}
+              >
+                {children}
+              </ul>
+            );
+          },
+          ol({ children, style }) {
+            return (
+              <ol
+                style={{
+                  whiteSpace: 'normal',
+                  margin: 0,
+                  paddingLeft: 10,
+                  ...(style || {}),
+                }}
+              >
+                {children}
+              </ol>
+            );
+          },
+          img(props) {
+            return (
+              <img
+                style={{
+                  maxWidth: '100%',
+                  objectFit: 'contain',
+                  ...(props?.style || {}),
+                }}
+                {...props}
+              />
+            );
+          },
+          table({ children, style }) {
+            return (
+              <table
+                style={{
+                  overflowWrap: 'break-word',
+                  borderCollapse: 'collapse',
+                  ...(style || {}),
+                }}
+              >
+                {children}
+              </table>
+            );
+          },
+          th({ children, style }) {
+            return (
+              <th
+                style={{
+                  textAlign: 'left',
+                  whiteSpace: 'nowrap',
+                  border: `1px solid ${tableBorderColor}`,
+                  padding: 5,
+                  ...(style || {}),
+                }}
+              >
+                {children}
+              </th>
+            );
+          },
+          td({ children, style }) {
+            return (
+              <td
+                style={{
+                  border: `1px solid ${tableBorderColor}`,
+                  padding: 5,
+                  ...(style || {}),
+                }}
+              >
+                {children}
+              </td>
+            );
+          },
+          h1({ children, style }) {
+            return (
+              <h1
+                style={{
+                  margin: 0,
+                  ...(style || {}),
+                }}
+              >
+                {children}
+              </h1>
+            );
+          },
+          h2({ children, style }) {
+            return (
+              <h2
+                style={{
+                  margin: 0,
+                  ...(style || {}),
+                }}
+              >
+                {children}
+              </h2>
+            );
+          },
+          h3({ children, style }) {
+            return (
+              <h3
+                style={{
+                  margin: 0,
+                  ...(style || {}),
+                }}
+              >
+                {children}
+              </h3>
+            );
+          },
+          h4({ children, style }) {
+            return (
+              <h4
+                style={{
+                  margin: 0,
+                  ...(style || {}),
+                }}
+              >
+                {children}
+              </h4>
+            );
+          },
+          h5({ children, style }) {
+            return (
+              <h5
+                style={{
+                  margin: 0,
+                  ...(style || {}),
+                }}
+              >
+                {children}
+              </h5>
+            );
+          },
+          h6({ children, style }) {
+            return (
+              <h6
+                style={{
+                  margin: 0,
+                  ...(style || {}),
+                }}
+              >
+                {children}
+              </h6>
+            );
+          },
+          script() {
+            return null;
+          },
+          link() {
+            return null;
+          },
+        }}
+      >
+        {body
+          ?.replaceAll('\\\n', '&nbsp;')
+          ?.replaceAll('\n', '  \n')
+          ?.replaceAll('&nbsp;', '&nbsp;  \n')}
+      </Markdown>
+    </BodyText>
+  );
+}
+
 export default function Notification({
   notificationData,
   handleActionClick,
@@ -82,12 +321,6 @@ export default function Notification({
   const feedClient = useFeedClient();
 
   const { message, read_on, created_on } = notificationData;
-
-  const tableBorderColor =
-    theme?.bodyText?.tableBorderColor || 'rgba(100, 116, 139, 0.3)';
-  const blockquoteColor =
-    theme?.bodyText?.blockquoteColor || 'rgba(100, 116, 139, 0.3)';
-  const linkColor = theme?.bodyText?.linkColor || lightColors.primary;
 
   const actionOne = message?.actions?.[0];
   const actionTwo = message?.actions?.[1];
@@ -182,227 +415,11 @@ export default function Notification({
                 {message.header}
               </HeaderText>
             )}
-            <BodyText style={theme?.bodyText}>
-              <Markdown
-                remarkPlugins={[remarkGfm as Pluggable] as PluggableList}
-                rehypePlugins={[rehypeRaw as Pluggable] as PluggableList}
-                components={{
-                  a({ children, href, style }) {
-                    return (
-                      <span
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleActionClick(e, {
-                            type: 'markdown_link',
-                            url: href,
-                          });
-                        }}
-                        style={{
-                          color: linkColor,
-                          textDecoration: 'none',
-                          ...(style || {}),
-                        }}
-                      >
-                        {children}
-                      </span>
-                    );
-                  },
-                  p({ children, style }) {
-                    return (
-                      <p
-                        style={{
-                          margin: 0,
-                          overflowWrap: 'anywhere',
-                          ...(style || {}),
-                        }}
-                      >
-                        {children}
-                      </p>
-                    );
-                  },
-                  blockquote({ children, style }) {
-                    return (
-                      <blockquote
-                        style={{
-                          margin: 0,
-                          paddingLeft: 10,
-                          borderLeft: `3px ${blockquoteColor} solid`,
-                          marginBottom: 5,
-                          marginTop: 5,
-                          ...(style || {}),
-                        }}
-                      >
-                        {children}
-                      </blockquote>
-                    );
-                  },
-                  ul({ children, style }) {
-                    return (
-                      <ul
-                        style={{
-                          whiteSpace: 'normal',
-                          margin: 0,
-                          paddingLeft: 10,
-                          ...(style || {}),
-                        }}
-                      >
-                        {children}
-                      </ul>
-                    );
-                  },
-                  ol({ children, style }) {
-                    return (
-                      <ol
-                        style={{
-                          whiteSpace: 'normal',
-                          margin: 0,
-                          paddingLeft: 10,
-                          ...(style || {}),
-                        }}
-                      >
-                        {children}
-                      </ol>
-                    );
-                  },
-                  img(props) {
-                    return (
-                      <img
-                        style={{
-                          maxWidth: '100%',
-                          objectFit: 'contain',
-                          ...(props?.style || {}),
-                        }}
-                        {...props}
-                      />
-                    );
-                  },
-                  table({ children, style }) {
-                    return (
-                      <table
-                        style={{
-                          overflowWrap: 'break-word',
-                          borderCollapse: 'collapse',
-                          ...(style || {}),
-                        }}
-                      >
-                        {children}
-                      </table>
-                    );
-                  },
-                  th({ children, style }) {
-                    return (
-                      <th
-                        style={{
-                          textAlign: 'left',
-                          whiteSpace: 'nowrap',
-                          border: `1px solid ${tableBorderColor}`,
-                          padding: 5,
-                          ...(style || {}),
-                        }}
-                      >
-                        {children}
-                      </th>
-                    );
-                  },
-                  td({ children, style }) {
-                    return (
-                      <td
-                        style={{
-                          border: `1px solid ${tableBorderColor}`,
-                          padding: 5,
-                          ...(style || {}),
-                        }}
-                      >
-                        {children}
-                      </td>
-                    );
-                  },
-                  h1({ children, style }) {
-                    return (
-                      <h1
-                        style={{
-                          margin: 0,
-                          ...(style || {}),
-                        }}
-                      >
-                        {children}
-                      </h1>
-                    );
-                  },
-                  h2({ children, style }) {
-                    return (
-                      <h2
-                        style={{
-                          margin: 0,
-                          ...(style || {}),
-                        }}
-                      >
-                        {children}
-                      </h2>
-                    );
-                  },
-                  h3({ children, style }) {
-                    return (
-                      <h3
-                        style={{
-                          margin: 0,
-                          ...(style || {}),
-                        }}
-                      >
-                        {children}
-                      </h3>
-                    );
-                  },
-                  h4({ children, style }) {
-                    return (
-                      <h4
-                        style={{
-                          margin: 0,
-                          ...(style || {}),
-                        }}
-                      >
-                        {children}
-                      </h4>
-                    );
-                  },
-                  h5({ children, style }) {
-                    return (
-                      <h5
-                        style={{
-                          margin: 0,
-                          ...(style || {}),
-                        }}
-                      >
-                        {children}
-                      </h5>
-                    );
-                  },
-                  h6({ children, style }) {
-                    return (
-                      <h6
-                        style={{
-                          margin: 0,
-                          ...(style || {}),
-                        }}
-                      >
-                        {children}
-                      </h6>
-                    );
-                  },
-                  script() {
-                    return null;
-                  },
-                  link() {
-                    return null;
-                  },
-                }}
-              >
-                {message?.text
-                  ?.replaceAll('\\\n', '&nbsp;')
-                  ?.replaceAll('\n', '  \n')
-                  ?.replaceAll('&nbsp;', '&nbsp;  \n')}
-              </Markdown>
-            </BodyText>
+            <BodyMarkdown
+              body={message.text}
+              handleActionClick={handleActionClick}
+              style={theme?.bodyText}
+            />
             {!!message?.subtext?.text && (
               <SubTextView
                 link={message?.subtext?.action_url}
