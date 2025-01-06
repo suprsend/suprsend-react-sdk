@@ -30,6 +30,13 @@
     "lint": "eslint ."
   },
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suprsend/suprsend-react-sdk.git"
+  },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
     "@types/node": "^20.14.10",
