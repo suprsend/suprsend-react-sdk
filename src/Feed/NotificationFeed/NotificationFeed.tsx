@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/react';
 import {
@@ -17,6 +18,7 @@ import {
 } from '../interface';
 import { mergeDeep } from '../utils';
 import { CText, darkTheme, HeadingText, lightColors } from '../utils/styles';
+import useDebouncedValue from '../utils/useDebounceValue';
 
 interface LoaderProps {
   style?: React.CSSProperties;
@@ -62,7 +64,20 @@ function EmptyFeed({
 export default function NotificationFeed(config: NotificationFeedProps) {
   const feedData = useFeedData();
   const feedClient = useFeedClient();
-  const pagination = config.pagination ? config.pagination : true;
+  const scrollRef = useRef<HTMLInputElement>();
+  const [unseenNotifications, setUnseenNotifications] = useState<string[]>([]);
+  const debouncedUnseenNotifs = useDebouncedValue(unseenNotifications, 1000);
+
+  useEffect(() => {
+    const unseenData = debouncedUnseenNotifs as string[];
+    if (unseenData?.length) {
+      feedClient?.markBulkAsSeen(unseenData);
+      const updatedUnseenNotifications = unseenNotifications.filter(
+        (notification_id) => !unseenData.includes(notification_id)
+      );
+      setUnseenNotifications(updatedUnseenNotifications);
+    }
+  }, [debouncedUnseenNotifs]);
 
   const modifiedTheme =
     config?.themeType === ThemeType.DARK
@@ -73,7 +88,7 @@ export default function NotificationFeed(config: NotificationFeedProps) {
       : config.theme || {};
 
   const notificationsContainerStyle = modifiedTheme?.notificationsContainer;
-
+  const pagination = config.pagination ? config.pagination : true;
   const CustomLoader = config?.loaderComponent;
   const ContainerDiv = config?.popover ? PopOverConatiner : Container;
 
@@ -142,6 +157,7 @@ export default function NotificationFeed(config: NotificationFeedProps) {
           >
             {feedData.notifications.map((notification) => (
               <NotificationCard
+                scrollRef={scrollRef}
                 key={notification.n_id}
                 notificationData={notification}
                 notificationClickHandler={config.notificationClickHandler}
@@ -151,6 +167,9 @@ export default function NotificationFeed(config: NotificationFeedProps) {
                 hideAvatar={config.hideAvatar}
                 notificationComponent={config.notificationComponent}
                 themeType={config.themeType}
+                setUnseenNotifications={setUnseenNotifications}
+                unseenNotifications={unseenNotifications}
+                enableIntersectionObserver={true}
               />
             ))}
           </InfiniteScroll>
@@ -179,6 +198,7 @@ const PopOverConatiner = styled.div`
 
 const Container = styled.div`
   overflow: scroll;
+  background-color: ${lightColors.main};
 `;
 
 const EmptyNotificationsContainer = styled.div`

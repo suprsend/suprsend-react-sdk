@@ -58,6 +58,7 @@
     "@emotion/react": "^11.13.5",
     "@emotion/styled": "^11.13.5",
     "@popperjs/core": "^2.11.8",
+    "@suprsend/react-core": "^0.0.1",
     "react-infinite-scroll-component": "^6.1.0",
     "react-markdown": "6.0.3",
     "react-popper": "^2.3.0",

@@ -8,6 +8,8 @@ import {
   ClickHandlerPayload,
 } from '../interface';
 import { darkTheme } from '../utils/styles';
+import useIntersectionObserver from '../utils/useIntersectionObserver';
+import { useEffect } from 'react';
 
 function getURLTarget(target?: boolean) {
   return target ? '_blank' : '_self';
@@ -22,8 +24,29 @@ function ClickableNotification({
   primaryActionClickHandler,
   secondaryActionClickHandler,
   theme,
+  scrollRef,
+  setUnseenNotifications,
+  unseenNotifications,
+  enableIntersectionObserver,
 }: ClickableNotificationProps) {
   const feedClient = useFeedClient();
+  const [ref, entry] = useIntersectionObserver({
+    threshold: 1,
+    root: scrollRef.current,
+    rootMargin: '0px',
+    enable: enableIntersectionObserver,
+  });
+
+  useEffect(() => {
+    if (
+      entry?.isIntersecting &&
+      !notificationData.seen_on &&
+      unseenNotifications &&
+      !unseenNotifications?.includes(notificationData.n_id)
+    ) {
+      setUnseenNotifications?.((prev) => [...prev, notificationData.n_id]);
+    }
+  }, [entry?.isIntersecting]);
 
   const cardClickNavigation = () => {
     if (typeof notificationClickHandler === 'function') {
@@ -72,7 +95,7 @@ function ClickableNotification({
       : theme || {};
 
   return (
-    <div onClick={handleCardClick}>
+    <div onClick={handleCardClick} ref={ref}>
       <NotificationCard
         notificationData={notificationData}
         handleActionClick={handleActionClick}

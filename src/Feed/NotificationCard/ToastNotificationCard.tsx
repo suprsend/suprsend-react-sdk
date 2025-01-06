@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Dictionary } from '@suprsend/react-hooks';
 import { AvatarIcon } from './Icons';
 import { BodyMarkdown } from './NotificationCard';
-import { CText, darkTheme } from '../utils/styles';
+import { CText, darkTheme, lightColors } from '../utils/styles';
 import { mergeDeep } from '../utils';
 import {
   ToastNotificationProps,
@@ -21,13 +21,13 @@ export default function ToastNotificationCard({
   const modifiedTheme =
     themeType === ThemeType.DARK
       ? (mergeDeep(
-          darkTheme.notification,
+          darkTheme.toast,
           theme as Dictionary
         ) as INotificationCardTheme)
       : theme || {};
 
   return (
-    <Container>
+    <Container style={modifiedTheme?.container}>
       <LeftAvatarView>
         {!hideAvatar && (
           <AvatarView>
@@ -62,6 +62,7 @@ const Container = styled.div`
   display: flex;
   overflow-wrap: anywhere;
   flex-grow: 1;
+  background-color: ${lightColors.main};
 `;
 
 const LeftAvatarView = styled.div`

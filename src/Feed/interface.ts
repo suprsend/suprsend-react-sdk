@@ -91,6 +91,7 @@ interface ToastNotificationCardTheme {
   avatar?: React.CSSProperties;
   headerText?: React.CSSProperties;
   bodyText?: NotificationCardBodyTextThemeProps;
+  container?: React.CSSProperties;
 }
 
 export interface NotificationCardProps {
@@ -153,6 +154,10 @@ export interface ClickableNotificationProps {
   primaryActionClickHandler?: (notification: IRemoteNotification) => void;
   secondaryActionClickHandler?: (notification: IRemoteNotification) => void;
   theme?: INotificationCardTheme;
+  scrollRef: React.MutableRefObject<HTMLInputElement | undefined>;
+  setUnseenNotifications?: Dispatch<SetStateAction<string[]>>;
+  unseenNotifications?: string[];
+  enableIntersectionObserver?: boolean;
 }
 
 export interface NotificationFeedProps {
