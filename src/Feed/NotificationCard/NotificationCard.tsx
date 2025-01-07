@@ -4,7 +4,7 @@ import Markdown, { PluggableList } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import TimeAgo from 'react-timeago';
-import { useFeedClient } from '@suprsend/react-hooks';
+import { useFeedClient } from '@suprsend/react-core';
 import { Pluggable } from 'unified';
 import { CText, HelperText, lightColors } from '../utils/styles';
 import {

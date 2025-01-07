@@ -1,7 +1,7 @@
 import { LegacyRef, useState } from 'react';
 import { usePopper } from 'react-popper';
 import styled from '@emotion/styled';
-import { Dictionary, useFeedClient, useFeedData } from '@suprsend/react-hooks';
+import { Dictionary, useFeedClient, useFeedData } from '@suprsend/react-core';
 import { Bell } from './Bell';
 import { Badge } from './Badge';
 import { NotificationFeed } from '../NotificationFeed';

@@ -1,4 +1,4 @@
-import { Dictionary, useFeedClient } from '@suprsend/react-hooks';
+import { Dictionary, useFeedClient } from '@suprsend/react-core';
 import NotificationCard from './NotificationCard';
 import { formatActionLink, mergeDeep } from '../utils';
 import {

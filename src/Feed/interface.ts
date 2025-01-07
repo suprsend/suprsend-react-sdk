@@ -2,7 +2,7 @@ import {
   IRemoteNotification,
   SuprSendFeedProviderProps,
   ApiResponse,
-} from '@suprsend/react-hooks';
+} from '@suprsend/react-core';
 import { Placement } from '@popperjs/core';
 import { Dispatch, SetStateAction } from 'react';
 

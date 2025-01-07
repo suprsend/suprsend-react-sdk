@@ -1,4 +1,4 @@
-import { SuprSendFeedProvider } from '@suprsend/react-hooks';
+import { SuprSendFeedProvider } from '@suprsend/react-core';
 import InboxPopover from './InboxPopover';
 import { InboxProps } from '../interface';
 

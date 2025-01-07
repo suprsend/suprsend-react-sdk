@@ -1,4 +1,4 @@
-import { Dictionary } from '@suprsend/react-hooks';
+import { Dictionary } from '@suprsend/react-core';
 
 export function formatActionLink(link: string) {
   if (!link) return;

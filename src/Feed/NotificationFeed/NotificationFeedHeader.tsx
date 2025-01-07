@@ -5,7 +5,7 @@ import {
   useFeedClient,
   useFeedData,
   ApiResponse,
-} from '@suprsend/react-hooks';
+} from '@suprsend/react-core';
 import { CText, HeadingText, lightColors } from '../utils/styles';
 import { TabsThemeProps, IHeaderTheme } from '../interface';
 

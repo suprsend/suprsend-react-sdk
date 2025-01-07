@@ -1,2 +1,2 @@
-export * from '@suprsend/react-hooks';
+export * from '@suprsend/react-core';
 export * from './Feed';

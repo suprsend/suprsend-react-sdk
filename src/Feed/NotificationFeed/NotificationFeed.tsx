@@ -6,7 +6,7 @@ import {
   useFeedData,
   ApiResponseStatus,
   Dictionary,
-} from '@suprsend/react-hooks';
+} from '@suprsend/react-core';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import NotificationFeedHeader from './NotificationFeedHeader';
 import { NotificationCard } from '../NotificationCard';

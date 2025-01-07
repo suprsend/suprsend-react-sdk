@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Dictionary } from '@suprsend/react-hooks';
+import { Dictionary } from '@suprsend/react-core';
 import { AvatarIcon } from './Icons';
 import { BodyMarkdown } from './NotificationCard';
 import { CText, darkTheme, lightColors } from '../utils/styles';
