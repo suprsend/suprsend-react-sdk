@@ -64,7 +64,7 @@ From current version of SDK, toast notification is not longer included along wit
 import toast, { Toaster } from 'react-hot-toast';
 import { SuprSendFeedProvider, Inbox, useFeedClient } from '@suprsend/react';
 
-// if you use Inbox component show toast example
+// toast example for Inbox component
 function Example() {
   return (
     <Inbox>
@@ -138,21 +138,21 @@ interface NotificationFeedProps {
 }
 ```
 
-Infinite sroll is also included to fetch more pages in this component. Specifying height for the container is needed for infinite scroll to work properly.
+Infinite scroll is also included to fetch more pages in this component. Specifying height for the container is needed for infinite scroll to work properly.
 
-```typescript
-import { NotificationFeed } from '@suprsend/react';
-
+```javascript
 <NotificationFeed
   theme={{ notificationsContainer: { container: { height: '100vh' } } }}
-/>;
+/>
 ```
 
 ### NotificationCard
 
-This is single notification component item. It will be handy if you want to implement your own UI but want to use just notification card item.
+This is single notification card component. It will be handy if you want to implement your own UI but want to just use our notification card.
 
 ```javascript
+import { NotificationCard } from '@suprsend/react';
+
 <NotificationCard notificationData={data} />;
 
 // props for notification card
@@ -188,7 +188,7 @@ interface ToastNotificationProps {
 
 ### BodyMarkdown
 
-This component is a paragraph field with support for rendering markdown language. Use this in case where you want to implement your custom notification card but dont want to handle adding markdown support on paragraph field, as it could be time consuming.
+This component supports rendering markdown text in UI. Use this in case where you want to implement your custom notification card but dont want to handle adding markdown support, as it could be time consuming.
 
 ```javascript
 import { BodyMarkdown } from '@suprsend/react';
@@ -197,7 +197,7 @@ import { BodyMarkdown } from '@suprsend/react';
 
 interface BodyMarkdownProps {
   body: string;
-  handleActionClick?: HandleActionClick; // for links this callback will be executed on click
+  handleActionClick?: HandleActionClick; // for links, this callback will be executed on click
   style?: NotificationCardBodyTextThemeProps;
 }
 ```
