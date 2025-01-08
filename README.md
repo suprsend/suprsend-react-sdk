@@ -58,10 +58,11 @@ interface InboxProps {
 
 ### Adding Toast Notifications
 
-From current version of SDK, toast notification is not longer included along with Inbox component. To show toast notification when new notification is arrived you have to listen for `feed.new_notification` event and use your toast library like `react-toastify` to show the notification.
+From current version of SDK, toast notification is not longer included along with Inbox component. To show toast notification when new notification is arrived you have to listen for `feed.new_notification` event and use your toast library like `react-hot-toast` to show the notification.
 
 ```javascript
-import { SuprSendFeedProvider, Inbox } from '@suprsend/react';
+import toast, { Toaster } from 'react-hot-toast';
+import { SuprSendFeedProvider, Inbox, useFeedClient } from '@suprsend/react';
 
 // if you use Inbox component show toast example
 function Example() {
