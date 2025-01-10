@@ -21,6 +21,13 @@
     "dist",
     "README.md"
   ],
+  "keywords": [
+    "notifications",
+    "suprsend",
+    "react",
+    "inbox",
+    "preferences"
+  ],
   "scripts": {
     "clean": "rimraf dist",
     "dev": "yarn build:es --watch",
