@@ -16,13 +16,17 @@ yarn add @suprsend/react # for yarn
 
 ### Inbox Popover
 
-This components provides bell and inbox notifications popover. This is already wrapped in `SuprSendFeedProvider` components internally so you dont have to wrap this component inside `SuprSendFeedProvider` again.
+This components provides bell and inbox notifications popover. This is already wrapped in [SuprSendFeedProvider](https://github.com/suprsend/suprsend-react-core?tab=readme-ov-file#suprsendfeedprovider) component internally so you dont have to wrap again. This component needs to be child of [SuprSendProvider](https://github.com/suprsend/suprsend-react-core?tab=readme-ov-file#suprsendprovider) as it handles authentication of user.
 
 ```javascript
-import { Inbox } from '@suprsend/react';
+import { Inbox, SuprSendProvider } from '@suprsend/react';
 
 function Example() {
-  return <Inbox pageSize={20} />;
+  return (
+    <SuprSendProvider>
+      <Inbox pageSize={20} />
+    </SuprSendProvider>
+  );
 }
 
 // props for Inbox
@@ -56,64 +60,20 @@ interface InboxProps {
 }
 ```
 
-### Adding Toast Notifications
-
-From current version of SDK, toast notification is not longer included along with Inbox component. To show toast notification when new notification is arrived you have to listen for `feed.new_notification` event and use your toast library like `react-hot-toast` to show the notification.
-
-```javascript
-import toast, { Toaster } from 'react-hot-toast';
-import { SuprSendFeedProvider, Inbox, useFeedClient } from '@suprsend/react';
-
-// toast example for Inbox component
-function Example() {
-  return (
-    <Inbox>
-      <ToastNotification />
-    </Inbox>
-  );
-}
-
-// general setup to integrate toast
-function HeadlessExample() {
-  return (
-    <SuprSendFeedProvider>
-      <ToastNotification />
-    </SuprSendFeedProvider>
-  );
-}
-
-function ToastNotification() {
-  const feedClient = useFeedClient();
-
-  useEffect(() => {
-    if (!feedClient) return;
-
-    feedClient.emitter.on('feed.new_notification', (data) => {
-      toast.custom(<ToastNotificationCard notificationData={data} />); // show toast with new notification data
-      feedClient.markAsSeen(data.n_id); // marking seen
-    });
-
-    return () => {
-      feedClient.emitter.off('feed.new_notification');
-    };
-  }, [feedClient]);
-
-  return <Toaster />;
-}
-```
-
 ### Notifications Feed
 
-If you want to render notifications in separate screen or in side modal or in any other way instead of popover, you can use this component. For this to work you have to wrap this component inside SuprSendFeedProvider.
+If you want to render notifications in separate screen or in side modal or in any other way instead of popover, you can use this component. For this to work you have to wrap this component inside [SuprSendFeedProvider](https://github.com/suprsend/suprsend-react-core?tab=readme-ov-file#suprsendfeedprovider) and [SuprSendProvider](https://github.com/suprsend/suprsend-react-core?tab=readme-ov-file#suprsendprovider).
 
 ```javascript
 import { SuprSendFeedProvider, NotificationFeed } from '@suprsend/react';
 
 function Example() {
   return (
-    <SuprSendFeedProvider>
-      <NotificationFeed />
-    </SuprSendFeedProvider>
+    <SuprSendProvider>
+      <SuprSendFeedProvider>
+        <NotificationFeed />
+      </SuprSendFeedProvider>
+    </SuprSendProvider>
   );
 }
 
@@ -144,6 +104,56 @@ Infinite scroll is also included to fetch more pages in this component. Specifyi
 <NotificationFeed
   theme={{ notificationsContainer: { container: { height: '100vh' } } }}
 />
+```
+
+### Adding Toast Notifications
+
+From current version of SDK, toast notification is not longer included along with Inbox component. To show toast notification when new notification is arrived you have to listen for `feed.new_notification` event and use your toast library like `react-hot-toast` to show the notification.
+
+```javascript
+import toast, { Toaster } from 'react-hot-toast';
+import { SuprSendFeedProvider, Inbox, useFeedClient } from '@suprsend/react';
+
+// toast example for Inbox component
+function Example() {
+  return (
+    <SuprSendProvider>
+      <Inbox>
+        <ToastNotification />
+      </Inbox>
+    </SuprSendProvider>
+  );
+}
+
+// general setup to integrate toast
+function HeadlessExample() {
+  return (
+    <SuprSendProvider>
+      <SuprSendFeedProvider>
+        <ToastNotification />
+      </SuprSendFeedProvider>
+    </SuprSendProvider>
+  );
+}
+
+function ToastNotification() {
+  const feedClient = useFeedClient();
+
+  useEffect(() => {
+    if (!feedClient) return;
+
+    feedClient.emitter.on('feed.new_notification', (data) => {
+      toast.custom(<ToastNotificationCard notificationData={data} />); // show toast with new notification data
+      feedClient.markAsSeen(data.n_id); // marking seen
+    });
+
+    return () => {
+      feedClient.emitter.off('feed.new_notification');
+    };
+  }, [feedClient]);
+
+  return <Toaster />;
+}
 ```
 
 ### NotificationCard
