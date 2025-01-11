@@ -154,7 +154,7 @@ export interface ClickableNotificationProps {
   primaryActionClickHandler?: (notification: IRemoteNotification) => void;
   secondaryActionClickHandler?: (notification: IRemoteNotification) => void;
   theme?: INotificationCardTheme;
-  scrollRef: React.MutableRefObject<HTMLInputElement | undefined>;
+  scrollRef?: React.MutableRefObject<HTMLInputElement | undefined>;
   setUnseenNotifications?: Dispatch<SetStateAction<string[]>>;
   unseenNotifications?: string[];
   enableIntersectionObserver?: boolean;

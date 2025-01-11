@@ -32,7 +32,7 @@ function ClickableNotification({
   const feedClient = useFeedClient();
   const [ref, entry] = useIntersectionObserver({
     threshold: 1,
-    root: scrollRef.current,
+    root: scrollRef?.current,
     rootMargin: '0px',
     enable: enableIntersectionObserver,
   });
