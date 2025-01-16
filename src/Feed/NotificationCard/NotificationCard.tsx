@@ -4,7 +4,7 @@ import Markdown, { PluggableList } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import TimeAgo from 'react-timeago';
-import { useFeedClient } from '@suprsend/react-core';
+import { useFeedClient, useFeedData } from '@suprsend/react-core';
 import { Pluggable } from 'unified';
 import { CText, HelperText, lightColors } from '../utils/styles';
 import {
@@ -319,12 +319,18 @@ export default function Notification({
   const [moreOpen, setMoreOpen] = useState(false);
 
   const feedClient = useFeedClient();
+  const feedData = useFeedData();
 
   const { message, read_on, created_on } = notificationData;
 
+  const notificationsList = feedData?.notifications;
   const actionOne = message?.actions?.[0];
   const actionTwo = message?.actions?.[1];
   const hasButtons = actionOne || actionTwo;
+  const lastNotification = notificationsList?.length
+    ? notificationsList[notificationsList.length - 1]
+    : null;
+  const isLastNotification = lastNotification?.n_id === notificationData.n_id;
 
   useEffect(() => {
     const isValidAvatar = isImgUrl(message?.avatar?.avatar_url);
@@ -498,7 +504,11 @@ export default function Notification({
             >
               <MoreIcon style={theme?.actionsMenuIcon} />
             </CMenuButton>
-            <CMenuPopup moreOpen={moreOpen} style={theme?.actionsMenu}>
+            <CMenuPopup
+              moreOpen={moreOpen}
+              style={theme?.actionsMenu}
+              isLastNotification={isLastNotification}
+            >
               {notificationData.read_on ? (
                 <CMenuItem
                   style={theme?.actionsMenuItem}
@@ -712,9 +722,13 @@ const AvatarImage = styled.img`
   border-radius: 100px;
 `;
 
-const CMenuPopup = styled.div<{ moreOpen: boolean }>`
+const CMenuPopup = styled.div<{
+  moreOpen: boolean;
+  isLastNotification: boolean;
+}>`
   position: absolute;
-  right: 0px;
+  right: ${(props) => (props.isLastNotification ? '25px' : '0px')};
+  bottom: ${(props) => (props.isLastNotification ? '-12.5px' : 'auto')};
   display: ${(props) => (props.moreOpen ? 'block' : 'none')};
   min-width: 150px;
   padding: 2px;
