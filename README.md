@@ -1,6 +1,6 @@
 # SuprSend React SDK
 
-This library provides drop-in components to intergrate SuprSend features like InApp feed, Preferences etc in react applications. This library is built on top of [@suprsend/react-hooks](https://github.com/suprsend/suprsend-react-core). If you want to build UI from scratch, use [@suprsend/react-core](https://github.com/suprsend/suprsend-react-core).
+This library provides drop-in components to intergrate SuprSend features like InApp feed, Preferences etc in react applications. This library is built on top of [@suprsend/react-core](https://github.com/suprsend/suprsend-react-core). If you want to build UI from scratch, use [@suprsend/react-core](https://github.com/suprsend/suprsend-react-core).
 
 - Refer type definitions for this library [here](https://github.com/suprsend/suprsend-react-sdk/blob/main/src/Feed/interface.ts).
 
