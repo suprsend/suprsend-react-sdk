@@ -179,7 +179,7 @@ export default function NotificationFeed(config: NotificationFeedProps) {
   );
 }
 
-const PopOverConatiner = styled.div`
+const PopOverConatiner = styled.div<{ style?: React.CSSProperties }>`
   height: 500px;
   width: 450px;
   margin: 0px 15px;
@@ -187,18 +187,48 @@ const PopOverConatiner = styled.div`
   background-color: ${lightColors.main};
   border: 1px solid ${lightColors.border};
   display: inline-block;
-  overflow: scroll;
+  overflow: auto;
   box-shadow: 0 0px 7px 0 rgba(0, 0, 0, 0.1);
   @media (max-width: 425px) {
     width: 99.5vw;
     margin: 0px;
     border-radius: 0px;
   }
+  scrollbar-color: ${(props) =>
+    'rgba(120, 120, 120, 0.6) ' +
+    (props?.style?.backgroundColor || lightColors.main)};
+  scrollbar-width: thin;
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(120, 120, 120, 0.6);
+    border-radius: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: ${(props) =>
+      props?.style?.backgroundColor || lightColors.main};
+  }
 `;
 
 const Container = styled.div`
-  overflow: scroll;
+  overflow: auto;
   background-color: ${lightColors.main};
+  scrollbar-color: ${(props) =>
+    'rgba(120, 120, 120, 0.6) ' +
+    (props?.style?.backgroundColor || lightColors.main)};
+  scrollbar-width: thin;
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(120, 120, 120, 0.6);
+    border-radius: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: ${(props) =>
+      props?.style?.backgroundColor || lightColors.main};
+  }
 `;
 
 const EmptyNotificationsContainer = styled.div`
