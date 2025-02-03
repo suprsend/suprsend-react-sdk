@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import styled from '@emotion/styled';
 import Markdown, { PluggableList } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -11,6 +11,7 @@ import {
   isImgUrl,
   getLongFormattedTime,
   getShortFormattedTime,
+  isMobile,
 } from '../utils';
 import {
   ArchiveIcon,
@@ -337,6 +338,8 @@ export default function Notification({
     isValidAvatar.then((res) => setValidAvatar(res));
   }, [notificationData]);
 
+  const isPlatformMobile = useMemo(isMobile, []);
+
   if (notificationComponent) {
     const NotificationComponent = notificationComponent;
     return (
@@ -494,9 +497,10 @@ export default function Notification({
               formatter={getShortFormattedTime}
             />
           </CreatedText>
-          <CMenuView showMore={showMore}>
+          <CMenuView showMore={showMore || isPlatformMobile}>
             <CMenuButton
               hoverBGColor={theme?.actionsMenuIcon?.hoverBackgroundColor}
+              isPlatformMobile={isPlatformMobile}
               onClick={(e) => {
                 e.stopPropagation();
                 setMoreOpen((prev) => !prev);
@@ -759,12 +763,17 @@ const CMenuView = styled.div<{ showMore?: boolean }>`
   visibility: ${(props) => (props?.showMore ? 'visible' : 'hidden')};
 `;
 
-const CMenuButton = styled.div<{ hoverBGColor?: string }>`
+const CMenuButton = styled.div<{
+  hoverBGColor?: string;
+  isPlatformMobile?: boolean;
+}>`
   height: 20px;
   width: 20px;
   &:hover {
     border-radius: 50%;
     background-color: ${(props) =>
-      props?.hoverBGColor || 'rgba(100, 116, 139, 0.09)'};
+      props?.isPlatformMobile
+        ? 'none'
+        : props?.hoverBGColor || 'rgba(100, 116, 139, 0.09)'};
   }
 `;

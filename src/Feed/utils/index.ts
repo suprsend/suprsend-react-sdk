@@ -85,3 +85,11 @@ export function mergeDeep(target?: Dictionary, source?: Dictionary) {
   }
   return output;
 }
+
+function hasTouchSupport() {
+  return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+}
+
+export function isMobile() {
+  return hasTouchSupport();
+}
