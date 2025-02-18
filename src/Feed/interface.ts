@@ -1,6 +1,6 @@
 import {
   IRemoteNotification,
-  SuprSendFeedProviderProps,
+  IFeedOptions,
   ApiResponse,
 } from '@suprsend/react-core';
 import { Placement } from '@popperjs/core';
@@ -235,6 +235,6 @@ export interface InboxPopoverProps extends NotificationFeedProps {
   theme?: ITheme;
 }
 
-export interface InboxProps
-  extends SuprSendFeedProviderProps,
-    InboxPopoverProps {}
+export interface InboxProps extends IFeedOptions, InboxPopoverProps {
+  children?: React.ReactNode;
+}
