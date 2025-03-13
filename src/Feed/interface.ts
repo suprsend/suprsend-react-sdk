@@ -85,6 +85,7 @@ export interface ToastNotificationProps {
   hideAvatar?: boolean;
   themeType?: ThemeType;
   theme?: ToastNotificationCardTheme;
+  disableMarkdown?: boolean;
 }
 
 interface ToastNotificationCardTheme {
@@ -104,12 +105,14 @@ export interface NotificationCardProps {
   primaryActionClickHandler?: (notificationData: IRemoteNotification) => void;
   secondaryActionClickHandler?: (notificationData: IRemoteNotification) => void;
   theme?: INotificationCardTheme;
+  disableMarkdown?: boolean;
 }
 
 export interface BodyMarkdownProps {
   body: string;
   handleActionClick?: HandleActionClick;
   style?: NotificationCardBodyTextThemeProps;
+  disableMarkdown?: boolean;
 }
 
 export interface NotificationCardActionButtonViewThemeProps
@@ -158,6 +161,7 @@ export interface ClickableNotificationProps {
   setUnseenNotifications?: Dispatch<SetStateAction<string[]>>;
   unseenNotifications?: string[];
   enableIntersectionObserver?: boolean;
+  disableMarkdown?: boolean;
 }
 
 export interface NotificationFeedProps {
@@ -179,6 +183,7 @@ export interface NotificationFeedProps {
   theme?: INotificationFeedTheme;
   popover?: boolean;
   setPopoverOpen?: Dispatch<SetStateAction<boolean>>;
+  disableMarkdown?: boolean;
 }
 
 export interface INotificationsContainerTheme {
