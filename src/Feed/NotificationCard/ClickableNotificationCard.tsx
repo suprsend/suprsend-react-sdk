@@ -28,6 +28,7 @@ function ClickableNotification({
   setUnseenNotifications,
   unseenNotifications,
   enableIntersectionObserver,
+  disableMarkdown,
 }: ClickableNotificationProps) {
   const feedClient = useFeedClient();
   const [ref, entry] = useIntersectionObserver({
@@ -105,6 +106,7 @@ function ClickableNotification({
         primaryActionClickHandler={primaryActionClickHandler}
         secondaryActionClickHandler={secondaryActionClickHandler}
         theme={modifiedTheme}
+        disableMarkdown={disableMarkdown}
       />
     </div>
   );
