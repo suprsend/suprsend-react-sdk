@@ -170,6 +170,7 @@ export default function NotificationFeed(config: NotificationFeedProps) {
                 setUnseenNotifications={setUnseenNotifications}
                 unseenNotifications={unseenNotifications}
                 enableIntersectionObserver={true}
+                disableMarkdown={config.disableMarkdown}
               />
             ))}
           </InfiniteScroll>

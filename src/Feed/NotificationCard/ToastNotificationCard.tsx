@@ -15,6 +15,7 @@ export default function ToastNotificationCard({
   hideAvatar,
   themeType,
   theme,
+  disableMarkdown,
 }: ToastNotificationProps) {
   const message = notificationData.message;
 
@@ -52,6 +53,7 @@ export default function ToastNotificationCard({
         <BodyMarkdown
           body={notificationData?.message?.text || ''}
           style={modifiedTheme?.bodyText}
+          disableMarkdown={disableMarkdown}
         />
       </ContentView>
     </Container>
