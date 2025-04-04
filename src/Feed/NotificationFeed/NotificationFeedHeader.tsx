@@ -5,6 +5,7 @@ import {
   useFeedClient,
   useFeedData,
   ApiResponse,
+  useTranslations,
 } from '@suprsend/react-core';
 import { CText, HeadingText, lightColors } from '../utils/styles';
 import { TabsThemeProps, IHeaderTheme } from '../interface';
@@ -18,6 +19,7 @@ function InternalHeaderRightComponent({
   header,
   markAllRead,
 }: InternalHeaderRightComponentProps) {
+  const { t } = useTranslations();
   return (
     <AllReadButton
       style={header?.markAllReadText}
@@ -26,7 +28,7 @@ function InternalHeaderRightComponent({
         markAllRead();
       }}
     >
-      Mark all as read
+      {t('markAllAsRead')}
     </AllReadButton>
   );
 }
@@ -58,6 +60,7 @@ export default function Header({
 }: IHeaderProps) {
   const feedClient = useFeedClient();
   const feedData = useFeedData();
+  const { t } = useTranslations();
 
   const stores = feedClient?.feedOptions.stores;
   const hasStores = !!(stores && stores.length > 0);
@@ -69,7 +72,7 @@ export default function Header({
   return (
     <Container style={header?.container}>
       <TopContainer hasStores={hasStores}>
-        <HeaderText style={header?.headerText}>Notifications</HeaderText>
+        <HeaderText style={header?.headerText}>{t('notifications')}</HeaderText>
         {HeaderRightComponent ? (
           <HeaderRightComponent
             markAllRead={() => feedClient?.markAllAsRead()}

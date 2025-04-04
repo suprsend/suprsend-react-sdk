@@ -4,7 +4,11 @@ import Markdown, { PluggableList } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import TimeAgo from 'react-timeago';
-import { useFeedClient, useFeedData } from '@suprsend/react-core';
+import {
+  useFeedClient,
+  useFeedData,
+  useTranslations,
+} from '@suprsend/react-core';
 import { Pluggable } from 'unified';
 import { CText, HelperText, lightColors } from '../utils/styles';
 import {
@@ -29,6 +33,7 @@ import {
 
 function ExpiryTime({ dateInput, style }: ExpiryTimerProps) {
   const [, setTime] = useState(Date.now());
+  const { t } = useTranslations();
 
   useEffect(() => {
     const interval = setInterval(() => setTime(Date.now()), 10000);
@@ -55,7 +60,7 @@ function ExpiryTime({ dateInput, style }: ExpiryTimerProps) {
             : style?.backgroundColor || 'rgba(100, 116, 139, 0.09)',
         }}
       >
-        Expires in{' '}
+        {t('expiresIn')}{' '}
         {expiredAlready ? (
           'a minute'
         ) : (
@@ -327,6 +332,7 @@ export default function Notification({
 
   const feedClient = useFeedClient();
   const feedData = useFeedData();
+  const { t } = useTranslations();
 
   const { message, read_on, created_on } = notificationData;
 
@@ -394,7 +400,7 @@ export default function Notification({
         <PinnedView hideAvatar={hideAvatar}>
           <PinnedNotificationIcon style={theme?.pinnedIcon} />
           <PinnedNotificationText style={theme?.pinnedText}>
-            Pinned
+            {t('pinned')}
           </PinnedNotificationText>
         </PinnedView>
       )}
@@ -531,7 +537,7 @@ export default function Notification({
                 >
                   <UnReadIcon style={theme?.actionsMenuItemIcon} />
                   <CMenuText style={theme?.actionsMenuItemText}>
-                    Mark as unread
+                    {t('markAsUnread')}
                   </CMenuText>
                 </CMenuItem>
               ) : (
@@ -545,7 +551,7 @@ export default function Notification({
                 >
                   <ReadIcon style={theme?.actionsMenuItemIcon} />
                   <CMenuText style={theme?.actionsMenuItemText}>
-                    Mark as read
+                    {t('markAsRead')}
                   </CMenuText>
                 </CMenuItem>
               )}
@@ -559,7 +565,7 @@ export default function Notification({
                 >
                   <ArchiveIcon style={theme?.actionsMenuItemIcon} />
                   <CMenuText style={theme?.actionsMenuItemText}>
-                    Archive
+                    {t('archive')}
                   </CMenuText>
                 </CMenuItem>
               )}
