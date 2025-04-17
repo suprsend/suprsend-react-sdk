@@ -1,4 +1,4 @@
-import { Dictionary } from '@suprsend/react-core';
+import { Dictionary, ITranslations } from '@suprsend/react-core';
 
 export function formatActionLink(link: string) {
   if (!link) return;
@@ -19,22 +19,28 @@ export async function isImgUrl(url?: string): Promise<boolean> {
   });
 }
 
-export function getLongFormattedTime(value: number, unit: string) {
+export function getLongFormattedTime(
+  value: number,
+  unit: string,
+  t: (key: keyof ITranslations) => string
+) {
   switch (unit) {
     case 'second':
-      return 'a minute';
+      return `1 ${t('minute')}`;
     case 'minute':
-      return value === 1 ? `${value} minute` : `${value} minutes`;
+      return value === 1
+        ? `${value} ${t('minute')}`
+        : `${value} ${t('minutes')}`;
     case 'hour':
-      return value === 1 ? `${value} hour` : `${value} hours`;
+      return value === 1 ? `${value} ${t('hour')}` : `${value} ${t('hours')}`;
     case 'day':
-      return value === 1 ? `${value} day` : `${value} days`;
+      return value === 1 ? `${value} ${t('day')}` : `${value} ${t('days')}`;
     case 'week':
-      return value === 1 ? `${value} week` : `${value} weeks`;
+      return value === 1 ? `${value} ${t('week')}` : `${value} ${t('weeks')}`;
     case 'month':
-      return value === 1 ? `${value} month` : `${value} months`;
+      return value === 1 ? `${value} ${t('month')}` : `${value} ${t('months')}`;
     case 'year':
-      return value === 1 ? `${value} year` : `${value} years`;
+      return value === 1 ? `${value} ${t('year')}` : `${value} ${t('years')}`;
     default:
       return value;
   }

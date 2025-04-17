@@ -67,7 +67,7 @@ function ExpiryTime({ dateInput, style }: ExpiryTimerProps) {
           <TimeAgo
             date={dateInput}
             live={false}
-            formatter={getLongFormattedTime}
+            formatter={(value, unit) => getLongFormattedTime(value, unit, t)}
           />
         )}
       </ExpiresText>
