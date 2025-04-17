@@ -735,10 +735,10 @@
   resolved "https://registry.yarnpkg.com/@socket.io/component-emitter/-/component-emitter-3.1.2.tgz#821f8442f4175d8f0467b9daf26e3a18e2d02af2"
   integrity sha512-9BCxFwvbGg/RsZK9tjXd8s4UcwR0MWeFQ1XEKIQVVvAGJyINdrqKMcTRyLoK8Rse1GjzLV9cwjWV1olXRWEXVA==
 
-"@suprsend/react-core@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@suprsend/react-core/-/react-core-0.1.0.tgz#f32cf359d4c4422e2eaed95b3513f9c6391aed1c"
-  integrity sha512-aAqnmayYr2X4CrHeNJsUhoU3qagZdHTEfmcZEpjPpz9vj6WGOcgSv20rpJCDfuyvcQEswP7E7GawmlL9/9H1+A==
+"@suprsend/react-core@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@suprsend/react-core/-/react-core-0.1.1.tgz#72a823b28a55672db466612bc6d98a4958d58624"
+  integrity sha512-1N1WeqL/prjc2RsBZTSrEigDjOq/dEyZjaDNTN4gNEGqiPQHYo20crUhwMv22JA6YVR2nGahRYpPrkSXG4ilHQ==
   dependencies:
     "@suprsend/web-sdk" "^3.0.1"
 
