@@ -6,6 +6,7 @@ import {
   useFeedData,
   ApiResponseStatus,
   Dictionary,
+  useTranslations,
 } from '@suprsend/react-core';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import NotificationFeedHeader from './NotificationFeedHeader';
@@ -44,6 +45,8 @@ function EmptyFeed({
   noNotificationsComponent,
   notificationsContainer,
 }: EmptyFeedProps) {
+  const { t } = useTranslations();
+
   if (noNotificationsComponent) {
     const NoNotificationsComponent = noNotificationsComponent;
     return <NoNotificationsComponent />;
@@ -52,10 +55,10 @@ function EmptyFeed({
   return (
     <EmptyNotificationsContainer>
       <EmptyText style={notificationsContainer?.noNotificationsText}>
-        No notifications yet
+        {t('noNotificationsTitle')}
       </EmptyText>
       <EmptySubText style={notificationsContainer?.noNotificationsSubtext}>
-        We'll let you know when we've got something new for you.
+        {t('noNotificationsDescription')}
       </EmptySubText>
     </EmptyNotificationsContainer>
   );

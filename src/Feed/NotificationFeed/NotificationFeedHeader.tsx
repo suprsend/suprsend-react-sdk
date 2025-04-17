@@ -5,6 +5,8 @@ import {
   useFeedClient,
   useFeedData,
   ApiResponse,
+  useTranslations,
+  useFeed,
 } from '@suprsend/react-core';
 import { CText, HeadingText, lightColors } from '../utils/styles';
 import { TabsThemeProps, IHeaderTheme } from '../interface';
@@ -18,6 +20,7 @@ function InternalHeaderRightComponent({
   header,
   markAllRead,
 }: InternalHeaderRightComponentProps) {
+  const { t } = useTranslations();
   return (
     <AllReadButton
       style={header?.markAllReadText}
@@ -26,7 +29,7 @@ function InternalHeaderRightComponent({
         markAllRead();
       }}
     >
-      Mark all as read
+      {t('markAllAsRead')}
     </AllReadButton>
   );
 }
@@ -58,6 +61,8 @@ export default function Header({
 }: IHeaderProps) {
   const feedClient = useFeedClient();
   const feedData = useFeedData();
+  const feed = useFeed();
+  const { t } = useTranslations();
 
   const stores = feedClient?.feedOptions.stores;
   const hasStores = !!(stores && stores.length > 0);
@@ -69,7 +74,7 @@ export default function Header({
   return (
     <Container style={header?.container}>
       <TopContainer hasStores={hasStores}>
-        <HeaderText style={header?.headerText}>Notifications</HeaderText>
+        <HeaderText style={header?.headerText}>{t('notifications')}</HeaderText>
         {HeaderRightComponent ? (
           <HeaderRightComponent
             markAllRead={() => feedClient?.markAllAsRead()}
@@ -96,6 +101,10 @@ export default function Header({
             const textColor = isActiveTab
               ? tabs?.color
               : tabs?.unselectedColor || tabs?.color;
+            const label =
+              feed?.stores?.find(
+                (storeItem) => storeItem.storeId === store.storeId
+              )?.label || store.label;
 
             return (
               <TabContainer
@@ -113,7 +122,7 @@ export default function Header({
                     color: textColor,
                   }}
                 >
-                  {store.label}
+                  {label}
                 </TabText>
                 {showBadge &&
                   (TabBadgeComponent ? (
