@@ -103,7 +103,8 @@ export default function NotificationFeed(config: NotificationFeedProps) {
       container?.scrollHeight &&
       container?.clientHeight &&
       container?.scrollHeight <= container?.clientHeight &&
-      hasMore
+      hasMore &&
+      pagination
     ) {
       feedClient?.fetchNextPage();
     }
