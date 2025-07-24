@@ -184,6 +184,7 @@ export interface NotificationFeedProps {
   popover?: boolean;
   setPopoverOpen?: Dispatch<SetStateAction<boolean>>;
   disableMarkdown?: boolean;
+  shadowRoot?: ShadowRoot;
 }
 
 export interface INotificationsContainerTheme {
