@@ -91,9 +91,24 @@ export default function NotificationFeed(config: NotificationFeedProps) {
       : config.theme || {};
 
   const notificationsContainerStyle = modifiedTheme?.notificationsContainer;
-  const pagination = config.pagination ? config.pagination : true;
+  const pagination = config.pagination !== false;
   const CustomLoader = config?.loaderComponent;
   const ContainerDiv = config?.popover ? PopOverConatiner : Container;
+
+  useEffect(() => {
+    const container = document.getElementById('ss-notification-container');
+    const hasMore = feedData?.pageInfo?.hasMore;
+
+    if (
+      container?.scrollHeight &&
+      container?.clientHeight &&
+      container?.scrollHeight <= container?.clientHeight &&
+      hasMore &&
+      pagination
+    ) {
+      feedClient?.fetchNextPage();
+    }
+  }, [feedData]);
 
   if (!feedData) {
     return (
@@ -146,10 +161,7 @@ export default function NotificationFeed(config: NotificationFeedProps) {
             scrollableTarget="ss-notification-container"
             dataLength={feedData?.notifications.length}
             next={() => feedClient?.fetchNextPage()}
-            hasMore={
-              pagination &&
-              feedData?.pageInfo.currentPage < feedData?.pageInfo.totalPages
-            }
+            hasMore={pagination && feedData?.pageInfo.hasMore}
             loader={
               CustomLoader ? (
                 <CustomLoader />
