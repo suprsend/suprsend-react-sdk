@@ -8,7 +8,7 @@ import {
   Dictionary,
   useTranslations,
 } from '@suprsend/react-core';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from '../utils/InfiniteScroll';
 import NotificationFeedHeader from './NotificationFeedHeader';
 import { NotificationCard } from '../NotificationCard';
 import {
@@ -96,7 +96,8 @@ export default function NotificationFeed(config: NotificationFeedProps) {
   const ContainerDiv = config?.popover ? PopOverConatiner : Container;
 
   useEffect(() => {
-    const container = document.getElementById('ss-notification-container');
+    const mainElement = config.shadowRoot || document;
+    const container = mainElement.getElementById('ss-notification-container');
     const hasMore = feedData?.pageInfo?.hasMore;
 
     if (
@@ -158,8 +159,6 @@ export default function NotificationFeed(config: NotificationFeedProps) {
       {feedData?.notifications.length > 0 && (
         <ScrollDiv>
           <InfiniteScroll
-            scrollableTarget="ss-notification-container"
-            dataLength={feedData?.notifications.length}
             next={() => feedClient?.fetchNextPage()}
             hasMore={pagination && feedData?.pageInfo.hasMore}
             loader={
@@ -169,6 +168,7 @@ export default function NotificationFeed(config: NotificationFeedProps) {
                 <Loader style={notificationsContainerStyle?.loader} />
               )
             }
+            mainElement={config.shadowRoot || document}
           >
             {feedData.notifications.map((notification) => (
               <NotificationCard
