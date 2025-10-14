@@ -10,7 +10,7 @@ export default function Badge({ count, badgeComponent, style }: BadgeProps) {
     return <BagdeComponent count={count} />;
   }
   return (
-    <CountText className="ss-badge-text" style={style}>
+    <CountText className="ss-feed-badge-text" style={style}>
       {count}
     </CountText>
   );

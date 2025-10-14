@@ -24,7 +24,7 @@ function InternalHeaderRightComponent({
   return (
     <AllReadButton
       style={header?.markAllReadText}
-      className="ss-mark-all-read-button"
+      className="ss-feed-mark-all-read-button"
       onClick={(e) => {
         e.stopPropagation();
         markAllRead();
@@ -93,7 +93,7 @@ export default function Header({
         )}
       </TopContainer>
       {hasStores && (
-        <TabsContainer className="ss-tabs-container">
+        <TabsContainer className="ss-feed-tabs-container">
           {stores.map((store: IStore, index: number) => {
             const isActiveTab = feedData?.store.storeId === store.storeId;
             const tabUnreadCount = feedData?.meta[store.storeId] || 0;
@@ -111,7 +111,7 @@ export default function Header({
 
             return (
               <TabContainer
-                className="ss-tab"
+                className="ss-feed-tab"
                 style={{ borderBottomColor: selectedTabBottomColor }}
                 key={index}
                 selected={isActiveTab}
@@ -125,7 +125,7 @@ export default function Header({
                     ...tabs,
                     color: textColor,
                   }}
-                  className="ss-tab-text"
+                  className="ss-feed-tab-text"
                 >
                   {label}
                 </TabText>
@@ -134,14 +134,14 @@ export default function Header({
                     <TabBadgeComponent count={tabUnreadCount} />
                   ) : (
                     <TabBadge
-                      className="ss-tab-badge"
+                      className="ss-feed-tab-badge"
                       style={{
                         backgroundColor: tabs?.badgeColor,
                         color: tabs?.badgeText,
                       }}
                     >
                       <TabBadgeText
-                        className="ss-tab-badge-text"
+                        className="ss-feed-tab-badge-text"
                         count={tabUnreadCount}
                       >
                         {tabUnreadCount}
