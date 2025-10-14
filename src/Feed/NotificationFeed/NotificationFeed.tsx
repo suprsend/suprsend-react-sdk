@@ -53,11 +53,17 @@ function EmptyFeed({
   }
 
   return (
-    <EmptyNotificationsContainer>
-      <EmptyText style={notificationsContainer?.noNotificationsText}>
+    <EmptyNotificationsContainer className="ss-empty-feed-container">
+      <EmptyText
+        className="ss-empty-feed-text"
+        style={notificationsContainer?.noNotificationsText}
+      >
         {t('noNotificationsTitle')}
       </EmptyText>
-      <EmptySubText style={notificationsContainer?.noNotificationsSubtext}>
+      <EmptySubText
+        className="ss-empty-feed-subtext"
+        style={notificationsContainer?.noNotificationsSubtext}
+      >
         {t('noNotificationsDescription')}
       </EmptySubText>
     </EmptyNotificationsContainer>

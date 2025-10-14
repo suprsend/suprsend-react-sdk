@@ -50,6 +50,7 @@ function ExpiryTime({ dateInput, style }: ExpiryTimerProps) {
   return (
     <div>
       <ExpiresText
+        className="ss-notification-expires-text"
         style={{
           ...style,
           color: isExpiring
@@ -87,7 +88,7 @@ export function BodyMarkdown({
   const linkColor = style?.linkColor || lightColors.primary;
 
   return (
-    <BodyText style={style}>
+    <BodyText className="ss-notification-body-text" style={style}>
       {disableMarkdown ? (
         body
       ) : (
@@ -379,6 +380,7 @@ export default function Notification({
 
   return (
     <Container
+      className="ss-notification"
       style={theme?.container}
       read={!!read_on}
       onMouseEnter={() => {
@@ -397,9 +399,12 @@ export default function Notification({
       }}
     >
       {notificationData.is_pinned && (
-        <PinnedView hideAvatar={hideAvatar}>
+        <PinnedView hideAvatar={hideAvatar} className="ss-notification-pinned">
           <PinnedNotificationIcon style={theme?.pinnedIcon} />
-          <PinnedNotificationText style={theme?.pinnedText}>
+          <PinnedNotificationText
+            style={theme?.pinnedText}
+            className="ss-notification-pinned-text"
+          >
             {t('pinned')}
           </PinnedNotificationText>
         </PinnedView>
@@ -407,9 +412,14 @@ export default function Notification({
       <NotificationView>
         <LeftView>
           <LeftAvatarView>
-            <UnseenDot style={theme?.unseenDot} show={!read_on} />
+            <UnseenDot
+              style={theme?.unseenDot}
+              show={!read_on}
+              className="ss-notification-unseen-dot"
+            />
             {!hideAvatar && (
               <AvatarView
+                className="ss-notification-avatar"
                 onClick={(e) => {
                   const avatarData = message?.avatar;
                   handleActionClick(e, {
@@ -432,7 +442,10 @@ export default function Notification({
           </LeftAvatarView>
           <ContentView>
             {message.header && (
-              <HeaderText style={theme?.headerText}>
+              <HeaderText
+                style={theme?.headerText}
+                className="ss-notification-header-text"
+              >
                 {message.header}
               </HeaderText>
             )}
@@ -453,7 +466,12 @@ export default function Notification({
                   });
                 }}
               >
-                <SubText style={theme?.subtext}>{message.subtext.text}</SubText>
+                <SubText
+                  style={theme?.subtext}
+                  className="ss-notification-subtext"
+                >
+                  {message.subtext.text}
+                </SubText>
               </SubTextView>
             )}
             {notificationData.expiry && notificationData?.is_expiry_visible && (
@@ -463,9 +481,10 @@ export default function Notification({
               />
             )}
             {hasButtons && (
-              <ButtonContainer>
+              <ButtonContainer className="ss-notification-buttons-container">
                 {actionOne && (
                   <ButtonView
+                    className="ss-notification-primary-action-button-view"
                     style={theme?.actions?.[0]?.container}
                     onClick={(e) => {
                       handleActionClick(e, {
@@ -476,13 +495,17 @@ export default function Notification({
                       });
                     }}
                   >
-                    <ButtonText style={theme?.actions?.[0]?.text}>
+                    <ButtonText
+                      style={theme?.actions?.[0]?.text}
+                      className="ss-notification-primary-action-button-text"
+                    >
                       {actionOne.name}
                     </ButtonText>
                   </ButtonView>
                 )}
                 {actionTwo && (
                   <ButtonOutlineView
+                    className="ss-notification-secondary-action-button-view"
                     style={theme?.actions?.[1]?.container}
                     onClick={(e) => {
                       handleActionClick(e, {
@@ -493,7 +516,10 @@ export default function Notification({
                       });
                     }}
                   >
-                    <ButtonOutlineText style={theme?.actions?.[1]?.text}>
+                    <ButtonOutlineText
+                      style={theme?.actions?.[1]?.text}
+                      className="ss-notification-secondary-action-button-text"
+                    >
                       {actionTwo.name}
                     </ButtonOutlineText>
                   </ButtonOutlineView>
@@ -503,14 +529,20 @@ export default function Notification({
           </ContentView>
         </LeftView>
         <RightView>
-          <CreatedText style={theme?.createdOnText}>
+          <CreatedText
+            style={theme?.createdOnText}
+            className="ss-notification-created-on-text"
+          >
             <TimeAgo
               date={created_on}
               live={false}
               formatter={getShortFormattedTime}
             />
           </CreatedText>
-          <CMenuView showMore={showMore || isPlatformMobile}>
+          <CMenuView
+            showMore={showMore || isPlatformMobile}
+            className="ss-notification-menu"
+          >
             <CMenuButton
               hoverBGColor={theme?.actionsMenuIcon?.hoverBackgroundColor}
               isPlatformMobile={isPlatformMobile}
@@ -518,6 +550,7 @@ export default function Notification({
                 e.stopPropagation();
                 setMoreOpen((prev) => !prev);
               }}
+              className="ss-notification-menu-button"
             >
               <MoreIcon style={theme?.actionsMenuIcon} />
             </CMenuButton>
@@ -525,6 +558,7 @@ export default function Notification({
               moreOpen={moreOpen}
               style={theme?.actionsMenu}
               isLastNotification={isLastNotification}
+              className="ss-notification-menu-popup"
             >
               {notificationData.read_on ? (
                 <CMenuItem
@@ -534,9 +568,13 @@ export default function Notification({
                     setMoreOpen(false);
                     return feedClient?.markAsUnread(notificationData.n_id);
                   }}
+                  className="ss-notification-menu-popup-item"
                 >
                   <UnReadIcon style={theme?.actionsMenuItemIcon} />
-                  <CMenuText style={theme?.actionsMenuItemText}>
+                  <CMenuText
+                    style={theme?.actionsMenuItemText}
+                    className="ss-notification-menu-popup-item-text"
+                  >
                     {t('markAsUnread')}
                   </CMenuText>
                 </CMenuItem>
@@ -548,9 +586,13 @@ export default function Notification({
                     setMoreOpen(false);
                     return feedClient?.markAsRead(notificationData.n_id);
                   }}
+                  className="ss-notification-menu-popup-item"
                 >
                   <ReadIcon style={theme?.actionsMenuItemIcon} />
-                  <CMenuText style={theme?.actionsMenuItemText}>
+                  <CMenuText
+                    style={theme?.actionsMenuItemText}
+                    className="ss-notification-menu-popup-item-text"
+                  >
                     {t('markAsRead')}
                   </CMenuText>
                 </CMenuItem>
@@ -562,9 +604,13 @@ export default function Notification({
                     e.stopPropagation();
                     return feedClient?.markAsArchived(notificationData.n_id);
                   }}
+                  className="ss-notification-menu-popup-item"
                 >
                   <ArchiveIcon style={theme?.actionsMenuItemIcon} />
-                  <CMenuText style={theme?.actionsMenuItemText}>
+                  <CMenuText
+                    style={theme?.actionsMenuItemText}
+                    className="ss-notification-menu-popup-item-text"
+                  >
                     {t('archive')}
                   </CMenuText>
                 </CMenuItem>
