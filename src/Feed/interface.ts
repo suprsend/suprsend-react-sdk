@@ -113,6 +113,7 @@ export interface BodyMarkdownProps {
   handleActionClick?: HandleActionClick;
   style?: NotificationCardBodyTextThemeProps;
   disableMarkdown?: boolean;
+  toast?: boolean;
 }
 
 export interface NotificationCardActionButtonViewThemeProps

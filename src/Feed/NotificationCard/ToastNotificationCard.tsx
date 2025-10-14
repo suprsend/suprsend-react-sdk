@@ -28,10 +28,13 @@ export default function ToastNotificationCard({
       : theme || {};
 
   return (
-    <Container style={modifiedTheme?.container}>
+    <Container
+      style={modifiedTheme?.container}
+      className="ss-toast-notification"
+    >
       <LeftAvatarView>
         {!hideAvatar && (
-          <AvatarView>
+          <AvatarView className="ss-toast-notification-avatar">
             {message?.avatar?.avatar_url ? (
               <AvatarImage
                 src={message.avatar.avatar_url}
@@ -46,7 +49,10 @@ export default function ToastNotificationCard({
       </LeftAvatarView>
       <ContentView>
         {message.header && (
-          <HeaderText style={modifiedTheme?.headerText}>
+          <HeaderText
+            style={modifiedTheme?.headerText}
+            className="ss-toast-notification-header-text"
+          >
             {message.header}
           </HeaderText>
         )}
@@ -54,6 +60,7 @@ export default function ToastNotificationCard({
           body={notificationData?.message?.text || ''}
           style={modifiedTheme?.bodyText}
           disableMarkdown={disableMarkdown}
+          toast={true}
         />
       </ContentView>
     </Container>

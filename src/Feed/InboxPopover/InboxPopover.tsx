@@ -53,8 +53,12 @@ export default function InboxPopover({
       : theme || {};
 
   return (
-    <Container>
-      <BellContainer onClick={handleBellClick} ref={setReferenceElement}>
+    <Container className="ss-feed-container">
+      <BellContainer
+        onClick={handleBellClick}
+        ref={setReferenceElement}
+        className="ss-feed-bell-container"
+      >
         <Badge
           count={notificationData?.meta?.badge || 0}
           badgeComponent={badgeComponent}

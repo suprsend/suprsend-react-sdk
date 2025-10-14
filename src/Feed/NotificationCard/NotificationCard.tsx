@@ -50,6 +50,7 @@ function ExpiryTime({ dateInput, style }: ExpiryTimerProps) {
   return (
     <div>
       <ExpiresText
+        className="ss-feed-notification-expires-text"
         style={{
           ...style,
           color: isExpiring
@@ -80,6 +81,7 @@ export function BodyMarkdown({
   handleActionClick,
   style,
   disableMarkdown,
+  toast = false,
 }: BodyMarkdownProps) {
   const tableBorderColor =
     style?.tableBorderColor || 'rgba(100, 116, 139, 0.3)';
@@ -87,7 +89,14 @@ export function BodyMarkdown({
   const linkColor = style?.linkColor || lightColors.primary;
 
   return (
-    <BodyText style={style}>
+    <BodyText
+      className={
+        toast
+          ? 'ss-toast-notification-body-text'
+          : 'ss-feed-notification-body-text'
+      }
+      style={style}
+    >
       {disableMarkdown ? (
         body
       ) : (
@@ -379,6 +388,7 @@ export default function Notification({
 
   return (
     <Container
+      className="ss-feed-notification"
       style={theme?.container}
       read={!!read_on}
       onMouseEnter={() => {
@@ -397,9 +407,15 @@ export default function Notification({
       }}
     >
       {notificationData.is_pinned && (
-        <PinnedView hideAvatar={hideAvatar}>
+        <PinnedView
+          hideAvatar={hideAvatar}
+          className="ss-feed-notification-pinned"
+        >
           <PinnedNotificationIcon style={theme?.pinnedIcon} />
-          <PinnedNotificationText style={theme?.pinnedText}>
+          <PinnedNotificationText
+            style={theme?.pinnedText}
+            className="ss-feed-notification-pinned-text"
+          >
             {t('pinned')}
           </PinnedNotificationText>
         </PinnedView>
@@ -407,9 +423,14 @@ export default function Notification({
       <NotificationView>
         <LeftView>
           <LeftAvatarView>
-            <UnseenDot style={theme?.unseenDot} show={!read_on} />
+            <UnseenDot
+              style={theme?.unseenDot}
+              show={!read_on}
+              className="ss-feed-notification-unseen-dot"
+            />
             {!hideAvatar && (
               <AvatarView
+                className="ss-feed-notification-avatar"
                 onClick={(e) => {
                   const avatarData = message?.avatar;
                   handleActionClick(e, {
@@ -432,7 +453,10 @@ export default function Notification({
           </LeftAvatarView>
           <ContentView>
             {message.header && (
-              <HeaderText style={theme?.headerText}>
+              <HeaderText
+                style={theme?.headerText}
+                className="ss-feed-notification-header-text"
+              >
                 {message.header}
               </HeaderText>
             )}
@@ -453,7 +477,12 @@ export default function Notification({
                   });
                 }}
               >
-                <SubText style={theme?.subtext}>{message.subtext.text}</SubText>
+                <SubText
+                  style={theme?.subtext}
+                  className="ss-feed-notification-subtext"
+                >
+                  {message.subtext.text}
+                </SubText>
               </SubTextView>
             )}
             {notificationData.expiry && notificationData?.is_expiry_visible && (
@@ -463,9 +492,10 @@ export default function Notification({
               />
             )}
             {hasButtons && (
-              <ButtonContainer>
+              <ButtonContainer className="ss-feed-notification-buttons-container">
                 {actionOne && (
                   <ButtonView
+                    className="ss-feed-notification-primary-action-button-view"
                     style={theme?.actions?.[0]?.container}
                     onClick={(e) => {
                       handleActionClick(e, {
@@ -476,13 +506,17 @@ export default function Notification({
                       });
                     }}
                   >
-                    <ButtonText style={theme?.actions?.[0]?.text}>
+                    <ButtonText
+                      style={theme?.actions?.[0]?.text}
+                      className="ss-feed-notification-primary-action-button-text"
+                    >
                       {actionOne.name}
                     </ButtonText>
                   </ButtonView>
                 )}
                 {actionTwo && (
                   <ButtonOutlineView
+                    className="ss-feed-notification-secondary-action-button-view"
                     style={theme?.actions?.[1]?.container}
                     onClick={(e) => {
                       handleActionClick(e, {
@@ -493,7 +527,10 @@ export default function Notification({
                       });
                     }}
                   >
-                    <ButtonOutlineText style={theme?.actions?.[1]?.text}>
+                    <ButtonOutlineText
+                      style={theme?.actions?.[1]?.text}
+                      className="ss-feed-notification-secondary-action-button-text"
+                    >
                       {actionTwo.name}
                     </ButtonOutlineText>
                   </ButtonOutlineView>
@@ -503,14 +540,20 @@ export default function Notification({
           </ContentView>
         </LeftView>
         <RightView>
-          <CreatedText style={theme?.createdOnText}>
+          <CreatedText
+            style={theme?.createdOnText}
+            className="ss-feed-notification-created-on-text"
+          >
             <TimeAgo
               date={created_on}
               live={false}
               formatter={getShortFormattedTime}
             />
           </CreatedText>
-          <CMenuView showMore={showMore || isPlatformMobile}>
+          <CMenuView
+            showMore={showMore || isPlatformMobile}
+            className="ss-feed-notification-menu"
+          >
             <CMenuButton
               hoverBGColor={theme?.actionsMenuIcon?.hoverBackgroundColor}
               isPlatformMobile={isPlatformMobile}
@@ -518,6 +561,7 @@ export default function Notification({
                 e.stopPropagation();
                 setMoreOpen((prev) => !prev);
               }}
+              className="ss-feed-notification-menu-button"
             >
               <MoreIcon style={theme?.actionsMenuIcon} />
             </CMenuButton>
@@ -525,6 +569,7 @@ export default function Notification({
               moreOpen={moreOpen}
               style={theme?.actionsMenu}
               isLastNotification={isLastNotification}
+              className="ss-feed-notification-menu-popup"
             >
               {notificationData.read_on ? (
                 <CMenuItem
@@ -534,9 +579,13 @@ export default function Notification({
                     setMoreOpen(false);
                     return feedClient?.markAsUnread(notificationData.n_id);
                   }}
+                  className="ss-feed-notification-menu-popup-item"
                 >
                   <UnReadIcon style={theme?.actionsMenuItemIcon} />
-                  <CMenuText style={theme?.actionsMenuItemText}>
+                  <CMenuText
+                    style={theme?.actionsMenuItemText}
+                    className="ss-feed-notification-menu-popup-item-text"
+                  >
                     {t('markAsUnread')}
                   </CMenuText>
                 </CMenuItem>
@@ -548,9 +597,13 @@ export default function Notification({
                     setMoreOpen(false);
                     return feedClient?.markAsRead(notificationData.n_id);
                   }}
+                  className="ss-feed-notification-menu-popup-item"
                 >
                   <ReadIcon style={theme?.actionsMenuItemIcon} />
-                  <CMenuText style={theme?.actionsMenuItemText}>
+                  <CMenuText
+                    style={theme?.actionsMenuItemText}
+                    className="ss-feed-notification-menu-popup-item-text"
+                  >
                     {t('markAsRead')}
                   </CMenuText>
                 </CMenuItem>
@@ -562,9 +615,13 @@ export default function Notification({
                     e.stopPropagation();
                     return feedClient?.markAsArchived(notificationData.n_id);
                   }}
+                  className="ss-feed-notification-menu-popup-item"
                 >
                   <ArchiveIcon style={theme?.actionsMenuItemIcon} />
-                  <CMenuText style={theme?.actionsMenuItemText}>
+                  <CMenuText
+                    style={theme?.actionsMenuItemText}
+                    className="ss-feed-notification-menu-popup-item-text"
+                  >
                     {t('archive')}
                   </CMenuText>
                 </CMenuItem>

@@ -24,6 +24,7 @@ function InternalHeaderRightComponent({
   return (
     <AllReadButton
       style={header?.markAllReadText}
+      className="ss-feed-mark-all-read-button"
       onClick={(e) => {
         e.stopPropagation();
         markAllRead();
@@ -72,9 +73,11 @@ export default function Header({
   const tabs = style?.tabs;
 
   return (
-    <Container style={header?.container}>
+    <Container className="ss-feed-header" style={header?.container}>
       <TopContainer hasStores={hasStores}>
-        <HeaderText style={header?.headerText}>{t('notifications')}</HeaderText>
+        <HeaderText className="ss-feed-header-text" style={header?.headerText}>
+          {t('notifications')}
+        </HeaderText>
         {HeaderRightComponent ? (
           <HeaderRightComponent
             markAllRead={() => feedClient?.markAllAsRead()}
@@ -90,7 +93,7 @@ export default function Header({
         )}
       </TopContainer>
       {hasStores && (
-        <TabsContainer>
+        <TabsContainer className="ss-feed-tabs-container">
           {stores.map((store: IStore, index: number) => {
             const isActiveTab = feedData?.store.storeId === store.storeId;
             const tabUnreadCount = feedData?.meta[store.storeId] || 0;
@@ -108,6 +111,7 @@ export default function Header({
 
             return (
               <TabContainer
+                className="ss-feed-tab"
                 style={{ borderBottomColor: selectedTabBottomColor }}
                 key={index}
                 selected={isActiveTab}
@@ -121,6 +125,7 @@ export default function Header({
                     ...tabs,
                     color: textColor,
                   }}
+                  className="ss-feed-tab-text"
                 >
                   {label}
                 </TabText>
@@ -129,12 +134,16 @@ export default function Header({
                     <TabBadgeComponent count={tabUnreadCount} />
                   ) : (
                     <TabBadge
+                      className="ss-feed-tab-badge"
                       style={{
                         backgroundColor: tabs?.badgeColor,
                         color: tabs?.badgeText,
                       }}
                     >
-                      <TabBadgeText count={tabUnreadCount}>
+                      <TabBadgeText
+                        className="ss-feed-tab-badge-text"
+                        count={tabUnreadCount}
+                      >
                         {tabUnreadCount}
                       </TabBadgeText>
                     </TabBadge>

@@ -9,7 +9,11 @@ export default function Badge({ count, badgeComponent, style }: BadgeProps) {
     const BagdeComponent = badgeComponent;
     return <BagdeComponent count={count} />;
   }
-  return <CountText style={style}>{count}</CountText>;
+  return (
+    <CountText className="ss-feed-badge-text" style={style}>
+      {count}
+    </CountText>
+  );
 }
 
 const CountText = styled(CText)`
