@@ -161,7 +161,7 @@ export interface ClickableNotificationProps {
   scrollRef?: React.MutableRefObject<HTMLInputElement | undefined>;
   setUnseenNotifications?: Dispatch<SetStateAction<string[]>>;
   unseenNotifications?: string[];
-  enableIntersectionObserver?: boolean;
+  disableAutomaticSeenTracking?: boolean;
   disableMarkdown?: boolean;
 }
 
@@ -186,6 +186,7 @@ export interface NotificationFeedProps {
   setPopoverOpen?: Dispatch<SetStateAction<boolean>>;
   disableMarkdown?: boolean;
   shadowRoot?: ShadowRoot;
+  disableAutomaticSeenTracking?: boolean;
 }
 
 export interface INotificationsContainerTheme {

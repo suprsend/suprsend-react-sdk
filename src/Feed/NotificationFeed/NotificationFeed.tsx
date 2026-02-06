@@ -100,6 +100,8 @@ export default function NotificationFeed(config: NotificationFeedProps) {
   const pagination = config.pagination !== false;
   const CustomLoader = config?.loaderComponent;
   const ContainerDiv = config?.popover ? PopOverConatiner : Container;
+  const disableAutomaticSeenTracking =
+    config?.disableAutomaticSeenTracking === true;
 
   useEffect(() => {
     const mainElement = config.shadowRoot || document;
@@ -190,7 +192,7 @@ export default function NotificationFeed(config: NotificationFeedProps) {
                 themeType={config.themeType}
                 setUnseenNotifications={setUnseenNotifications}
                 unseenNotifications={unseenNotifications}
-                enableIntersectionObserver={true}
+                disableAutomaticSeenTracking={disableAutomaticSeenTracking}
                 disableMarkdown={config.disableMarkdown}
               />
             ))}

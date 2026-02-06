@@ -24,7 +24,7 @@ import { Inbox, SuprSendProvider } from '@suprsend/react';
 function Example() {
   return (
     <SuprSendProvider>
-      <Inbox pageSize={20} />
+      <Inbox />
     </SuprSendProvider>
   );
 }
@@ -57,6 +57,7 @@ interface InboxProps {
     markAllRead: () => void,
     closeInboxPopover: () => void,
   }>;
+  disableAutomaticSeenTracking?: boolean;
 }
 ```
 
@@ -95,6 +96,7 @@ interface NotificationFeedProps {
     markAllRead: () => void,
     closeInboxPopover: () => void,
   }>;
+  disableAutomaticSeenTracking?: boolean;
 }
 ```
 

@@ -27,7 +27,7 @@ function ClickableNotification({
   scrollRef,
   setUnseenNotifications,
   unseenNotifications,
-  enableIntersectionObserver,
+  disableAutomaticSeenTracking = true,
   disableMarkdown,
 }: ClickableNotificationProps) {
   const feedClient = useFeedClient();
@@ -35,7 +35,7 @@ function ClickableNotification({
     threshold: 1,
     root: scrollRef?.current,
     rootMargin: '0px',
-    enable: enableIntersectionObserver,
+    enable: !disableAutomaticSeenTracking,
   });
 
   useEffect(() => {
