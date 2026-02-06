@@ -1,6 +1,6 @@
 {
   "name": "@suprsend/react",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "The react library for using SuprSend features like inbox, preferences etc",
   "author": "SuprSend Developers",
   "type": "module",
