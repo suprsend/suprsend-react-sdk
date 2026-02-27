@@ -735,17 +735,17 @@
   resolved "https://registry.yarnpkg.com/@socket.io/component-emitter/-/component-emitter-3.1.2.tgz#821f8442f4175d8f0467b9daf26e3a18e2d02af2"
   integrity sha512-9BCxFwvbGg/RsZK9tjXd8s4UcwR0MWeFQ1XEKIQVVvAGJyINdrqKMcTRyLoK8Rse1GjzLV9cwjWV1olXRWEXVA==
 
-"@suprsend/react-core@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@suprsend/react-core/-/react-core-1.0.5.tgz#8d6ab62807bcdb3ec32c7ff217ff51753099e127"
-  integrity sha512-v7k7f11D/yiL5SdOJ+Ayu9HVvmco1POyoZOQpkrPbkiNYMo3UIIU+8mNtyxTPq/QGWOJ6wMXNUtMVo3PfPBRmw==
+"@suprsend/react-core@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@suprsend/react-core/-/react-core-1.0.6.tgz#64b4d3c9b7c16b998444236ef031df475591512a"
+  integrity sha512-kcHYgbuAVogWvQ8/mx+xlZHhCPlfahNvTqGpbJof+ptc54y46QmboY2Oswd2aa7g9Al4t5+8fgjRkcppvV7/Xg==
   dependencies:
-    "@suprsend/web-sdk" "^4.1.0"
+    "@suprsend/web-sdk" "^4.1.1"
 
-"@suprsend/web-sdk@^4.1.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@suprsend/web-sdk/-/web-sdk-4.1.0.tgz#4f65555b2be185c3b915d4c61926bed69344d813"
-  integrity sha512-jWx+dKgWnrgNWDTQAlcjBk6W2iCicbEZGbsap9woKXLlumrKuwIG+zzD0cJs7ZsDK+/ws8Yw1LjajOrZnUdbow==
+"@suprsend/web-sdk@^4.1.1":
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/@suprsend/web-sdk/-/web-sdk-4.1.1.tgz#f791e212893d151a3824fcbc708b722a8fede186"
+  integrity sha512-zsc62Qn1qZf0OhqJ57m3W6EVUECaVY4NHz+jEBz+SK/DaaNExge9yei4NdMUKA7d8bK35tNKaYAbQXDjwBdgLQ==
   dependencies:
     jwt-decode "3.1.2"
     mitt "^3.0.1"
@@ -2723,8 +2723,16 @@ string-argv@~0.3.1:
   resolved "https://registry.yarnpkg.com/string-argv/-/string-argv-0.3.2.tgz#2b6d0ef24b656274d957d54e0a4bbf6153dc02b6"
   integrity sha512-aqD2Q0144Z+/RqG52NeHEkZauTAUWJO8c6yTftGJKO3Tja5tUgIfmIl6kExvhtxSDP7fXB6DvzkfMpCd/F3G+Q==
 
-"string-width-cjs@npm:string-width@^4.2.0", string-width@^4.1.0:
-  name string-width-cjs
+"string-width-cjs@npm:string-width@^4.2.0":
+  version "4.2.3"
+  resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
+  integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
+  dependencies:
+    emoji-regex "^8.0.0"
+    is-fullwidth-code-point "^3.0.0"
+    strip-ansi "^6.0.1"
+
+string-width@^4.1.0:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -2742,8 +2750,14 @@ string-width@^5.0.1, string-width@^5.1.2:
     emoji-regex "^9.2.2"
     strip-ansi "^7.0.1"
 
-"strip-ansi-cjs@npm:strip-ansi@^6.0.1", strip-ansi@^6.0.0, strip-ansi@^6.0.1:
-  name strip-ansi-cjs
+"strip-ansi-cjs@npm:strip-ansi@^6.0.1":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
+  integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
+  dependencies:
+    ansi-regex "^5.0.1"
+
+strip-ansi@^6.0.0, strip-ansi@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==

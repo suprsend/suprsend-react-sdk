@@ -1,6 +1,6 @@
 {
   "name": "@suprsend/react",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "The react library for using SuprSend features like inbox, preferences etc",
   "author": "SuprSend Developers",
   "type": "module",
@@ -73,7 +73,7 @@
     "@emotion/react": "^11.13.5",
     "@emotion/styled": "^11.13.5",
     "@popperjs/core": "^2.11.8",
-    "@suprsend/react-core": "^1.0.5",
+    "@suprsend/react-core": "^1.0.6",
     "lodash.throttle": "^4.1.1",
     "react-markdown": "6.0.3",
     "react-popper": "^2.3.0",
