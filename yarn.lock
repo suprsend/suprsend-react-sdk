@@ -773,17 +773,17 @@
   resolved "https://registry.yarnpkg.com/@socket.io/component-emitter/-/component-emitter-3.1.2.tgz#821f8442f4175d8f0467b9daf26e3a18e2d02af2"
   integrity sha512-9BCxFwvbGg/RsZK9tjXd8s4UcwR0MWeFQ1XEKIQVVvAGJyINdrqKMcTRyLoK8Rse1GjzLV9cwjWV1olXRWEXVA==
 
-"@suprsend/react-core@^1.2.3":
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/@suprsend/react-core/-/react-core-1.2.3.tgz#21e9ae1363be37d86979b8b772ec6fc8a853c84a"
-  integrity sha512-UXw/rvKXjXIXVO/NhHdaDt02WLySQC1jiacL/8vA0WstkjTiDfbG+BXZopVCgSwOaTXj5kFnmJVAN/c4kBhjeA==
+"@suprsend/react-core@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@suprsend/react-core/-/react-core-2.0.0.tgz#6acc469eda0cfa501d7b74762ec1268d0d89cc09"
+  integrity sha512-Ez7F0rDZaZsDplb+OOxLG0fWn8k7QQvxJQFimX+IuyNmPYCRxqiEe5dp2Z7tjBGOKMu6FMprDLDUccLPi+krpw==
   dependencies:
-    "@suprsend/web-sdk" "^4.4.0"
+    "@suprsend/web-sdk" "^5.0.0"
 
-"@suprsend/web-sdk@^4.4.0":
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/@suprsend/web-sdk/-/web-sdk-4.4.0.tgz#92774667f8008b37687200935b14ab9610dad3d6"
-  integrity sha512-VB2JaYuLFHWF4lc74P+3RBF/IXtybNDXxz/6EC80UNTP1X0jlqlt23SGXgnXpHEij8g3K17E/rA63mElfCxvHA==
+"@suprsend/web-sdk@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@suprsend/web-sdk/-/web-sdk-5.0.0.tgz#b8236dfba9fefafd70bfb23c39d20d74dfa1c586"
+  integrity sha512-pksr0fvYVCkR0pspWOX/48oH3hFfTBAnyTd+qoaGlcYE2cc5Gmi6TX3VFIHJAU+BbcHDdc4G+7Dkem8aUbto6w==
   dependencies:
     jwt-decode "3.1.2"
     mitt "^3.0.1"
@@ -1372,14 +1372,14 @@ electron-to-chromium@^1.5.328:
   integrity sha512-8lPELWuYZIWk7NDvCNthtmMw/7Q5Wu25NpM4djFMHBmk8DubPAtL4YTOp7ou0e7HyJtwkVlWv8XMLURnrtgJQw==
 
 engine.io-client@~6.6.1:
-  version "6.6.4"
-  resolved "https://registry.yarnpkg.com/engine.io-client/-/engine.io-client-6.6.4.tgz#a04998787dd342b543eec5d4452da7bb540e7ff8"
-  integrity sha512-+kjUJnZGwzewFDw951CDWcwj35vMNf2fcj7xQWOctq1F2i1jkDdVvdFG9kM/BEChymCH36KgjnW0NsL58JYRxw==
+  version "6.6.6"
+  resolved "https://registry.yarnpkg.com/engine.io-client/-/engine.io-client-6.6.6.tgz#8a8f1e451b1f6d4acf413305445e42133d1cbe9a"
+  integrity sha512-iY6QdftLQ9pyiPoX082bpf/u1UewnOaJrtJIF9T0++QB34lZrj0uP+Q/bj8AlUsAxqhnkTV2BS8SBZSxOmoV5Q==
   dependencies:
     "@socket.io/component-emitter" "~3.1.0"
     debug "~4.4.1"
     engine.io-parser "~5.2.1"
-    ws "~8.18.3"
+    ws "~8.21.0"
     xmlhttprequest-ssl "~2.1.1"
 
 engine.io-parser@~5.2.1:
@@ -2648,9 +2648,9 @@ socket.io-client@^4.8.1:
     socket.io-parser "~4.2.4"
 
 socket.io-parser@~4.2.4:
-  version "4.2.6"
-  resolved "https://registry.yarnpkg.com/socket.io-parser/-/socket.io-parser-4.2.6.tgz#19156bf179af3931abd05260cfb1491822578a6f"
-  integrity sha512-asJqbVBDsBCJx0pTqw3WfesSY0iRX+2xzWEWzrpcH7L6fLzrhyF8WPI8UaeM4YCuDfpwA/cgsdugMsmtz8EJeg==
+  version "4.2.7"
+  resolved "https://registry.yarnpkg.com/socket.io-parser/-/socket.io-parser-4.2.7.tgz#679e51fe24d1c81df90fc5f7efe4a5f432fe99c0"
+  integrity sha512-IH/iSeO9T6gz1KkFleGDWkG9N3dl4jXVYUtMhIqH10Md0ttMer8nUNWiP1DKuNrybD2xBrixLJdCC9J6ECoYkg==
   dependencies:
     "@socket.io/component-emitter" "~3.1.0"
     debug "~4.4.1"
@@ -2933,10 +2933,10 @@ word-wrap@^1.2.5:
   resolved "https://registry.yarnpkg.com/word-wrap/-/word-wrap-1.2.5.tgz#d2c45c6dd4fbce621a66f136cbe328afd0410b34"
   integrity sha512-BN22B5eaMMI9UMtjrGd5g5eCYPpCPDUy0FJXbYsaT5zYxjFOckS53SQDE3pWkVoWpHXVb3BrYcEN4Twa55B5cA==
 
-ws@~8.18.3:
-  version "8.18.3"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-8.18.3.tgz#b56b88abffde62791c639170400c93dcb0c95472"
-  integrity sha512-PEIGCY5tSlUt50cqyMXfCzX+oOPqN0vuGqWzbcJ2xvnkzkq46oOpz7dQaTDBdfICb4N14+GARUDw2XV2N4tvzg==
+ws@~8.21.0:
+  version "8.21.2"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-8.21.2.tgz#e6976cfe96161d40420689a5f051378d11b0f0ce"
+  integrity sha512-54dMVAo4WIe6SKy3vBgN+9bJZqqQ8IMRevAkOLQALhi49qkkQDQfWdAZ8KQlXiEabw88ARXXdUrlvtbKQX+aKw==
 
 xmlhttprequest-ssl@~2.1.1:
   version "2.1.2"
@@ -2964,9 +2964,9 @@ yocto-queue@^0.1.0:
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
 zustand@^5.0.1:
-  version "5.0.13"
-  resolved "https://registry.yarnpkg.com/zustand/-/zustand-5.0.13.tgz#06995c126e8903cd27100af04da91c36ae3051ed"
-  integrity sha512-efI2tVaVQPqtOh114loML/Z80Y4NP3yc+Ff0fYiZJPauNeWZeIp/bRFD7I9bfmCOYBh/PHxlglQ9+wvlwnPikQ==
+  version "5.0.14"
+  resolved "https://registry.yarnpkg.com/zustand/-/zustand-5.0.14.tgz#18216c24fcb980cf36898f9c57520e67b1f77855"
+  integrity sha512-/8tAspM5LMPr28b3fwLYrtdj77ECpfZviaP75CMTnwO8ISyaE4GDIG/9rDDYq/cH9D2Xw2A2RXglLInmVBQB/g==
 
 zwitch@^1.0.0:
   version "1.0.5"
