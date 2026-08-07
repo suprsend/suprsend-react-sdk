@@ -3,13 +3,7 @@ import InboxPopover from './InboxPopover';
 import { InboxProps } from '../interface';
 
 export default function Inbox(config: InboxProps) {
-  const {
-    tenantId = 'default',
-    pageSize = 20,
-    stores,
-    host,
-    children,
-  } = config;
+  const { tenantId, pageSize = 20, stores, host, children } = config;
 
   const providerConfig = {
     tenantId,
