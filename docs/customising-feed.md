@@ -1,0 +1,479 @@
+# Customising Feed
+
+## Customising tenant
+
+`tenantId` defaults to the active tenant set in [SuprSendProvider](../README.md#integration), else the `default` tenant. Passing it here pins the feed instance to that tenant — it takes priority over the active tenant and the feed ignores later tenant changes. Without it, the feed re-initializes automatically whenever the active tenant changes.
+
+If you are passing `tenantId` in feed, make sure it matches `scope.tenant_id` passed while creating [userToken](https://docs.suprsend.com/docs/client-authentication#2-creating-signed-user-jwt-token) else error will be thrown due to scope mismatching.
+
+```javascript
+// Inbox
+<Inbox tenantId="suprsend" />
+```
+
+```javascript
+// SuprSendFeedProvider
+<SuprSendFeedProvider tenantId="suprsend">....</SuprSendFeedProvider>
+```
+
+If you are passing `tenant_id` in feed, make sure to pass scope key while creating [userToken](https://docs.suprsend.com/docs/client-authentication#2-creating-signed-user-jwt-token) else 403 error will be thrown due to scope mismatching.
+
+## Adding tabs
+
+You can pass `stores` prop to add multiple tabs in feed. For each tab you can write your own logic to get notifications based on tags, preference categories and notification status like read, archived. Read more about it [here](https://docs.suprsend.com/docs/multi-tabs).
+
+```javascript
+// Inbox
+<Inbox
+  stores={[
+    { storeId: 'All', label: 'all' },
+    { storeId: 'Archived', label: 'archived', query: { archived: true } },
+  ]}
+/>
+```
+
+```javascript
+// SuprSendFeedProvider
+<SuprSendFeedProvider pageSize={25}>....</SuprSendFeedProvider>
+```
+
+## Internationalisation
+
+Feed components support multiple languages and custom translations. To enable internationalisation, wrap your feed components inside `SuprSendI18nProvider` and pass the desired `locale`.
+
+```javascript
+// Inbox
+<SuprSendI18nProvider locale="fr">
+  <Inbox />
+</SuprSendI18nProvider>
+```
+
+```javascript
+// NotificationFeed
+<SuprSendI18nProvider locale="fr">
+  <NotificationFeed />
+</SuprSendI18nProvider>
+```
+
+Refer [Language Support](https://github.com/suprsend/suprsend-react-core/blob/main/docs/language-support.md) docs for the list of supported languages and details on passing custom translations.
+
+## Disable pagination
+
+By default, feed supports infinite scrolling type pagination to get older notifications when you scroll through notifications list. If you want to remove infinite scroll, that is stop getting previous page notifications, you can set `pagination=false`.
+
+```javascript
+<Inbox pagination={false} />
+
+<NotificationFeed pagination={false} />
+```
+
+## Enable dark mode
+
+```javascript
+<Inbox themeType="dark" / "light" />
+
+<NotificationFeed themeType="dark" / "light" />
+```
+
+| Light Theme                                    | Dark Theme                                     |
+| ---------------------------------------------- | ---------------------------------------------- |
+| ![](https://files.readme.io/bb3ea43-image.png) | ![](https://files.readme.io/e4b8764-image.png) |
+
+## Custom notification card click handler
+
+Clicking on notification card will open the link if `Action URL` field is present in triggered inbox template. If you want to override this with your custom callback function you can pass `notificationClickHandler`.
+
+```javascript
+// Inbox
+<Inbox
+  notificationClickHandler={(notificationData: IRemoteNotification) => {
+    console.log('notification clicked', notificationData.n_id)
+  }}
+/>
+```
+
+```javascript
+// NotificationFeed
+<NotificationFeed
+  notificationClickHandler={(notificationData: IRemoteNotification) => {
+    console.log('notification clicked', notificationData.n_id)
+  }}
+/>
+```
+
+## Custom action button click handlers
+
+Clicking on action buttons in notification card will open link if you provide url on action button fields in triggered inbox template. If you want to override this with your custom action button callback functions you can pass `primaryActionClickHandler` and `secondaryActionClickHandler`.
+
+```javascript
+// Inbox
+<Inbox
+  primaryActionClickHandler={(notificationData: IRemoteNotification) => {
+    console.log('primary action button clicked', notificationData.n_id)
+  }}
+  secondaryActionClickHandler={(notificationData: IRemoteNotification) => {
+    console.log('secondary action button clicked', notificationData.n_id)
+  }}
+/>
+```
+
+```javascript
+// NotificationFeed
+<NotificationFeed
+  primaryActionClickHandler={(notificationData: IRemoteNotification) => {
+    console.log('primary action button clicked', notificationData.n_id)
+  }}
+  secondaryActionClickHandler={(notificationData: IRemoteNotification) => {
+    console.log('secondary action button clicked', notificationData.n_id)
+  }}
+/>
+```
+
+## Popover position
+
+Popover component is wrapper around NotificationFeed component and will be opened on click of bell icon. By default popover is shown at bottom ie., the inbox notifications popup list will be shown at bottom of the bell icon.
+
+Example: Feed needs to be shown at bottom of left sidebar above profile icon, in that case on click of bell icon you would want to show notifications popover at right side.
+
+```javascript
+<Inbox popperPosition="top" / "bottom" / "left" / "right" />
+```
+
+## Custom bell component
+
+For Bell, you can customise either css styles of existing bell component or replace existing bell with your own bell component. To replace existing bell component with your own component use `bellComponent` prop.
+
+```javascript
+<Inbox bellComponent={() => <p>MyBell</p>} />
+```
+
+## Custom badge component
+
+This element shows the number of unseen notifications on Bell. You can customise either css styles of existing badge component or replace existing badge with your own badge component. To replace existing badge component with your own component use `badgeComponent` prop.
+
+```javascript
+<Inbox badgeComponent={(count: number) => <p>{count}</p>} />
+```
+
+## Custom header component
+
+You can customize the header in two ways:
+
+1. **Replace the right side component**: You can add custom component on right side of Header, this will replace `Mark all as read` text and add any JSX you pass as component in that place. You can even add custom icons like setting or preferences in that JSX and navigate user to that pages.
+
+2. **Style the header text**: You can change the font style, color, and other CSS properties of the header text using the `header` theme property. See [Customising CSS styles](#customising-css-styles) section below for details.
+
+```javascript
+// Inbox
+<Inbox
+  headerRightComponent={({ markAllRead: ()=>void, closeInboxPopover: ()=>void }) => <p onClick={markAllRead}>Custom Mark All as Read</p>}
+/>
+```
+
+```javascript
+// NotificationFeed
+<NotificationFeed
+  headerRightComponent={({ markAllRead: ()=>void, closeInboxPopover: ()=>void }) => <p onClick={markAllRead}>Custom Mark All as Read</p>}
+/>
+```
+
+## Custom notification card component
+
+You can customise either css styles of existing notification card component or replace existing card with your own card component. To replace existing component use `notificationComponent` prop.
+
+```javascript
+// Inbox
+<Inbox
+  notificationComponent={(config: CustomNotificationCardProps) => (
+    <p onClick={() => config.markAsRead(config.notificationData.n_id)}>
+      My Notification card
+    </p>
+  )}
+/>
+```
+
+```javascript
+// NotificationFeed
+<NotificationFeed
+  notificationComponent={(config: CustomNotificationCardProps) => (
+    <p onClick={() => config.markAsRead(config.notificationData.n_id)}>
+      My Notification card
+    </p>
+  )}
+/>
+```
+
+```typescript
+interface CustomNotificationCardProps {
+  notificationData: IRemoteNotification;
+  markAsRead: (e?: Event) => Promise<ApiResponse> | undefined;
+  markAsUnread: (e?: Event) => Promise<ApiResponse> | undefined;
+  markAsArchived: (e?: Event) => Promise<ApiResponse> | undefined;
+  markAsInteracted: (e?: Event) => Promise<ApiResponse> | undefined;
+}
+```
+
+### BodyMarkdown component
+
+We support markdown language in body field in inbox template. So while designing your own notification card component if you want to use our inbuilt body component which includes support for markdown language to save some time you could use `BodyMarkdown` component.
+
+```javascript
+<Inbox
+  notificationComponent={(config: CustomNotificationCardProps) => (
+    <div onClick={() => config.markAsRead(config.notificationData.n_id)}>
+      <p>My Notification card</p>
+      <BodyMarkdown body={config.notificationData.message.text} />
+    </div>
+  )}
+/>
+```
+
+```typescript
+interface BodyMarkdownProps {
+  body: string;
+  handleActionClick?: HandleActionClick; // for links, this callback will be executed on click
+  style?: NotificationCardBodyTextThemeProps;
+}
+
+interface NotificationCardBodyTextThemeProps extends React.CSSProperties {
+  color?: string;
+  blockquoteColor?: string;
+  tableBorderColor?: string;
+  linkColor?: string;
+}
+
+type HandleActionClick = (
+  e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
+  clickData: ClickHandlerPayload
+) => void;
+```
+
+## Custom loader component
+
+Existing loader icon which is displayed while getting notifications from SuprSend server, can be changed.
+
+```javascript
+<Inbox loaderComponent={() => (<p>Loading...</p>)} />
+
+<NotificationFeed loaderComponent={() => (<p>Loading...</p>)} />
+```
+
+## Custom no notifications component
+
+When no notifications are present then we show empty component. This component can be overridden by using `noNotificationsComponent` prop.
+
+```javascript
+<Inbox noNotificationsComponent={() => (<p>No Notifications Yet</p>)} />
+
+<NotificationFeed noNotificationsComponent={() => (<p>No Notifications Yet.</p>)} />
+```
+
+## Customising CSS styles
+
+If you don't want to replace existing components, you have an option to change styles of them.
+
+```typescript
+// typedef for Inbox drop-in component
+interface ITheme extends INotificationFeedTheme {
+  bell?: IconThemeProps;
+  badge?: BadgeThemeProps;
+}
+
+interface IconThemeProps {
+  height?: number | string;
+  width?: number | string;
+  color?: string;
+}
+
+interface BadgeThemeProps extends React.CSSProperties {
+  backgroundColor?: string;
+  color?: string;
+}
+
+// typedef for NotificationFeed drop-in component
+interface INotificationFeedTheme {
+  header?: IHeaderTheme;
+  tabs?: TabsThemeProps;
+  notificationsContainer?: INotificationsContainerTheme;
+  notification?: INotificationCardTheme;
+}
+
+interface IHeaderTheme {
+  container?: React.CSSProperties;
+  headerText?: React.CSSProperties; // Use this to customize the header title font style, color, size, etc.
+  markAllReadText?: React.CSSProperties; // Use this to customize the "Mark all as read" text font style, color, size, etc.
+}
+
+interface TabsThemeProps {
+  color?: string;
+  unselectedColor?: string;
+  bottomColor?: string;
+  badgeColor?: string;
+  badgeText?: string;
+}
+
+interface INotificationsContainerTheme {
+  container?: React.CSSProperties;
+  noNotificationsText?: React.CSSProperties;
+  noNotificationsSubtext?: React.CSSProperties;
+  loader?: LoaderThemeProps;
+}
+
+interface INotificationCardTheme {
+  container?: NotificationCardContainerThemeProps;
+  pinnedIcon?: IconThemeProps;
+  pinnedText?: React.CSSProperties;
+  headerText?: React.CSSProperties;
+  bodyText?: NotificationCardBodyTextThemeProps;
+  unseenDot?: React.CSSProperties;
+  avatar?: React.CSSProperties;
+  createdOnText?: React.CSSProperties;
+  subtext?: React.CSSProperties;
+  expiresText?: NotificationCardExpriesTextThemeProps;
+  actions?: Array<{
+    container?: NotificationCardActionButtonViewThemeProps;
+    text?: React.CSSProperties;
+  }>;
+  actionsMenuIcon?: CardActionMenuIconThemeProps;
+  actionsMenu?: React.CSSProperties;
+  actionsMenuItem?: CardActionsMenuItem;
+  actionsMenuItemIcon?: IconThemeProps;
+  actionsMenuItemText?: React.CSSProperties;
+}
+
+interface LoaderThemeProps {
+  color?: string;
+}
+
+interface NotificationCardContainerThemeProps extends React.CSSProperties {
+  borderBottom?: string | number;
+  readBackgroundColor?: string;
+  unreadBackgroundColor?: string;
+  hoverBackgroundColor?: string;
+}
+
+interface NotificationCardBodyTextThemeProps extends React.CSSProperties {
+  color?: string;
+  blockquoteColor?: string;
+  tableBorderColor?: string;
+  linkColor?: string;
+}
+
+interface NotificationCardExpriesTextThemeProps extends React.CSSProperties {
+  expiringBackgroundColor?: string;
+  expiringColor?: string;
+}
+
+interface NotificationCardActionButtonViewThemeProps
+  extends React.CSSProperties {
+  hoverBackgroundColor?: string;
+}
+
+interface CardActionMenuIconThemeProps extends IconThemeProps {
+  hoverBackgroundColor?: string;
+}
+
+interface CardActionsMenuItem extends React.CSSProperties {
+  hoverBackgroundColor?: string;
+}
+```
+
+Example dark theme:
+
+```javascript
+const darkColors = {
+  primary: '#2E70E8',
+  primaryText: '#EFEFEF',
+  secondaryText: '#CBD5E1',
+  border: '#3A4A61',
+  main: '#1D2635',
+  error: '#F97066',
+};
+
+const darkInboxStyles = {
+  bell: { color: '#fff' },
+  badge: { backgroundColor: darkColors.primary },
+  ...darkNotificationsFeedStyles,
+};
+
+const darkNotificationsFeedStyles = {
+  header: {
+    container: {
+      backgroundColor: darkColors.main,
+      borderBottom: `0.5px solid ${darkColors.border}`,
+      boxShadow: '0 0 5px 0 rgba(0, 0, 0, 0.5)',
+    },
+    headerText: { color: darkColors.primaryText },
+    markAllReadText: { color: darkColors.primary },
+  },
+  tabs: {
+    color: darkColors.primaryText,
+    unselectedColor: darkColors.secondaryText + 'D9',
+    bottomColor: darkColors.primary,
+    badgeColor: 'rgba(100, 116, 139, 0.5)',
+    badgeText: darkColors.primaryText,
+  },
+  notificationsContainer: {
+    container: {
+      backgroundColor: darkColors.main,
+      borderColor: darkColors.border,
+    },
+    noNotificationsText: {
+      color: darkColors.primaryText,
+    },
+    noNotificationsSubtext: {
+      color: darkColors.secondaryText,
+    },
+    loader: { color: darkColors.primary },
+  },
+  notification: {
+    container: {
+      borderBottom: `1px solid ${darkColors.border}`,
+      readBackgroundColor: darkColors.main,
+      unreadBackgroundColor: '#273244',
+      hoverBackgroundColor: '#2D3A4D',
+    },
+    pinnedText: {
+      color: darkColors?.secondaryText,
+    },
+    headerText: { color: darkColors.primaryText },
+    bodyText: {
+      color: darkColors.secondaryText,
+      blockquoteColor: 'rgba(100, 116, 139, 0.5)',
+    },
+    unseenDot: { backgroundColor: darkColors.primary },
+    createdOnText: { color: darkColors.secondaryText },
+    subtext: { color: '#94a3b8' },
+    actions: [
+      { container: { backgroundColor: darkColors.primary } },
+      {
+        container: {
+          borderColor: darkColors.border,
+          backgroundColor: 'transparent',
+          hoverBackgroundColor: darkColors.main,
+        },
+        text: { color: darkColors.secondaryText },
+      },
+    ],
+    expiresText: {
+      backgroundColor: 'rgba(100, 116, 139, 0.5)',
+      color: darkColors.secondaryText,
+      expiringBackgroundColor: 'rgba(217, 45, 32, 0.15)',
+      expiringColor: darkColors.error,
+    },
+    actionsMenuIcon: {
+      color: darkColors.secondaryText,
+      hoverBackgroundColor: 'rgba(100, 116, 139, 0.5)',
+    },
+    actionsMenu: {
+      backgroundColor: darkColors.main,
+      borderColor: darkColors.border,
+    },
+    actionsMenuItem: { hoverBackgroundColor: 'rgba(100, 116, 139, 0.2)' },
+    actionsMenuItemIcon: { color: darkColors.secondaryText },
+    actionsMenuItemText: {
+      color: darkColors.secondaryText,
+    },
+  },
+};
+```
