@@ -4,7 +4,7 @@ We offer two SDKs for React applications:
 
 - [@suprsend/react-core](https://github.com/suprsend/suprsend-react-core): Provides context providers and hooks to integrate SuprSend into your application. This is the better option if you want to use web push, user methods, and event tracking, or build your own UI for preferences and inbox using the provided methods. If you want ready-made components for inbox or preferences, use `@suprsend/react` instead.
 
-- [@suprsend/react](https://github.com/suprsend/suprsend-react-sdk): Built on top of `@suprsend/react-core`, so it includes all the hooks, context providers, and methods available there. In addition, it offers drop-in components like Inbox, NotificationFeed, and Preferences with prebuilt UI to ease integration.
+- `@suprsend/react`: Built on top of `@suprsend/react-core`, so it includes all the hooks, context providers, and methods available there. In addition, it offers drop-in components like Inbox, NotificationFeed, and Preferences with prebuilt UI to ease integration.
 
 ## Installation
 
