@@ -2,6 +2,16 @@
 
 All notable changes to `@suprsend/react` will be documented in this file.
 
+## [1.1.0] - 2026-08-20
+
+### Changed
+
+- Upgraded `@suprsend/react-core` dependency to `^2.1.0`, which in turn upgrades `@suprsend/web-sdk` to `^5.1.0`. The changes in this release come from the web-sdk, see the [web-sdk 5.1.0 changelog](https://github.com/suprsend/suprsend-web-sdk/blob/main/CHANGELOG.md#510) for details.
+
+### Notes
+
+- No integration changes are needed.
+
 ## [1.0.0] - 2026-08-07
 
 ### Added
