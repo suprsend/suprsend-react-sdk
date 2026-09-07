@@ -83,7 +83,7 @@ interface SuprSendProviderProps {
 
 > **Note**
 >
-> Changing the `tenantId` prop switches the active tenant of the identified user without re-authenticating. The `Inbox` and `NotificationFeed` components re-initialize on the new tenant unless pinned with their own `tenantId`. Previously fetched preferences keep the tenant they were fetched with - call `getPreferences` again to load the new tenant's data. With `pushTokenActionOnTenantChange` set to `copy` or `move` the switch completes asynchronously (the push subscription is looked up first and, for `move`, detached from the previous tenant), so SDK calls made in the same render without an explicit `tenantId` still use the previous tenant. A failed copy or move leaves the previous tenant active - use `tenantChangeHandler` to detect it and revert or retry the `tenantId` prop.
+> Changing the `tenantId` prop switches the active tenant of the identified user without re-authenticating. The `Inbox` and `NotificationFeed` components re-initialize on the new tenant unless pinned with their own `tenantId`. Previously fetched preferences keep the tenant they were fetched with - call `getPreferences` again to load the new tenant's data.
 
 Once `SuprSendProvider` is in place, you can use all SuprSend features.
 
