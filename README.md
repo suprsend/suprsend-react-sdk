@@ -48,6 +48,14 @@ interface SuprSendProviderProps {
   distinctId?: unknown;
   userToken?: string;
   tenantId?: string;
+  pushTokenActionOnTenantChange?: 'none' | 'copy' | 'move';
+  tenantChangeHandler?: ({
+    tenantId,
+    response,
+  }: {
+    tenantId?: string;
+    response: ApiResponse;
+  }) => void;
   host?: string;
   vapidKey?: string;
   swFileName?: string;
@@ -59,17 +67,23 @@ interface SuprSendProviderProps {
 }
 ```
 
-| Parameter                 | Description                                                                                                                                                                                                                                                                                                                   |
-| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| publicApiKey              | Mandatory. Public API key used to authenticate the SDK — `SuprSendProvider` throws an error if it is missing. You can get it from the SuprSend Dashboard.                                                                                                                                                                     |
-| distinctId                | Unique identifier of the user. When a value is passed, the SDK creates and authenticates the user. Passing `null` clears the authenticated user's instance data in your application, similar to a logout.                                                                                                                     |
-| userToken                 | JWT token generated on your server, required only when enhanced security mode is turned on in the SuprSend Dashboard. Enhanced security mode adds an extra layer of authentication, recommended for production environments. Read more about it [here](https://docs.suprsend.com/docs/client-authentication).                 |
-| tenantId                  | Needed only when you use multi-tenant architecture. Scopes the identified user's events, preferences, and in-app feed to that tenant. Its value must match `scope.tenant_id` in the `userToken` payload, otherwise a scoping error is raised. Changing the `tenantId` prop switches the active tenant of the identified user. |
-| refreshUserToken          | Callback invoked internally by the SDK to replace the `userToken` with a new one before it expires                                                                                                                                                                                                                            |
-| userAuthenticationHandler | Callback invoked after the SDK internally authenticates the user you pass via `distinctId`. It gives you the response of the user creation API call.                                                                                                                                                                          |
-| host                      | Customise the host URL.                                                                                                                                                                                                                                                                                                       |
-| vapidKey                  | Needed only if you are implementing WebPush notifications. You can find it in SuprSend Dashboard --> Vendors --> WebPush.                                                                                                                                                                                                     |
-| swFileName                | Needed only if you are implementing WebPush notifications and want to replace the default `serviceworker.js` file name with your own service worker file name.                                                                                                                                                                |
+| Parameter                     | Description                                                                                                                                                                                                                                                                                                                                        |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| publicApiKey                  | Mandatory. Public API key used to authenticate the SDK — `SuprSendProvider` throws an error if it is missing. You can get it from the SuprSend Dashboard.                                                                                                                                                                                          |
+| distinctId                    | Unique identifier of the user. When a value is passed, the SDK creates and authenticates the user. Passing `null` clears the authenticated user's instance data in your application, similar to a logout.                                                                                                                                          |
+| userToken                     | JWT token generated on your server, required only when enhanced security mode is turned on in the SuprSend Dashboard. Enhanced security mode adds an extra layer of authentication, recommended for production environments. Read more about it [here](https://docs.suprsend.com/docs/client-authentication).                                      |
+| tenantId                      | Needed only when you use multi-tenant architecture. Scopes the identified user's events, preferences, and in-app feed to that tenant. Its value must match `scope.tenant_id` in the `userToken` payload, otherwise a scoping error is raised. Changing the `tenantId` prop switches the active tenant of the identified user.                      |
+| pushTokenActionOnTenantChange | Defaults to `none`. Controls what happens to the existing webpush subscription when the `tenantId` prop changes. `none` leaves it attached to the current tenant, `copy` attaches it to the new tenant as well, `move` detaches it from the current tenant and attaches it to the new tenant. Only relevant if you use [WebPush](docs/webpush.md). |
+| tenantChangeHandler           | Callback invoked with the response after a `tenantId` prop change switches the active tenant of the identified user. If `response.status` is `error`, the previous tenant remains active - revert or retry the `tenantId` prop.                                                                                                                    |
+| refreshUserToken              | Callback invoked internally by the SDK to replace the `userToken` with a new one before it expires                                                                                                                                                                                                                                                 |
+| userAuthenticationHandler     | Callback invoked after the SDK internally authenticates the user you pass via `distinctId`. It gives you the response of the user creation API call.                                                                                                                                                                                               |
+| host                          | Customise the host URL.                                                                                                                                                                                                                                                                                                                            |
+| vapidKey                      | Needed only if you are implementing WebPush notifications. You can find it in SuprSend Dashboard --> Vendors --> WebPush.                                                                                                                                                                                                                          |
+| swFileName                    | Needed only if you are implementing WebPush notifications and want to replace the default `serviceworker.js` file name with your own service worker file name.                                                                                                                                                                                     |
+
+> **Note**
+>
+> Changing the `tenantId` prop switches the active tenant of the identified user without re-authenticating. The `Inbox` and `NotificationFeed` components re-initialize on the new tenant unless pinned with their own `tenantId`. Previously fetched preferences keep the tenant they were fetched with - call `getPreferences` again to load the new tenant's data.
 
 Once `SuprSendProvider` is in place, you can use all SuprSend features.
 
