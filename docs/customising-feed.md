@@ -296,12 +296,34 @@ interface INotificationFeedTheme {
   tabs?: TabsThemeProps;
   notificationsContainer?: INotificationsContainerTheme;
   notification?: INotificationCardTheme;
+  connectionDot?: IConnectionDotThemeProps; // Only rendered when reachability is enabled
+  connectionBanner?: IConnectionBannerTheme; // Only rendered when reachability is enabled
 }
 
 interface IHeaderTheme {
   container?: React.CSSProperties;
   headerText?: React.CSSProperties; // Use this to customize the header title font style, color, size, etc.
   markAllReadText?: React.CSSProperties; // Use this to customize the "Mark all as read" text font style, color, size, etc.
+}
+
+interface IConnectionDotThemeProps {
+  connectedColor?: string; // Feed is live
+  warningColor?: string; // Realtime and/or fetching is down
+  offlineColor?: string; // Device has no internet
+  ringColor?: string; // The surface the dot sits on: draws the ring behind the bell dot, and fills the hollow offline dot. Set it to the background the dot appears against
+}
+
+interface IConnectionBannerTheme {
+  container?: React.CSSProperties; // Applied to both tones
+  warning?: IConnectionBannerToneTheme; // Realtime and/or fetching is down
+  offline?: IConnectionBannerToneTheme; // Device has no internet
+}
+
+interface IConnectionBannerToneTheme {
+  container?: React.CSSProperties;
+  icon?: IconThemeProps;
+  text?: React.CSSProperties;
+  actionText?: React.CSSProperties; // "Report issue"
 }
 
 interface TabsThemeProps {

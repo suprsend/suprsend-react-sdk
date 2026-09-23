@@ -7,26 +7,48 @@ import {
   ApiResponse,
   useTranslations,
   useFeed,
+  ReachabilityStatus,
 } from '@suprsend/react-core';
-import { CText, HeadingText, lightColors } from '../utils/styles';
-import { TabsThemeProps, IHeaderTheme } from '../interface';
+import {
+  CText,
+  HeadingText,
+  lightColors,
+  lightStatusColors,
+} from '../utils/styles';
+import { ConnectionBanner, ConnectionDot } from '../ConnectionStatus';
+import { getConnectionMessageKey } from '../utils/connection';
+import {
+  TabsThemeProps,
+  IHeaderTheme,
+  IConnectionBannerTheme,
+  IConnectionDotThemeProps,
+} from '../interface';
 
 interface InternalHeaderRightComponentProps {
   header?: IHeaderTheme;
   markAllRead: () => Promise<ApiResponse> | undefined;
+  disabled?: boolean;
 }
 
 function InternalHeaderRightComponent({
   header,
   markAllRead,
+  disabled,
 }: InternalHeaderRightComponentProps) {
   const { t } = useTranslations();
   return (
     <AllReadButton
-      style={header?.markAllReadText}
+      style={{
+        ...header?.markAllReadText,
+        ...(disabled
+          ? { color: lightStatusColors.neutral, cursor: 'default' }
+          : null),
+      }}
       className="ss-feed-mark-all-read-button"
+      aria-disabled={disabled || undefined}
       onClick={(e) => {
         e.stopPropagation();
+        if (disabled) return;
         markAllRead();
       }}
     >
@@ -43,6 +65,8 @@ interface IHeaderProps {
       markAllReadText?: React.CSSProperties;
     };
     tabs?: TabsThemeProps;
+    connectionDot?: IConnectionDotThemeProps;
+    connectionBanner?: IConnectionBannerTheme;
   };
   tabBadgeComponent?: React.FC<{ count: number }>;
   showUnreadCountOnTabs?: boolean;
@@ -72,12 +96,26 @@ export default function Header({
   const header = style?.header;
   const tabs = style?.tabs;
 
+  const reachabilityStatus = feed?.reachability?.status;
+  const hasBanner = !!getConnectionMessageKey(reachabilityStatus);
+  const offline = reachabilityStatus === ReachabilityStatus.OFFLINE;
+
   return (
     <Container className="ss-feed-header" style={header?.container}>
-      <TopContainer hasStores={hasStores}>
-        <HeaderText className="ss-feed-header-text" style={header?.headerText}>
-          {t('notifications')}
-        </HeaderText>
+      <TopContainer hasStores={hasStores} hasBanner={hasBanner}>
+        <TitleContainer className="ss-feed-header-title-container">
+          <HeaderText
+            className="ss-feed-header-text"
+            style={header?.headerText}
+          >
+            {t('notifications')}
+          </HeaderText>
+          <ConnectionDot
+            status={reachabilityStatus}
+            size={9}
+            style={style?.connectionDot}
+          />
+        </TitleContainer>
         {HeaderRightComponent ? (
           <HeaderRightComponent
             markAllRead={() => feedClient?.markAllAsRead()}
@@ -89,9 +127,22 @@ export default function Header({
           <InternalHeaderRightComponent
             header={header}
             markAllRead={() => feedClient?.markAllAsRead()}
+            disabled={offline}
           />
         )}
       </TopContainer>
+      {hasBanner && (
+        <BannerContainer
+          className="ss-feed-connection-banner-container"
+          hasStores={hasStores}
+        >
+          <ConnectionBanner
+            status={reachabilityStatus}
+            reachability={feed?.reachability}
+            style={style?.connectionBanner}
+          />
+        </BannerContainer>
+      )}
       {hasStores && (
         <TabsContainer className="ss-feed-tabs-container">
           {stores.map((store: IStore, index: number) => {
@@ -167,12 +218,28 @@ const Container = styled.div`
   box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.1);
 `;
 
-const TopContainer = styled.div<{ hasStores: boolean }>`
+const TopContainer = styled.div<{ hasStores: boolean; hasBanner: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: ${(props) => (props.hasStores ? '16px' : '0px')};
-  padding-bottom: ${(props) => (props.hasStores ? '0px' : '16px')};
+  margin-bottom: ${(props) => {
+    if (props.hasBanner) return '12px';
+    return props.hasStores ? '16px' : '0px';
+  }};
+  padding-bottom: ${(props) =>
+    props.hasStores || props.hasBanner ? '0px' : '16px'};
+`;
+
+const TitleContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+const BannerContainer = styled.div<{ hasStores: boolean }>`
+  margin-left: -16px;
+  margin-right: -16px;
+  margin-bottom: ${(props) => (props.hasStores ? '12px' : '0px')};
 `;
 
 const TabsContainer = styled.div`

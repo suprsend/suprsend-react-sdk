@@ -202,6 +202,26 @@ export interface IHeaderTheme {
   markAllReadText?: React.CSSProperties;
 }
 
+export interface IConnectionDotThemeProps {
+  connectedColor?: string;
+  warningColor?: string;
+  offlineColor?: string;
+  ringColor?: string;
+}
+
+export interface IConnectionBannerToneTheme {
+  container?: React.CSSProperties;
+  icon?: IconThemeProps;
+  text?: React.CSSProperties;
+  actionText?: React.CSSProperties;
+}
+
+export interface IConnectionBannerTheme {
+  container?: React.CSSProperties;
+  warning?: IConnectionBannerToneTheme;
+  offline?: IConnectionBannerToneTheme;
+}
+
 export interface INotificationCardTheme {
   container?: NotificationCardContainerThemeProps;
   pinnedIcon?: IconThemeProps;
@@ -229,6 +249,8 @@ export interface INotificationFeedTheme {
   tabs?: TabsThemeProps;
   notificationsContainer?: INotificationsContainerTheme;
   notification?: INotificationCardTheme;
+  connectionDot?: IConnectionDotThemeProps;
+  connectionBanner?: IConnectionBannerTheme;
 }
 
 export interface ITheme extends INotificationFeedTheme {

@@ -23,6 +23,7 @@ interface InboxProps {
     apiHost?: string;
   };
   pageSize?: number; // defined page size defaults to 20, max value that can be passed is 100
+  reachability?: boolean; // defaults to true. Pass false to hide the connection status dot and banner. See "Connection status" below
   pagination?: boolean; // pass false to disable pagination
   theme?: ITheme; // used to customise css styles of existing component
   themeType?: ThemeType; // dark or light
@@ -77,6 +78,7 @@ interface SuprSendFeedProviderProps {
   pageSize?: number;
   stores?: IStore[] | null;
   host?: { socketHost?: string; apiHost?: string };
+  reachability?: boolean;
 }
 
 interface NotificationFeedProps {
@@ -108,3 +110,38 @@ Infinite scroll is also included to fetch more pages in `NotificationFeed` compo
   theme={{ notificationsContainer: { container: { height: '100vh' } } }}
 />
 ```
+
+## Connection status
+
+A feed that has silently stopped receiving notifications otherwise looks exactly like one with nothing new. `Inbox` surfaces the difference out of the box: the bell carries a small status dot next to the unread count, and the panel shows a banner whenever something is wrong.
+
+```javascript
+<Inbox /> // connection status is on
+
+<Inbox reachability={false} /> // opt out
+```
+
+
+| State | Bell dot | Banner |
+| --- | --- | --- |
+| Feed is live | Green | None |
+| Connection issue — realtime updates and/or fetching is down | Amber | "There seems to be a connection issue. New notifications may get delayed or missed." |
+| Device has no internet | Hollow grey | "You're offline. Notifications will update when your connection is back." |
+
+Every connection issue shows the same message regardless of which channel is down, since that distinction is yours to debug rather than the reader's to interpret.
+
+The status dot and the unread count stay separate on purpose. The count badge only renders when something is unread, so it cannot report a problem on an empty inbox, which is exactly when a user is asking why nothing has arrived.
+
+Nothing is shown until a connection outcome is actually observed, so the bell stays quiet on first paint. The offline banner has no "report" action, since the user's own network is not something you can act on.
+
+When using `NotificationFeed` directly you own the provider, so opt in there. `SuprSendFeedProvider` defaults to `false`; `NotificationFeed` renders the status UI as soon as it is enabled:
+
+```javascript
+<SuprSendFeedProvider reachability>
+  <NotificationFeed />
+</SuprSendFeedProvider>
+```
+
+Note: `reachability` is read when the feed is created. Toggling it later has no effect, matching `stores`, `host` and `pageSize`.
+
+Colors are themeable through `connectionDot` and `connectionBanner` — see [Customising CSS styles](customising-feed.md#customising-css-styles).

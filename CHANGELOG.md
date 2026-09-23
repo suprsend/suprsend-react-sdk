@@ -2,6 +2,22 @@
 
 All notable changes to `@suprsend/react` will be documented in this file.
 
+## [1.3.0] - 2026-09-22
+
+### Added
+
+- `Inbox` now shows connection status: a dot on the bell, and a banner in the panel when there is a connection issue or the device is offline. On by default, pass `reachability={false}` to turn it off. With `NotificationFeed`, pass `reachability` to your own `SuprSendFeedProvider`. See [Connection status](docs/in-app-feed.md#connection-status).
+- `connectionDot` and `connectionBanner` theme keys on `INotificationFeedTheme`, with dark-mode defaults. The banner's two tones are themed separately under `connectionBanner.warning` and `connectionBanner.offline`.
+
+### Changed
+
+- Upgraded `@suprsend/react-core` dependency to `^2.3.0`, which in turn upgrades `@suprsend/web-sdk` to `^5.3.0`. See the [react-core 2.3.0 changelog](https://github.com/suprsend/suprsend-react-core/blob/main/CHANGELOG.md#230) and [web-sdk 5.3.0 changelog](https://github.com/suprsend/suprsend-web-sdk/blob/main/CHANGELOG.md#530) for details.
+
+### Notes
+
+- `Inbox` looks different after this upgrade: a healthy feed shows a small green dot on the bell and beside the panel title. `reachability={false}` restores the previous appearance.
+- "Report issue" currently only logs to the console.
+
 ## [1.2.0] - 2026-09-03
 
 ### Added

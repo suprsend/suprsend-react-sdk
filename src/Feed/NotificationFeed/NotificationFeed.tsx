@@ -97,6 +97,12 @@ export default function NotificationFeed(config: NotificationFeedProps) {
       : config.theme || {};
 
   const notificationsContainerStyle = modifiedTheme?.notificationsContainer;
+  const headerStyle = {
+    header: modifiedTheme?.header,
+    tabs: modifiedTheme?.tabs,
+    connectionDot: modifiedTheme?.connectionDot,
+    connectionBanner: modifiedTheme?.connectionBanner,
+  };
   const pagination = config.pagination !== false;
   const CustomLoader = config?.loaderComponent;
   const ContainerDiv = config?.popover ? PopOverConatiner : Container;
@@ -126,7 +132,7 @@ export default function NotificationFeed(config: NotificationFeedProps) {
         id="ss-notification-container"
       >
         <NotificationFeedHeader
-          style={{ header: modifiedTheme?.header, tabs: modifiedTheme?.tabs }}
+          style={headerStyle}
           headerRightComponent={config.headerRightComponent}
           showUnreadCountOnTabs={config.showUnreadCountOnTabs}
           tabBadgeComponent={config.tabBadgeComponent}
@@ -142,7 +148,7 @@ export default function NotificationFeed(config: NotificationFeedProps) {
       id="ss-notification-container"
     >
       <NotificationFeedHeader
-        style={{ header: modifiedTheme?.header, tabs: modifiedTheme?.tabs }}
+        style={headerStyle}
         headerRightComponent={config.headerRightComponent}
         showUnreadCountOnTabs={config.showUnreadCountOnTabs}
         tabBadgeComponent={config.tabBadgeComponent}
