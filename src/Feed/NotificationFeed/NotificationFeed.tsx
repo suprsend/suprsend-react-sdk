@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
-import { keyframes } from '@emotion/react';
 import {
   useFeedClient,
   useFeedData,
@@ -18,7 +17,13 @@ import {
   ThemeType,
 } from '../interface';
 import { mergeDeep } from '../utils';
-import { CText, darkTheme, HeadingText, lightColors } from '../utils/styles';
+import {
+  CText,
+  darkTheme,
+  HeadingText,
+  lightColors,
+  spin,
+} from '../utils/styles';
 import useDebouncedValue from '../utils/useDebounceValue';
 
 interface LoaderProps {
@@ -285,15 +290,6 @@ const EmptySubText = styled(CText)`
 `;
 
 const ScrollDiv = styled.div``;
-
-const spin = keyframes`
-0% {
-  transform: rotate(0deg);
-}
-100% {
-  transform: rotate(360deg);
-}
-`;
 
 const Spinner = styled.div<{ size?: string; color?: string }>`
   border: ${(props) =>

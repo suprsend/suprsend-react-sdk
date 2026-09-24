@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { keyframes } from '@emotion/react';
 
 export const lightColors = {
   primary: '#2E70E8',
@@ -27,6 +28,7 @@ export const lightStatusColors = {
   neutral: '#94A3B8',
   neutralBackground: '#F1F5F9',
   neutralText: '#475569',
+  neutralTrack: '#CBD5E1',
 };
 
 export const darkStatusColors = {
@@ -38,6 +40,7 @@ export const darkStatusColors = {
   neutral: '#94A3B8',
   neutralBackground: 'rgba(148, 163, 184, 0.14)',
   neutralText: '#CBD5E1',
+  neutralTrack: 'rgba(148, 163, 184, 0.35)',
 };
 
 export const CText = styled.p`
@@ -83,6 +86,8 @@ export const darkTheme = {
     connectedColor: darkStatusColors.ok,
     warningColor: darkStatusColors.warning,
     offlineColor: darkStatusColors.neutral,
+    reconnectingColor: darkStatusColors.neutralText,
+    reconnectingTrackColor: darkStatusColors.neutralTrack,
     ringColor: darkColors.main,
   },
   connectionBanner: {
@@ -92,11 +97,22 @@ export const darkTheme = {
       text: { color: darkStatusColors.warningText },
       actionText: { color: darkStatusColors.warningText },
     },
+    authError: {
+      container: { backgroundColor: darkStatusColors.warningBackground },
+      icon: { color: darkStatusColors.warningIcon },
+      text: { color: darkStatusColors.warningText },
+    },
     offline: {
       container: { backgroundColor: darkStatusColors.neutralBackground },
       icon: { color: darkStatusColors.neutralText },
       text: { color: darkStatusColors.neutralText },
       actionText: { color: darkStatusColors.neutralText },
+    },
+    reconnecting: {
+      container: { backgroundColor: darkStatusColors.neutralBackground },
+      icon: { color: darkStatusColors.neutralText },
+      spinnerTrackColor: darkStatusColors.neutralTrack,
+      text: { color: darkStatusColors.neutralText },
     },
   },
   notificationsContainer: {
@@ -174,3 +190,12 @@ export const darkTheme = {
     },
   },
 };
+
+export const spin = keyframes`
+0% {
+  transform: rotate(0deg);
+}
+100% {
+  transform: rotate(360deg);
+}
+`;

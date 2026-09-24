@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { ReachabilityStatus } from '@suprsend/react-core';
 import { IConnectionDotThemeProps } from '../interface';
 import { lightColors, lightStatusColors } from '../utils/styles';
+import ConnectionSpinner from './ConnectionSpinner';
 
 interface ConnectionDotProps {
   status?: ReachabilityStatus;
@@ -20,12 +21,28 @@ export default function ConnectionDot({
 }: ConnectionDotProps) {
   const surfaceColor = style?.ringColor || lightColors.main;
 
+  if (status === ReachabilityStatus.RECONNECTING) {
+    return (
+      <ConnectionSpinner
+        size={size}
+        color={style?.reconnectingColor}
+        trackColor={style?.reconnectingTrackColor}
+        label={label}
+        style={{
+          backgroundColor: ring ? surfaceColor : undefined,
+          boxShadow: ring ? `0 0 0 2px ${surfaceColor}` : undefined,
+        }}
+      />
+    );
+  }
+
   let color: string;
   switch (status) {
     case ReachabilityStatus.ONLINE:
       color = style?.connectedColor || lightStatusColors.ok;
       break;
     case ReachabilityStatus.DEGRADED:
+    case ReachabilityStatus.AUTH_ERROR:
       color = style?.warningColor || lightStatusColors.warning;
       break;
     case ReachabilityStatus.OFFLINE:

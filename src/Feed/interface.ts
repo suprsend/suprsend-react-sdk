@@ -206,20 +206,25 @@ export interface IConnectionDotThemeProps {
   connectedColor?: string;
   warningColor?: string;
   offlineColor?: string;
+  reconnectingColor?: string;
+  reconnectingTrackColor?: string;
   ringColor?: string;
 }
 
-export interface IConnectionBannerToneTheme {
+export interface IConnectionBannerVariantTheme {
   container?: React.CSSProperties;
   icon?: IconThemeProps;
+  spinnerTrackColor?: string;
   text?: React.CSSProperties;
   actionText?: React.CSSProperties;
 }
 
 export interface IConnectionBannerTheme {
   container?: React.CSSProperties;
-  warning?: IConnectionBannerToneTheme;
-  offline?: IConnectionBannerToneTheme;
+  warning?: IConnectionBannerVariantTheme;
+  authError?: IConnectionBannerVariantTheme;
+  offline?: IConnectionBannerVariantTheme;
+  reconnecting?: IConnectionBannerVariantTheme;
 }
 
 export interface INotificationCardTheme {

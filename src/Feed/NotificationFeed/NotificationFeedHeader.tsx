@@ -138,7 +138,6 @@ export default function Header({
         >
           <ConnectionBanner
             status={reachabilityStatus}
-            reachability={feed?.reachability}
             style={style?.connectionBanner}
           />
         </BannerContainer>

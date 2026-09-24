@@ -125,14 +125,18 @@ A feed that has silently stopped receiving notifications otherwise looks exactly
 | State | Bell dot | Banner |
 | --- | --- | --- |
 | Feed is live | Green | None |
+| Realtime dropped and is reconnecting (first 10 attempts) | Grey spinner | "Connecting…" |
 | Connection issue — realtime updates and/or fetching is down | Amber | "There seems to be a connection issue. New notifications may get delayed or missed." |
+| Feed fetch failed with `401` / `403` — user token is invalid, expired or lacks permission | Amber | "Not able to fetch notifications due to authentication or permission issue." |
 | Device has no internet | Hollow grey | "You're offline. Notifications will update when your connection is back." |
 
 Every connection issue shows the same message regardless of which channel is down, since that distinction is yours to debug rather than the reader's to interpret.
 
+Most realtime drops recover within seconds, so a socket that was connected and then drops shows "Connecting…" first. After 10 failed reconnect attempts it switches to the connection issue banner, and it keeps retrying in the background. The first connection on page load never shows "Connecting…".
+
 The status dot and the unread count stay separate on purpose. The count badge only renders when something is unread, so it cannot report a problem on an empty inbox, which is exactly when a user is asking why nothing has arrived.
 
-Nothing is shown until a connection outcome is actually observed, so the bell stays quiet on first paint. The offline banner has no "report" action, since the user's own network is not something you can act on.
+Nothing is shown until a connection outcome is actually observed, so the bell stays quiet on first paint. The offline and authentication banners have no "refresh" or "report" actions: neither the user's own network nor a bad user token is fixed by reloading or reporting. The authentication banner clears on the next successful fetch, for example after `refreshUserToken` returns a new token.
 
 When using `NotificationFeed` directly you own the provider, so opt in there. `SuprSendFeedProvider` defaults to `false`; `NotificationFeed` renders the status UI as soon as it is enabled:
 
