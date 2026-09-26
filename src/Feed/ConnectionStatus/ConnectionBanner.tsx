@@ -30,7 +30,7 @@ interface VariantDefaults {
   iconPath?: string;
 }
 
-type VariantKey = 'warning' | 'authError' | 'offline' | 'reconnecting';
+type VariantKey = 'warning' | 'authError' | 'offline' | 'connecting';
 
 const warningDefaults: VariantDefaults = {
   background: lightStatusColors.warningBackground,
@@ -50,7 +50,7 @@ const variantDefaults: Record<VariantKey, VariantDefaults> = {
     iconPath:
       'M2 2l12 12M6.4 3.5A6.5 6.5 0 0 1 14 8M4 5.6A6.5 6.5 0 0 0 2 8m2.6 2.1A3.5 3.5 0 0 1 8 9.2m2.6 1.9L8 13.8',
   },
-  reconnecting: {
+  connecting: {
     background: lightStatusColors.neutralBackground,
     text: lightStatusColors.neutralText,
     icon: lightStatusColors.neutralText,
@@ -122,16 +122,16 @@ export default function ConnectionBanner({
   const variantKey: VariantKey =
     status === ReachabilityStatus.OFFLINE
       ? 'offline'
-      : status === ReachabilityStatus.RECONNECTING
-        ? 'reconnecting'
+      : status === ReachabilityStatus.CONNECTING
+        ? 'connecting'
         : status === ReachabilityStatus.AUTH_ERROR
           ? 'authError'
           : 'warning';
-  const reconnecting = variantKey === 'reconnecting';
-  // refreshing or reporting can't fix offline, reconnecting or a bad token
+  const connecting = variantKey === 'connecting';
+  // refreshing or reporting can't fix offline, connecting or a bad token
   const showActions = variantKey === 'warning';
-  // offline and reconnecting show a single line
-  const compact = variantKey === 'offline' || reconnecting;
+  // offline and connecting show a single line
+  const compact = variantKey === 'offline' || connecting;
   const defaults = variantDefaults[variantKey];
   const variant: IConnectionBannerVariantTheme | undefined =
     style?.[variantKey];
@@ -151,7 +151,7 @@ export default function ConnectionBanner({
       }}
     >
       <IconContainer compact={compact}>
-        {reconnecting || !defaults.iconPath ? (
+        {connecting || !defaults.iconPath ? (
           <ConnectionSpinner
             size={iconStyle.width || 16}
             color={iconStyle.color}

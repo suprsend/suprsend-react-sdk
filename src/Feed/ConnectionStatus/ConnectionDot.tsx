@@ -21,12 +21,12 @@ export default function ConnectionDot({
 }: ConnectionDotProps) {
   const surfaceColor = style?.ringColor || lightColors.main;
 
-  if (status === ReachabilityStatus.RECONNECTING) {
+  if (status === ReachabilityStatus.CONNECTING) {
     return (
       <ConnectionSpinner
         size={size}
-        color={style?.reconnectingColor}
-        trackColor={style?.reconnectingTrackColor}
+        color={style?.connectingColor}
+        trackColor={style?.connectingTrackColor}
         label={label}
         style={{
           backgroundColor: ring ? surfaceColor : undefined,

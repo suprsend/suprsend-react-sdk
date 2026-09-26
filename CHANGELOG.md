@@ -6,7 +6,7 @@ All notable changes to `@suprsend/react` will be documented in this file.
 
 ### Added
 
-- `Inbox` now shows connection status: a dot on the bell and beside the panel title, and a banner in the panel when the feed is reconnecting, has a connection issue, failed to authenticate or the device is offline. On by default, pass `reachability={false}` to turn it off. With `NotificationFeed`, pass `reachability` to your own `SuprSendFeedProvider`.
+- `Inbox` now shows connection status: a dot on the bell and beside the panel title, and a banner in the panel when the feed is connecting, has a connection issue, failed to authenticate or the device is offline. On by default, pass `reachability={false}` to turn it off. With `NotificationFeed`, pass `reachability` to your own `SuprSendFeedProvider`.
 
 ### Changed
 

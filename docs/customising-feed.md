@@ -310,8 +310,8 @@ interface IConnectionDotThemeProps {
   connectedColor?: string; // Feed is live
   warningColor?: string; // Realtime and/or fetching is down, or an authentication error
   offlineColor?: string; // Device has no internet
-  reconnectingColor?: string; // Spinner arc while realtime is reconnecting
-  reconnectingTrackColor?: string; // Spinner track while realtime is reconnecting
+  connectingColor?: string; // Spinner arc while the feed is connecting
+  connectingTrackColor?: string; // Spinner track while the feed is connecting
   ringColor?: string; // The surface the dot sits on: draws the ring behind the bell dot, and fills the hollow offline dot. Set it to the background the dot appears against
 }
 
@@ -320,7 +320,7 @@ interface IConnectionBannerTheme {
   warning?: IConnectionBannerVariantTheme; // Realtime and/or fetching is down
   authError?: IConnectionBannerVariantTheme; // Feed fetch failed with 401/403 (invalid or expired user token, or missing permission)
   offline?: IConnectionBannerVariantTheme; // Device has no internet
-  reconnecting?: IConnectionBannerVariantTheme; // Realtime dropped and is reconnecting ("Connecting…")
+  connecting?: IConnectionBannerVariantTheme; // Initial load, socket connect or reconnect in progress ("Connecting…")
 }
 
 interface IConnectionBannerVariantTheme {
@@ -328,7 +328,7 @@ interface IConnectionBannerVariantTheme {
   icon?: IconThemeProps;
   text?: React.CSSProperties;
   actionText?: React.CSSProperties; // "Refresh the page", "Report an issue" and report result
-  spinnerTrackColor?: string; // reconnecting variant only: track of the spinner (icon.color sets the arc)
+  spinnerTrackColor?: string; // connecting variant only: track of the spinner (icon.color sets the arc)
 }
 
 interface TabsThemeProps {

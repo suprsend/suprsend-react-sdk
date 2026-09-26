@@ -206,8 +206,8 @@ export interface IConnectionDotThemeProps {
   connectedColor?: string;
   warningColor?: string;
   offlineColor?: string;
-  reconnectingColor?: string;
-  reconnectingTrackColor?: string;
+  connectingColor?: string;
+  connectingTrackColor?: string;
   ringColor?: string;
 }
 
@@ -224,7 +224,7 @@ export interface IConnectionBannerTheme {
   warning?: IConnectionBannerVariantTheme;
   authError?: IConnectionBannerVariantTheme;
   offline?: IConnectionBannerVariantTheme;
-  reconnecting?: IConnectionBannerVariantTheme;
+  connecting?: IConnectionBannerVariantTheme;
 }
 
 export interface INotificationCardTheme {

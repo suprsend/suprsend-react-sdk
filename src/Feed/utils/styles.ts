@@ -86,8 +86,8 @@ export const darkTheme = {
     connectedColor: darkStatusColors.ok,
     warningColor: darkStatusColors.warning,
     offlineColor: darkStatusColors.neutral,
-    reconnectingColor: darkStatusColors.neutralText,
-    reconnectingTrackColor: darkStatusColors.neutralTrack,
+    connectingColor: darkStatusColors.neutralText,
+    connectingTrackColor: darkStatusColors.neutralTrack,
     ringColor: darkColors.main,
   },
   connectionBanner: {
@@ -108,7 +108,7 @@ export const darkTheme = {
       text: { color: darkStatusColors.neutralText },
       actionText: { color: darkStatusColors.neutralText },
     },
-    reconnecting: {
+    connecting: {
       container: { backgroundColor: darkStatusColors.neutralBackground },
       icon: { color: darkStatusColors.neutralText },
       spinnerTrackColor: darkStatusColors.neutralTrack,
