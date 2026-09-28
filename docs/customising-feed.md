@@ -296,12 +296,39 @@ interface INotificationFeedTheme {
   tabs?: TabsThemeProps;
   notificationsContainer?: INotificationsContainerTheme;
   notification?: INotificationCardTheme;
+  connectionDot?: IConnectionDotThemeProps; // Only rendered when reachability is enabled
+  connectionBanner?: IConnectionBannerTheme; // Only rendered when reachability is enabled
 }
 
 interface IHeaderTheme {
   container?: React.CSSProperties;
   headerText?: React.CSSProperties; // Use this to customize the header title font style, color, size, etc.
   markAllReadText?: React.CSSProperties; // Use this to customize the "Mark all as read" text font style, color, size, etc.
+}
+
+interface IConnectionDotThemeProps {
+  connectedColor?: string; // Feed is live
+  warningColor?: string; // Realtime and/or fetching is down, or an authentication error
+  offlineColor?: string; // Device has no internet
+  connectingColor?: string; // Spinner arc while the feed is connecting
+  connectingTrackColor?: string; // Spinner track while the feed is connecting
+  ringColor?: string; // The surface the dot sits on: draws the ring behind the bell dot, and fills the hollow offline dot. Set it to the background the dot appears against
+}
+
+interface IConnectionBannerTheme {
+  container?: React.CSSProperties; // Applied to all variants
+  warning?: IConnectionBannerVariantTheme; // Realtime and/or fetching is down
+  authError?: IConnectionBannerVariantTheme; // Feed fetch failed with 401/403 (invalid or expired user token, or missing permission)
+  offline?: IConnectionBannerVariantTheme; // Device has no internet
+  connecting?: IConnectionBannerVariantTheme; // Initial load, socket connect or reconnect in progress ("Connecting…")
+}
+
+interface IConnectionBannerVariantTheme {
+  container?: React.CSSProperties;
+  icon?: IconThemeProps;
+  text?: React.CSSProperties;
+  actionText?: React.CSSProperties; // "Refresh the page", "Report an issue" and report result
+  spinnerTrackColor?: string; // connecting variant only: track of the spinner (icon.color sets the arc)
 }
 
 interface TabsThemeProps {

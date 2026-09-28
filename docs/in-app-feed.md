@@ -23,6 +23,7 @@ interface InboxProps {
     apiHost?: string;
   };
   pageSize?: number; // defined page size defaults to 20, max value that can be passed is 100
+  reachability?: boolean; // defaults to true. Pass false to hide the connection status dot and banner.
   pagination?: boolean; // pass false to disable pagination
   theme?: ITheme; // used to customise css styles of existing component
   themeType?: ThemeType; // dark or light
@@ -77,6 +78,7 @@ interface SuprSendFeedProviderProps {
   pageSize?: number;
   stores?: IStore[] | null;
   host?: { socketHost?: string; apiHost?: string };
+  reachability?: boolean;
 }
 
 interface NotificationFeedProps {

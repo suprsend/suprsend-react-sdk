@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { keyframes } from '@emotion/react';
 
 export const lightColors = {
   primary: '#2E70E8',
@@ -16,6 +17,30 @@ export const darkColors = {
   border: '#3A4A61',
   main: '#1D2635',
   error: '#F97066',
+};
+
+export const lightStatusColors = {
+  ok: '#16A34A',
+  warning: '#D97706',
+  warningIcon: '#B45309',
+  warningBackground: '#FEF3C7',
+  warningText: '#92400E',
+  neutral: '#94A3B8',
+  neutralBackground: '#F1F5F9',
+  neutralText: '#475569',
+  neutralTrack: '#CBD5E1',
+};
+
+export const darkStatusColors = {
+  ok: '#22C55E',
+  warning: '#F59E0B',
+  warningIcon: '#FBBF24',
+  warningBackground: 'rgba(217, 119, 6, 0.18)',
+  warningText: '#FCD34D',
+  neutral: '#94A3B8',
+  neutralBackground: 'rgba(148, 163, 184, 0.14)',
+  neutralText: '#CBD5E1',
+  neutralTrack: 'rgba(148, 163, 184, 0.35)',
 };
 
 export const CText = styled.p`
@@ -56,6 +81,39 @@ export const darkTheme = {
     bottomColor: darkColors.primary,
     badgeColor: 'rgba(100, 116, 139, 0.5)',
     badgeText: darkColors.primaryText,
+  },
+  connectionDot: {
+    connectedColor: darkStatusColors.ok,
+    warningColor: darkStatusColors.warning,
+    offlineColor: darkStatusColors.neutral,
+    connectingColor: darkStatusColors.neutralText,
+    connectingTrackColor: darkStatusColors.neutralTrack,
+    ringColor: darkColors.main,
+  },
+  connectionBanner: {
+    warning: {
+      container: { backgroundColor: darkStatusColors.warningBackground },
+      icon: { color: darkStatusColors.warningIcon },
+      text: { color: darkStatusColors.warningText },
+      actionText: { color: darkStatusColors.warningText },
+    },
+    authError: {
+      container: { backgroundColor: darkStatusColors.warningBackground },
+      icon: { color: darkStatusColors.warningIcon },
+      text: { color: darkStatusColors.warningText },
+    },
+    offline: {
+      container: { backgroundColor: darkStatusColors.neutralBackground },
+      icon: { color: darkStatusColors.neutralText },
+      text: { color: darkStatusColors.neutralText },
+      actionText: { color: darkStatusColors.neutralText },
+    },
+    connecting: {
+      container: { backgroundColor: darkStatusColors.neutralBackground },
+      icon: { color: darkStatusColors.neutralText },
+      spinnerTrackColor: darkStatusColors.neutralTrack,
+      text: { color: darkStatusColors.neutralText },
+    },
   },
   notificationsContainer: {
     container: {
@@ -132,3 +190,12 @@ export const darkTheme = {
     },
   },
 };
+
+export const spin = keyframes`
+0% {
+  transform: rotate(0deg);
+}
+100% {
+  transform: rotate(360deg);
+}
+`;
