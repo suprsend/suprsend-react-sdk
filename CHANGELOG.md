@@ -2,6 +2,12 @@
 
 All notable changes to `@suprsend/react` will be documented in this file.
 
+## [1.4.0] - 2026-10-06
+
+### Added
+
+- `theme.tabs` now accepts CSS for each part of the tabs, so you can set font, spacing and more: `container` (row of tabs), `tab` and `selectedTab` (each tab), `text` and `selectedText` (tab label) and `badge` (unread count badge). Existing color keys keep working, and the new CSS keys take precedence over them. [Read more](docs/customising-feed.md).
+
 ## [1.3.0] - 2026-09-22
 
 ### Added

@@ -332,11 +332,17 @@ interface IConnectionBannerVariantTheme {
 }
 
 interface TabsThemeProps {
-  color?: string;
-  unselectedColor?: string;
-  bottomColor?: string;
-  badgeColor?: string;
-  badgeText?: string;
+  color?: string; // selected tab text color
+  unselectedColor?: string; // unselected tab text color
+  bottomColor?: string; // selected tab underline color
+  badgeColor?: string; // unread count badge background color
+  badgeText?: string; // unread count badge text color
+  container?: React.CSSProperties; // row holding all tabs, use for gap, padding etc.
+  tab?: React.CSSProperties; // each tab, use for padding, border, background etc.
+  selectedTab?: React.CSSProperties; // merged over tab for the selected tab
+  text?: React.CSSProperties; // tab label, use for font family, size, weight etc.
+  selectedText?: React.CSSProperties; // merged over text for the selected tab
+  badge?: React.CSSProperties; // unread count badge
 }
 
 interface INotificationsContainerTheme {
