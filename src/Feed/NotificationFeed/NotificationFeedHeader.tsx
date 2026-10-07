@@ -94,7 +94,20 @@ export default function Header({
   const TabBadgeComponent = tabBadgeComponent;
   const HeaderRightComponent = headerRightComponent;
   const header = style?.header;
-  const tabs = style?.tabs;
+  const {
+    color: tabColor,
+    unselectedColor: tabUnselectedColor,
+    bottomColor: tabBottomColor,
+    badgeColor: tabBadgeColor,
+    badgeText: tabBadgeTextColor,
+    container: tabsContainerStyle,
+    tab: tabStyle,
+    selectedTab: selectedTabStyle,
+    text: tabTextStyle,
+    selectedText: selectedTabTextStyle,
+    badge: tabBadgeStyle,
+    ...legacyTabTextStyle
+  } = style?.tabs || {};
 
   const reachabilityStatus = feed?.reachability?.status;
   const hasBanner = !!getConnectionMessageKey(reachabilityStatus);
@@ -143,17 +156,20 @@ export default function Header({
         </BannerContainer>
       )}
       {hasStores && (
-        <TabsContainer className="ss-feed-tabs-container">
+        <TabsContainer
+          className="ss-feed-tabs-container"
+          style={tabsContainerStyle}
+        >
           {stores.map((store: IStore, index: number) => {
             const isActiveTab = feedData?.store.storeId === store.storeId;
             const tabUnreadCount = feedData?.meta[store.storeId] || 0;
             const showBadge = showUnreadCountOnTabs && tabUnreadCount > 0;
             const selectedTabBottomColor = isActiveTab
-              ? tabs?.bottomColor
+              ? tabBottomColor
               : 'none';
             const textColor = isActiveTab
-              ? tabs?.color
-              : tabs?.unselectedColor || tabs?.color;
+              ? tabColor
+              : tabUnselectedColor || tabColor;
             const label =
               feed?.stores?.find(
                 (storeItem) => storeItem.storeId === store.storeId
@@ -162,7 +178,11 @@ export default function Header({
             return (
               <TabContainer
                 className="ss-feed-tab"
-                style={{ borderBottomColor: selectedTabBottomColor }}
+                style={{
+                  borderBottomColor: selectedTabBottomColor,
+                  ...tabStyle,
+                  ...(isActiveTab ? selectedTabStyle : null),
+                }}
                 key={index}
                 selected={isActiveTab}
                 onClick={() => {
@@ -172,8 +192,10 @@ export default function Header({
                 <TabText
                   selected={isActiveTab}
                   style={{
-                    ...tabs,
+                    ...legacyTabTextStyle,
                     color: textColor,
+                    ...tabTextStyle,
+                    ...(isActiveTab ? selectedTabTextStyle : null),
                   }}
                   className="ss-feed-tab-text"
                 >
@@ -186,8 +208,9 @@ export default function Header({
                     <TabBadge
                       className="ss-feed-tab-badge"
                       style={{
-                        backgroundColor: tabs?.badgeColor,
-                        color: tabs?.badgeText,
+                        backgroundColor: tabBadgeColor,
+                        color: tabBadgeTextColor,
+                        ...tabBadgeStyle,
                       }}
                     >
                       <TabBadgeText

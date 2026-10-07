@@ -47,6 +47,12 @@ export interface TabsThemeProps {
   bottomColor?: string;
   badgeColor?: string;
   badgeText?: string;
+  container?: React.CSSProperties;
+  tab?: React.CSSProperties;
+  selectedTab?: React.CSSProperties;
+  text?: React.CSSProperties;
+  selectedText?: React.CSSProperties;
+  badge?: React.CSSProperties;
 }
 
 export interface LoaderThemeProps {
