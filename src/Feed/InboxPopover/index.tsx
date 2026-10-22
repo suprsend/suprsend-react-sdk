@@ -9,6 +9,7 @@ export default function Inbox(config: InboxProps) {
     stores,
     host,
     reachability = true,
+    disconnectWhenHidden,
     children,
   } = config;
 
@@ -18,6 +19,7 @@ export default function Inbox(config: InboxProps) {
     stores,
     host,
     reachability,
+    disconnectWhenHidden,
   };
 
   return (
