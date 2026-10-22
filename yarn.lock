@@ -773,17 +773,17 @@
   resolved "https://registry.yarnpkg.com/@socket.io/component-emitter/-/component-emitter-3.1.2.tgz#821f8442f4175d8f0467b9daf26e3a18e2d02af2"
   integrity sha512-9BCxFwvbGg/RsZK9tjXd8s4UcwR0MWeFQ1XEKIQVVvAGJyINdrqKMcTRyLoK8Rse1GjzLV9cwjWV1olXRWEXVA==
 
-"@suprsend/react-core@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@suprsend/react-core/-/react-core-2.3.0.tgz#b1e071b8b2bfd5bfb195df2baab553e730b7face"
-  integrity sha512-Io47vUJ74MQl0wdZ8VQw1b0bew2B0IkuqPhp9/j7I265XD/SQpKMlsOqqrmpC1zqBkOnp9VpslpwlR9FYUKGAw==
+"@suprsend/react-core@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@suprsend/react-core/-/react-core-2.4.0.tgz#31e4e3a191167d6b87e694522582edab981fa88a"
+  integrity sha512-oL4bCh4l3wYPHNpYEUuBKQKaMZtt0LRaZS7Rz2YwlIT+ht6dyI1NelQxmg/dAy+qaAPZm9B2dXtcwFZ6QcRcxg==
   dependencies:
-    "@suprsend/web-sdk" "^5.3.0"
+    "@suprsend/web-sdk" "^5.4.0"
 
-"@suprsend/web-sdk@^5.3.0":
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/@suprsend/web-sdk/-/web-sdk-5.3.0.tgz#6605f971fa93e9121200440aac4e26fece47bf5b"
-  integrity sha512-HFwZjodjzL8G5FjWHb2XgxDRzUxJjv3HH5j0g67l5m8RHRmDi4XI4HBPpVC7Z3GC0ckeOThAYwqU4ZgDt0+i2w==
+"@suprsend/web-sdk@^5.4.0":
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/@suprsend/web-sdk/-/web-sdk-5.4.0.tgz#8c6b6a6f06cf0025ed2861a7dc2594f599831366"
+  integrity sha512-LDaUHp9RAaXtwonqZTEPyOI7fjYE3R6/1yHlIQdaeCdMIZy7ZBqw3X9JZHIEjq4iD1aryJsV2ZUDCtd0OVbeeA==
   dependencies:
     jwt-decode "3.1.2"
     mitt "^3.0.1"
