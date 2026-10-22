@@ -2,6 +2,20 @@
 
 All notable changes to `@suprsend/react` will be documented in this file.
 
+## [1.5.0] - 2026-10-22
+
+### Added
+
+- `Inbox` now accepts a `disconnectWhenHidden` prop (defaults to `true`): disconnects the feed socket after the tab is hidden for 1 minute, and reconnects and refreshes the feed when the tab is visible again. Pass `false` to keep the socket always connected. With `NotificationFeed`, pass it to your own `SuprSendFeedProvider`. [Read more](docs/in-app-feed.md).
+
+### Changed
+
+- Upgraded `@suprsend/react-core` dependency to `^2.4.0`, which in turn upgrades `@suprsend/web-sdk` to `^5.4.0`. See the [react-core 2.4.0 changelog](https://github.com/suprsend/suprsend-react-core/blob/main/CHANGELOG.md#240) and [web-sdk 5.4.0 changelog](https://github.com/suprsend/suprsend-web-sdk/blob/main/CHANGELOG.md#540) for details.
+
+### Notes
+
+- The feed socket now disconnects by default when the tab stays hidden for over a minute. Pass `disconnectWhenHidden={false}` to keep the previous behaviour.
+
 ## [1.4.0] - 2026-10-06
 
 ### Added
