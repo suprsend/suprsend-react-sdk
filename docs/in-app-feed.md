@@ -24,6 +24,7 @@ interface InboxProps {
   };
   pageSize?: number; // defined page size defaults to 20, max value that can be passed is 100
   reachability?: boolean; // defaults to true. Pass false to hide the connection status dot and banner.
+  disconnectWhenHidden?: boolean; // defaults to true. Disconnects the feed socket after the tab is hidden for 1 minute and reconnects when visible again. Pass false to keep it always connected.
   pagination?: boolean; // pass false to disable pagination
   theme?: ITheme; // used to customise css styles of existing component
   themeType?: ThemeType; // dark or light
@@ -79,6 +80,7 @@ interface SuprSendFeedProviderProps {
   stores?: IStore[] | null;
   host?: { socketHost?: string; apiHost?: string };
   reachability?: boolean;
+  disconnectWhenHidden?: boolean;
 }
 
 interface NotificationFeedProps {
