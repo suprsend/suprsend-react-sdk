@@ -74,6 +74,7 @@ export const darkTheme = {
     },
     headerText: { color: darkColors.primaryText },
     markAllReadText: { color: darkColors.primary },
+    archiveAllText: { color: darkColors.primary },
   },
   tabs: {
     color: darkColors.primaryText,
@@ -114,6 +115,13 @@ export const darkTheme = {
       spinnerTrackColor: darkStatusColors.neutralTrack,
       text: { color: darkStatusColors.neutralText },
     },
+  },
+  archiveAllConfirm: {
+    container: { backgroundColor: darkStatusColors.neutralBackground },
+    icon: { color: darkStatusColors.neutralText },
+    text: { color: darkStatusColors.neutralText },
+    cancelText: { color: darkStatusColors.neutralText },
+    confirmText: { color: darkColors.primary },
   },
   notificationsContainer: {
     container: {

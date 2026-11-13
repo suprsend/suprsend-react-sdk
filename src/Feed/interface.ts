@@ -181,10 +181,12 @@ export interface NotificationFeedProps {
   notificationComponent?: React.FC<CustomNotificationCard>;
   headerRightComponent?: React.FC<{
     markAllRead: () => void;
+    archiveAll: () => void;
     closeInboxPopover: () => void;
   }>;
   pagination?: boolean;
   showUnreadCountOnTabs?: boolean;
+  showArchiveAll?: boolean;
   hideAvatar?: boolean;
   themeType?: ThemeType;
   theme?: INotificationFeedTheme;
@@ -206,6 +208,7 @@ export interface IHeaderTheme {
   container?: React.CSSProperties;
   headerText?: React.CSSProperties;
   markAllReadText?: React.CSSProperties;
+  archiveAllText?: React.CSSProperties;
 }
 
 export interface IConnectionDotThemeProps {
@@ -231,6 +234,14 @@ export interface IConnectionBannerTheme {
   authError?: IConnectionBannerVariantTheme;
   offline?: IConnectionBannerVariantTheme;
   connecting?: IConnectionBannerVariantTheme;
+}
+
+export interface IArchiveAllConfirmTheme {
+  container?: React.CSSProperties;
+  icon?: IconThemeProps;
+  text?: React.CSSProperties;
+  cancelText?: React.CSSProperties;
+  confirmText?: React.CSSProperties;
 }
 
 export interface INotificationCardTheme {
@@ -262,6 +273,7 @@ export interface INotificationFeedTheme {
   notification?: INotificationCardTheme;
   connectionDot?: IConnectionDotThemeProps;
   connectionBanner?: IConnectionBannerTheme;
+  archiveAllConfirm?: IArchiveAllConfirmTheme;
 }
 
 export interface ITheme extends INotificationFeedTheme {
