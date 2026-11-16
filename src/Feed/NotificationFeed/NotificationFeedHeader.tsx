@@ -27,7 +27,7 @@ import {
 } from '../interface';
 import ArchiveAllConfirm, { ArchiveAllConfirmState } from './ArchiveAllConfirm';
 
-const ARCHIVE_ALL_NOTICE_MS = 3000;
+const ARCHIVE_ALL_NOTICE_MS = 5000;
 
 interface InternalHeaderRightComponentProps {
   header?: IHeaderTheme;
@@ -144,17 +144,15 @@ export default function Header({
   const reachabilityStatus = feed?.reachability?.status;
   const hasConnectionBanner = !!getConnectionMessageKey(reachabilityStatus);
   const offline = reachabilityStatus === ReachabilityStatus.OFFLINE;
-  const activeStoreArchived = !!feedData?.store?.query?.archived;
-  const archiveAllAvailable = showArchiveAll && !activeStoreArchived;
   const showArchiveAllConfirm =
-    archiveAllAvailable && !offline && archiveAllState !== 'idle';
+    showArchiveAll && !offline && archiveAllState !== 'idle';
   const hasBanner = hasConnectionBanner || showArchiveAllConfirm;
 
   useEffect(() => {
-    if (archiveAllState === 'confirming' && (!archiveAllAvailable || offline)) {
+    if (archiveAllState === 'confirming' && (!showArchiveAll || offline)) {
       setArchiveAllState('idle');
     }
-  }, [archiveAllState, archiveAllAvailable, offline]);
+  }, [archiveAllState, showArchiveAll, offline]);
 
   useEffect(() => {
     if (archiveAllState !== 'started') return;
@@ -206,7 +204,7 @@ export default function Header({
             header={header}
             markAllRead={() => feedClient?.markAllAsRead()}
             onArchiveAllClick={() => setArchiveAllState('confirming')}
-            showArchiveAll={archiveAllAvailable}
+            showArchiveAll={showArchiveAll}
             disabled={offline}
           />
         )}

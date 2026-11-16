@@ -31,7 +31,6 @@ interface InboxProps {
   popperPosition?: Placement; // placement of inbox popover on click of bell
   hideAvatar?: boolean;
   showUnreadCountOnTabs?: boolean;
-  showArchiveAll?: boolean; // defaults to false. Pass true to show "Archive all" next to "Mark all as read" in the header. Hidden when the active store lists archived notifications.
   notificationClickHandler?: (notification: IRemoteNotification) => void; // callback executed on click of notification card
   primaryActionClickHandler?: (notification: IRemoteNotification) => void; // callback executed on click of primary action button
   secondaryActionClickHandler?: (notification: IRemoteNotification) => void; // callback executed on click of secondary action button
@@ -43,7 +42,6 @@ interface InboxProps {
   notificationComponent?: React.FC<CustomNotificationCard>; // custom notification card component
   headerRightComponent?: React.FC<{
     markAllRead: () => void;
-    archiveAll: () => void;
     closeInboxPopover: () => void;
   }>; // custom right side header component to override mark all as read etc
 }
@@ -88,7 +86,6 @@ interface SuprSendFeedProviderProps {
 interface NotificationFeedProps {
   pagination?: boolean;
   showUnreadCountOnTabs?: boolean;
-  showArchiveAll?: boolean;
   hideAvatar?: boolean;
   themeType?: ThemeType;
   theme?: INotificationFeedTheme;
@@ -101,7 +98,6 @@ interface NotificationFeedProps {
   notificationComponent?: React.FC<CustomNotificationCard>;
   headerRightComponent?: React.FC<{
     markAllRead: () => void;
-    archiveAll: () => void;
     closeInboxPopover: () => void;
   }>;
 }

@@ -2,6 +2,17 @@
 
 All notable changes to `@suprsend/react` will be documented in this file.
 
+## [1.6.0] - 2026-11-16
+
+### Added
+
+- `Inbox` and `NotificationFeed` now accept a `showArchiveAll` prop (defaults to `false`). Pass `true` to show an `Archive all` button next to `Mark all as read` in the header. It asks the user to confirm, since archiving can't be undone, then archives all of their notifications in the current tenant. Archiving runs in the background and the feed refreshes once it completes. Style it with `theme.header.archiveAllText` and `theme.archiveAllConfirm`.
+- `headerRightComponent` now also receives `archiveAll`. It archives right away without the confirmation, so add your own if you need one.
+
+### Changed
+
+- Upgraded `@suprsend/react-core` dependency to `^2.5.0`, which in turn upgrades `@suprsend/web-sdk` to `^5.5.0`. See the [react-core 2.5.0 changelog](https://github.com/suprsend/suprsend-react-core/blob/main/CHANGELOG.md#250) and [web-sdk 5.5.0 changelog](https://github.com/suprsend/suprsend-web-sdk/blob/main/CHANGELOG.md#550) for details.
+
 ## [1.5.0] - 2026-10-22
 
 ### Added

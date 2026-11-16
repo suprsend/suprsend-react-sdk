@@ -159,32 +159,22 @@ This element shows the number of unseen notifications on Bell. You can customise
 
 You can customize the header in two ways:
 
-1. **Replace the right side component**: You can add custom component on right side of Header, this will replace `Mark all as read` text and add any JSX you pass as component in that place. You can even add custom icons like setting or preferences in that JSX and navigate user to that pages. The component receives `markAllRead` and `archiveAll` to bulk update all notifications, and `closeInboxPopover` to close the popover. `archiveAll` archives right away without the confirmation shown by the default header, so add your own confirmation if you need one.
+1. **Replace the right side component**: You can add custom component on right side of Header, this will replace `Mark all as read` text and add any JSX you pass as component in that place. You can even add custom icons like setting or preferences in that JSX and navigate user to that pages.
 
 2. **Style the header text**: You can change the font style, color, and other CSS properties of the header text using the `header` theme property. See [Customising CSS styles](#customising-css-styles) section below for details.
 
 ```javascript
 // Inbox
 <Inbox
-  headerRightComponent={({ markAllRead: ()=>void, archiveAll: ()=>void, closeInboxPopover: ()=>void }) => <p onClick={markAllRead}>Custom Mark All as Read</p>}
+  headerRightComponent={({ markAllRead: ()=>void, closeInboxPopover: ()=>void }) => <p onClick={markAllRead}>Custom Mark All as Read</p>}
 />
 ```
 
 ```javascript
 // NotificationFeed
 <NotificationFeed
-  headerRightComponent={({ markAllRead: ()=>void, archiveAll: ()=>void, closeInboxPopover: ()=>void }) => <p onClick={markAllRead}>Custom Mark All as Read</p>}
+  headerRightComponent={({ markAllRead: ()=>void, closeInboxPopover: ()=>void }) => <p onClick={markAllRead}>Custom Mark All as Read</p>}
 />
-```
-
-### Archive all
-
-Pass `showArchiveAll` to show an `Archive all` button to the left of `Mark all as read` in the default header. It archives all of the user's notifications in the current tenant across every store, not only the loaded ones. The button is hidden while the active store lists archived notifications.
-
-Clicking the button first asks the user to confirm below the header, since archiving all can't be reversed. Once confirmed, a notice says archiving is in progress and may take some time to complete. It hides after a few seconds. Archiving happens in the background, so for users with a very large number of notifications the archived tab can take a while to fill up. Style both with the `archiveAllConfirm` theme property, and change the text with the `archiveAllConfirm`, `archiveAllStarted` and `cancel` translation keys.
-
-```javascript
-<Inbox showArchiveAll />
 ```
 
 ## Custom notification card component
@@ -308,14 +298,12 @@ interface INotificationFeedTheme {
   notification?: INotificationCardTheme;
   connectionDot?: IConnectionDotThemeProps; // Only rendered when reachability is enabled
   connectionBanner?: IConnectionBannerTheme; // Only rendered when reachability is enabled
-  archiveAllConfirm?: IArchiveAllConfirmTheme; // Only rendered when showArchiveAll is true
 }
 
 interface IHeaderTheme {
   container?: React.CSSProperties;
   headerText?: React.CSSProperties; // Use this to customize the header title font style, color, size, etc.
   markAllReadText?: React.CSSProperties; // Use this to customize the "Mark all as read" text font style, color, size, etc.
-  archiveAllText?: React.CSSProperties; // Use this to customize the "Archive all" text font style, color, size, etc. Shown only when showArchiveAll is true
 }
 
 interface IConnectionDotThemeProps {
@@ -341,14 +329,6 @@ interface IConnectionBannerVariantTheme {
   text?: React.CSSProperties;
   actionText?: React.CSSProperties; // "Refresh the page", "Report an issue" and report result
   spinnerTrackColor?: string; // connecting variant only: track of the spinner (icon.color sets the arc)
-}
-
-interface IArchiveAllConfirmTheme {
-  container?: React.CSSProperties; // Strip below the header, used for both the confirmation and the "archiving in progress" notice
-  icon?: IconThemeProps; // Archive icon on the confirmation
-  text?: React.CSSProperties; // Confirmation question and notice text
-  cancelText?: React.CSSProperties; // "Cancel"
-  confirmText?: React.CSSProperties; // "Archive all" on the confirmation
 }
 
 interface TabsThemeProps {
