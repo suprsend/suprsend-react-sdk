@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import {
   IStore,
@@ -8,6 +8,7 @@ import {
   useTranslations,
   useFeed,
   ReachabilityStatus,
+  RESPONSE_STATUS,
 } from '@suprsend/react-core';
 import {
   CText,
@@ -22,28 +23,35 @@ import {
   IHeaderTheme,
   IConnectionBannerTheme,
   IConnectionDotThemeProps,
+  IArchiveAllConfirmTheme,
 } from '../interface';
+import ArchiveAllConfirm, { ArchiveAllConfirmState } from './ArchiveAllConfirm';
+
+const ARCHIVE_ALL_NOTICE_MS = 5000;
 
 interface InternalHeaderRightComponentProps {
   header?: IHeaderTheme;
   markAllRead: () => Promise<ApiResponse> | undefined;
+  onArchiveAllClick: () => void;
+  showArchiveAll?: boolean;
   disabled?: boolean;
 }
 
 function InternalHeaderRightComponent({
   header,
   markAllRead,
+  onArchiveAllClick,
+  showArchiveAll,
   disabled,
 }: InternalHeaderRightComponentProps) {
   const { t } = useTranslations();
-  return (
-    <AllReadButton
-      style={{
-        ...header?.markAllReadText,
-        ...(disabled
-          ? { color: lightStatusColors.neutral, cursor: 'default' }
-          : null),
-      }}
+  const disabledStyle = disabled
+    ? { color: lightStatusColors.neutral, cursor: 'default' }
+    : null;
+
+  const markAllReadButton = (
+    <HeaderActionButton
+      style={{ ...header?.markAllReadText, ...disabledStyle }}
       className="ss-feed-mark-all-read-button"
       aria-disabled={disabled || undefined}
       onClick={(e) => {
@@ -53,25 +61,44 @@ function InternalHeaderRightComponent({
       }}
     >
       {t('markAllAsRead')}
-    </AllReadButton>
+    </HeaderActionButton>
+  );
+
+  if (!showArchiveAll) return markAllReadButton;
+
+  return (
+    <HeaderActions className="ss-feed-header-actions">
+      <HeaderActionButton
+        style={{ ...header?.archiveAllText, ...disabledStyle }}
+        className="ss-feed-archive-all-button"
+        aria-disabled={disabled || undefined}
+        onClick={(e) => {
+          e.stopPropagation();
+          if (disabled) return;
+          onArchiveAllClick();
+        }}
+      >
+        {t('archiveAll')}
+      </HeaderActionButton>
+      {markAllReadButton}
+    </HeaderActions>
   );
 }
 
 interface IHeaderProps {
   style?: {
-    header?: {
-      container?: React.CSSProperties;
-      headerText?: React.CSSProperties;
-      markAllReadText?: React.CSSProperties;
-    };
+    header?: IHeaderTheme;
     tabs?: TabsThemeProps;
     connectionDot?: IConnectionDotThemeProps;
     connectionBanner?: IConnectionBannerTheme;
+    archiveAllConfirm?: IArchiveAllConfirmTheme;
   };
   tabBadgeComponent?: React.FC<{ count: number }>;
   showUnreadCountOnTabs?: boolean;
+  showArchiveAll?: boolean;
   headerRightComponent?: React.FC<{
     markAllRead: () => void;
+    archiveAll: () => void;
     closeInboxPopover: () => void;
   }>;
   setPopoverOpen?: Dispatch<SetStateAction<boolean>>;
@@ -82,6 +109,7 @@ export default function Header({
   tabBadgeComponent,
   headerRightComponent,
   showUnreadCountOnTabs = true,
+  showArchiveAll = false,
   setPopoverOpen,
 }: IHeaderProps) {
   const feedClient = useFeedClient();
@@ -109,9 +137,43 @@ export default function Header({
     ...legacyTabTextStyle
   } = style?.tabs || {};
 
+  const [archiveAllState, setArchiveAllState] = useState<
+    ArchiveAllConfirmState | 'idle'
+  >('idle');
+
   const reachabilityStatus = feed?.reachability?.status;
-  const hasBanner = !!getConnectionMessageKey(reachabilityStatus);
+  const hasConnectionBanner = !!getConnectionMessageKey(reachabilityStatus);
   const offline = reachabilityStatus === ReachabilityStatus.OFFLINE;
+  const showArchiveAllConfirm =
+    showArchiveAll && !offline && archiveAllState !== 'idle';
+  const hasBanner = hasConnectionBanner || showArchiveAllConfirm;
+
+  useEffect(() => {
+    if (archiveAllState === 'confirming' && (!showArchiveAll || offline)) {
+      setArchiveAllState('idle');
+    }
+  }, [archiveAllState, showArchiveAll, offline]);
+
+  useEffect(() => {
+    if (archiveAllState !== 'started') return;
+    const timer = setTimeout(
+      () => setArchiveAllState('idle'),
+      ARCHIVE_ALL_NOTICE_MS
+    );
+    return () => clearTimeout(timer);
+  }, [archiveAllState]);
+
+  const confirmArchiveAll = async () => {
+    setArchiveAllState('started');
+    try {
+      const response = await feedClient?.markAllAsArchived();
+      if (response?.status === RESPONSE_STATUS.ERROR) {
+        setArchiveAllState('idle');
+      }
+    } catch {
+      setArchiveAllState('idle');
+    }
+  };
 
   return (
     <Container className="ss-feed-header" style={header?.container}>
@@ -132,6 +194,7 @@ export default function Header({
         {HeaderRightComponent ? (
           <HeaderRightComponent
             markAllRead={() => feedClient?.markAllAsRead()}
+            archiveAll={() => feedClient?.markAllAsArchived()}
             closeInboxPopover={() => {
               setPopoverOpen?.(false);
             }}
@@ -140,6 +203,8 @@ export default function Header({
           <InternalHeaderRightComponent
             header={header}
             markAllRead={() => feedClient?.markAllAsRead()}
+            onArchiveAllClick={() => setArchiveAllState('confirming')}
+            showArchiveAll={showArchiveAll}
             disabled={offline}
           />
         )}
@@ -149,10 +214,20 @@ export default function Header({
           className="ss-feed-connection-banner-container"
           hasStores={hasStores}
         >
-          <ConnectionBanner
-            status={reachabilityStatus}
-            style={style?.connectionBanner}
-          />
+          {hasConnectionBanner && (
+            <ConnectionBanner
+              status={reachabilityStatus}
+              style={style?.connectionBanner}
+            />
+          )}
+          {showArchiveAllConfirm && (
+            <ArchiveAllConfirm
+              state={archiveAllState}
+              onCancel={() => setArchiveAllState('idle')}
+              onConfirm={confirmArchiveAll}
+              style={style?.archiveAllConfirm}
+            />
+          )}
         </BannerContainer>
       )}
       {hasStores && (
@@ -300,7 +375,13 @@ const HeaderText = styled(HeadingText)`
   font-size: 16px;
 `;
 
-const AllReadButton = styled(HeadingText)`
+const HeaderActions = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+`;
+
+const HeaderActionButton = styled(HeadingText)`
   color: ${lightColors.primary};
   font-size: 12px;
   cursor: pointer;

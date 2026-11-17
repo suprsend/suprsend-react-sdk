@@ -107,6 +107,7 @@ export default function NotificationFeed(config: NotificationFeedProps) {
     tabs: modifiedTheme?.tabs,
     connectionDot: modifiedTheme?.connectionDot,
     connectionBanner: modifiedTheme?.connectionBanner,
+    archiveAllConfirm: modifiedTheme?.archiveAllConfirm,
   };
   const pagination = config.pagination !== false;
   const CustomLoader = config?.loaderComponent;
@@ -140,6 +141,7 @@ export default function NotificationFeed(config: NotificationFeedProps) {
           style={headerStyle}
           headerRightComponent={config.headerRightComponent}
           showUnreadCountOnTabs={config.showUnreadCountOnTabs}
+          showArchiveAll={config.showArchiveAll}
           tabBadgeComponent={config.tabBadgeComponent}
           setPopoverOpen={config?.setPopoverOpen}
         />
@@ -156,6 +158,7 @@ export default function NotificationFeed(config: NotificationFeedProps) {
         style={headerStyle}
         headerRightComponent={config.headerRightComponent}
         showUnreadCountOnTabs={config.showUnreadCountOnTabs}
+        showArchiveAll={config.showArchiveAll}
         tabBadgeComponent={config.tabBadgeComponent}
         setPopoverOpen={config?.setPopoverOpen}
       />
